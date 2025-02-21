@@ -1,12 +1,6 @@
 "use client";
 import { Link, usePage } from "@inertiajs/react";
-import {
-    Bell,
-    ChevronsUpDown,
-    CreditCard,
-    LogOut,
-    Sparkles,
-} from "lucide-react";
+import { Bell, ChevronsUpDown, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import {
@@ -44,7 +38,7 @@ export function NavUser() {
                                     alt={user.name}
                                 />
                                 <AvatarFallback className="rounded-lg">
-                                    CN
+                                    SE
                                 </AvatarFallback>
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
@@ -72,7 +66,7 @@ export function NavUser() {
                                         alt={user.name}
                                     />
                                     <AvatarFallback className="rounded-lg">
-                                        BM
+                                        SE
                                     </AvatarFallback>
                                 </Avatar>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -96,7 +90,7 @@ export function NavUser() {
                         <DropdownMenuItem asChild>
                             <Link href={route("logout")} method="post">
                                 <LogOut />
-                                Log out
+                                Se déconnecter
                             </Link>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
