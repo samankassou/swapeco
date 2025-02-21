@@ -18,8 +18,12 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/Components/ui/sidebar";
+import { User } from "@/types";
+interface NavUserProps {
+    user: User;
+}
 
-export function NavUser({ user }) {
+export function NavUser({ user }: NavUserProps) {
     const { isMobile } = useSidebar();
 
     return (

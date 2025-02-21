@@ -7,7 +7,7 @@ import {
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb";
 import { SidebarTrigger } from "@/Components/ui/sidebar";
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@/Components/ui/separator";
 
 interface Breadcrumb {
     href?: string;
