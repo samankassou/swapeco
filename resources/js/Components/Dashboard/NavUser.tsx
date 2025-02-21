@@ -1,5 +1,5 @@
 "use client";
-import { Link, usePage } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import { Bell, ChevronsUpDown, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
@@ -19,9 +19,8 @@ import {
     useSidebar,
 } from "@/Components/ui/sidebar";
 
-export function NavUser() {
+export function NavUser({ user }) {
     const { isMobile } = useSidebar();
-    const user = usePage().props.auth.user;
 
     return (
         <SidebarMenu>

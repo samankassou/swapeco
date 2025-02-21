@@ -13,71 +13,19 @@ import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
-    SidebarGroup,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-    SidebarMenuSub,
-    SidebarMenuSubButton,
-    SidebarMenuSubItem,
     SidebarRail,
 } from "@/Components/ui/sidebar";
 import { usePage } from "@inertiajs/react";
 import { NavMain } from "./Dashboard/NavMain";
 import { NavDashboard } from "./Dashboard/NavDashboard";
 import { NavUser } from "./Dashboard/NavUser";
-const navigations = [
-    {
-        group: "Dashboard",
-        permission: null,
-        role: null,
-        menu: [
-            {
-                name: "Dashboard",
-                href: route("dashboard"),
-                icon: (
-                    <LayoutDashboard className="h-4 w-4 shrink-0 text-gray-600" />
-                ),
-                current: route().current("dashboard"),
-                permission: null,
-                role: null,
-                subs: [],
-            },
-        ],
-    },
-    {
-        group: "Content",
-        permission: null,
-        role: null,
-        menu: [
-            {
-                name: "Posts",
-                href: route("dashboard"),
-                icon: (
-                    <NewspaperIcon className="h-4 w-4 shrink-0 text-gray-600" />
-                ),
-                current: route().current("dashboard"),
-                permission: null,
-                role: null,
-                subs: [],
-            },
-            {
-                name: "Categories",
-                href: route("dashboard"),
-                icon: <TagsIcon className="h-4 w-4 shrink-0 text-gray-600" />,
-                current: "dashboard",
-                permission: null,
-                role: null,
-                subs: [],
-            },
-        ],
-    },
-];
-
 const data = {
     dashboard: {
-        name: "Dashboard",
+        name: "Tableau de bord",
         url: route("dashboard"),
         icon: Gauge,
         isActive: route().current("dashboard"),
@@ -140,7 +88,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <NavMain items={data.navMain} />
             </SidebarContent>
             <SidebarFooter>
-                <NavUser />
+                <NavUser user={user} />
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>
