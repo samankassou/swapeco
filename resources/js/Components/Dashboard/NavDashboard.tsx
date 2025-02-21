@@ -17,7 +17,7 @@ interface NavDashboardProps {
 export function NavDashboard({ dashboard }: NavDashboardProps) {
     return (
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-            <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+            <SidebarGroupLabel>Tableau de bord</SidebarGroupLabel>
             <SidebarMenu>
                 <SidebarMenuItem key={dashboard.name}>
                     <SidebarMenuButton asChild>
