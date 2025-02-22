@@ -6,9 +6,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class OfferCategory extends Model
 {
     /** @use HasFactory<\Database\Factories\OfferCategoryFactory> */
     use HasFactory;
+
+    /**
+     * Get sub categories
+     *
+     * @return HasMany
+     */
+    public function subCategories()
+    {
+        return $this->hasMany(OfferSubCategory::class, 'category_id');
+    }
 }
