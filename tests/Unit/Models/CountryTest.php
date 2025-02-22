@@ -17,7 +17,6 @@ test('to array', function () {
         ]);
 });
 
-
 it('may have cities', function () {
     $country = Country::factory()->hasCities(3)->create();
 
