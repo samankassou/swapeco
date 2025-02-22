@@ -13,6 +13,10 @@ SwapEco est une application web développée avec Laravel 11 et React 18, utilis
 -   Composer
 -   SQLite (par défaut) ou autre base de données supportée par Laravel
 
+## Aperçu
+
+![Capture d'écran de SwapEco](docs/images/overview.png)
+
 ## Installation
 
 1. Cloner le dépôt
