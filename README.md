@@ -18,7 +18,7 @@ SwapEco est une application web développée avec Laravel 11 et React 18, utilis
 1. Cloner le dépôt
 
 ```bash
-git clone <url-du-repo>
+git clone https://github.com/samankassou/swapeco.git
 cd swapeco
 ```
 
@@ -87,13 +87,22 @@ composer test:type-coverage
 
 ## Contribution
 
-Les contributions sont les bienvenues ! Veuillez suivre ces étapes :
+Veuillez suivre ces étapes :
 
 1. Fork le projet
 2. Créez votre branche de fonctionnalité (`git checkout -b feature/AmazingFeature`)
 3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
 4. Push vers la branche (`git push origin feature/AmazingFeature`)
 5. Ouvrez une Pull Request
+
+## Flow de travail
+
+Pour éviter les conflits `git`, pensez à:
+
+1. A faire un `git pull`
+2. `composer install`
+3. `npm install`
+4. `php artisan migrate` pour s'assurer que vous avez la dernière version de la BD
 
 ## License
 
