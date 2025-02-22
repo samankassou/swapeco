@@ -35,13 +35,13 @@ const data = {
             title: "Bourse d’échanges",
             url: "#",
             icon: HandCoins,
-            isActive: false,
+            isActive: route().current("exchange-market.*"),
             items: [
                 {
                     title: "Comment ça marche",
-                    url: "#",
+                    url: route("exchange-market.how-it-works"),
                     icon: HandCoins,
-                    isActive: false,
+                    isActive: route().current("exchange-market.how-it-works"),
                 },
                 {
                     title: "Gestion des échanges",

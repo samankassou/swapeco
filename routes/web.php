@@ -8,17 +8,24 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Home');
+    /*return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-    ]);
+    ]);*/
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard/Index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard/Index');
+    })->name('dashboard');
+
+    Route::get('/exchange-market/how-it-works', function () {
+        return Inertia::render('ExchangeMarket/HowItWorks/Index');
+    })->name('exchange-market.how-it-works');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
