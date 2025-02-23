@@ -1,10 +1,13 @@
 import { Head } from "@inertiajs/react";
 import Dashboard from "@/Layouts/DashboardLayout";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import OfferCard from "@/Components/ExchangeMarket/OfferCard";
+import { Offer } from "@/types";
 
-export default function Index({ offers }) {
+export interface IndexProps {
+    offers: Offer[];
+}
+export default function Index({ offers }: IndexProps) {
     return (
         <>
             <Head title="Gestion des offres" />
