@@ -1,5 +1,7 @@
 import { Head } from "@inertiajs/react";
 import Dashboard from "@/Layouts/DashboardLayout";
+import placeholder from "./images/placeholders/placeholder.svg";
+
 import {
     Card,
     CardContent,
@@ -19,10 +21,10 @@ export default function Index() {
                     Bourse d'échanges - Comment ça marche
                 </h1>
             </div>
-            <div className="container mx-auto py-4">
+            <div className="container mx-auto px-10 py-4">
                 <Card>
                     <CardHeader>
-                        <CardTitle>
+                        <CardTitle className="text-base font-bold md:text-xl ">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit.
                         </CardTitle>
@@ -32,7 +34,7 @@ export default function Index() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <h2 className="text-base font-bold md:text-xl">
+                        <h2 className="font-semibold leading-none tracking-tight">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit.
                         </h2>
@@ -50,6 +52,13 @@ export default function Index() {
                             itaque laboriosam minus, natus eum neque fuga in
                             soluta magni voluptatibus, porro quam voluptatum
                             facere laborum!
+                        </p>
+                        <p>
+                            <img
+                                className="object-cover h-96 w-full"
+                                src="/images/placeholders/placeholder.svg"
+                                alt="Placeholder"
+                            />
                         </p>
                         <p>
                             Lorem ipsum dolor sit amet consectetur adipisicing
