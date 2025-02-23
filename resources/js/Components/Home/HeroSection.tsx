@@ -6,13 +6,13 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "@inertiajs/react";
 
 const navigation = [
-    { name: "Product", href: "#" },
-    { name: "Features", href: "#" },
-    { name: "Marketplace", href: "#" },
-    { name: "Company", href: "#" },
+    { name: "Accueil", href: "#" },
+    { name: "Missions", href: "#" },
+    { name: "Services", href: "#" },
+    { name: "Contact", href: "#" },
 ];
 
-export default function HeroSection() {
+export default function HeroSection({ auth }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
@@ -26,9 +26,9 @@ export default function HeroSection() {
                         <a href="#" className="-m-1.5 p-1.5">
                             <span className="sr-only">SwapEco</span>
                             <img
-                                alt=""
-                                src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                                className="h-8 w-auto"
+                                alt="Logo SwapEco"
+                                src="./images/placeholders/logo.png"
+                                className="h-12 w-auto"
                             />
                         </a>
                     </div>
@@ -54,12 +54,29 @@ export default function HeroSection() {
                         ))}
                     </div>
                     <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                        <Link
-                            href={route("login")}
-                            className="text-sm/6 font-semibold text-gray-900"
-                        >
-                            Se connecter <span aria-hidden="true">&rarr;</span>
-                        </Link>
+                        {auth.user ? (
+                            <Link
+                                href={route("dashboard")}
+                                className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 ml-8"
+                            >
+                                Dashboard
+                            </Link>
+                        ) : (
+                            <>
+                                <Link
+                                    href={route("login")}
+                                    className="rounded-md text-sm/6 font-semibold px-3 py-2 text-gray-900 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                >
+                                    Se connecter
+                                </Link>
+                                <Link
+                                    href={route("register")}
+                                    className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 ml-8"
+                                >
+                                    S'inscrire
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </nav>
                 <Dialog
@@ -73,8 +90,8 @@ export default function HeroSection() {
                             <a href="#" className="-m-1.5 p-1.5">
                                 <span className="sr-only">SwapEco</span>
                                 <img
-                                    alt=""
-                                    src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                                    alt="Logo Swap Eco"
+                                    src="./images/placeholders/placeholder.svg"
                                     className="h-8 w-auto"
                                 />
                             </a>
@@ -104,12 +121,29 @@ export default function HeroSection() {
                                     ))}
                                 </div>
                                 <div className="py-6">
-                                    <Link
-                                        href={route("login")}
-                                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                    >
-                                        Se connecter
-                                    </Link>
+                                    {auth.user ? (
+                                        <Link
+                                            href={route("dashboard")}
+                                            className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                                        >
+                                            Dashboard
+                                        </Link>
+                                    ) : (
+                                        <>
+                                            <Link
+                                                href={route("login")}
+                                                className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                                            >
+                                                Se connecter
+                                            </Link>
+                                            <Link
+                                                href={route("register")}
+                                                className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                                            >
+                                                S'inscrire
+                                            </Link>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -133,25 +167,29 @@ export default function HeroSection() {
                 <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
                     <div className="text-center">
                         <h1 className="text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
-                            Data to enrich your online business
+                            Bourse Eco-Solidaires B2B
                         </h1>
                         <p className="mt-8 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
-                            Anim aute id magna aliqua ad ad non deserunt sunt.
-                            Qui irure qui lorem cupidatat commodo. Elit sunt
-                            amet fugiat veniam occaecat.
+                            Bourse de valorisation d’échanges Eco-solidaires
+                            inter-entreprises, fondée sur la valorisation des
+                            sous-produits et des ressources sous-utilisées.
+                            Destinée aux entreprises, commerçants et
+                            éco-entrepreneurs engagés, transformez vos excédents
+                            en leviers de financement pour des projets durables
+                            et solidaires
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
                             <a
                                 href={route("login")}
-                                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 ml-8"
                             >
-                                Get started
+                                Rejoindre
                             </a>
                             <a
                                 href="#"
                                 className="text-sm/6 font-semibold text-gray-900"
                             >
-                                Learn more <span aria-hidden="true">→</span>
+                                Apprendre plus <span aria-hidden="true">→</span>
                             </a>
                         </div>
                     </div>
