@@ -21,10 +21,10 @@ export default function Index() {
                     Bourse d'échanges - Comment ça marche
                 </h1>
             </div>
-            <div className="container mx-auto px-10 py-4">
-                <Card>
+            <div className="container mx-auto">
+                <Card className="px-10 py-4">
                     <CardHeader>
-                        <CardTitle className="text-base font-bold md:text-xl ">
+                        <CardTitle className="text-base font-bold md:text-xl">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit.
                         </CardTitle>
@@ -38,7 +38,7 @@ export default function Index() {
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit.
                         </h2>
-                        <p>
+                        <p className="text-sm text-muted-foreground">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Voluptatum suscipit minima distinctio harum
                             facilis vel nam nihil. Cupiditate, deserunt non
@@ -60,7 +60,7 @@ export default function Index() {
                                 alt="Placeholder"
                             />
                         </p>
-                        <p>
+                        <p className="text-sm text-muted-foreground">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Voluptatum suscipit minima distinctio harum
                             facilis vel nam nihil. Cupiditate, deserunt non
@@ -76,7 +76,7 @@ export default function Index() {
                             fugiat architecto quis. Tempora, aspernatur et
                             perferendis necessitatibus dolores harum aliquam.
                         </p>
-                        <p>
+                        <p className="text-sm text-muted-foreground">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Voluptatum suscipit minima distinctio harum
                             facilis vel nam nihil. Cupiditate, deserunt non
@@ -85,7 +85,7 @@ export default function Index() {
                         </p>
                     </CardContent>
                     <CardFooter>
-                        <p>
+                        <p className="text-sm italic">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Voluptatum suscipit minima distinctio harum
                             facilis vel nam nihil. Cupiditate, deserunt non
