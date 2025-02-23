@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\ExchangeMarket;
 
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
 use App\Models\Offer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class OfferController extends Controller
 {

@@ -12,9 +12,14 @@ export interface Auth {
 
 export interface Offer {
     id: number;
+    image_url: "/images/placeholders/placeholder.svg";
     title: string;
     description: string;
+    type: string;
+    status: string;
     published_at?: string;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface Flash {

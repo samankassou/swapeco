@@ -3,7 +3,7 @@ import Dashboard from "@/Layouts/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import OfferCard from "@/Components/ExchangeMarket/OfferCard";
 import { PaginatedData, Offer } from "@/types";
-import EmptyState from "./EmptyState";
+import EmptyState from "@/Components/ExchangeMarket/Offers/EmptyState";
 import { Button } from "@/Components/ui/button";
 import { PlusCircle } from "lucide-react";
 
