@@ -1,7 +1,12 @@
 import HeroSection from "@/Components/Home/HeroSection";
 import { Head } from "@inertiajs/react";
+import { Auth } from "@/types";
 
-export default function Home({ auth }) {
+export interface HomeProps {
+    auth: Auth;
+}
+
+export default function Home({ auth }: HomeProps) {
     return (
         <>
             <Head title="Accueil" />

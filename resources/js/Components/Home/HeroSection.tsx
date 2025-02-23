@@ -13,11 +13,11 @@ const navigation = [
     { name: "Contact", href: "#" },
 ];
 
-interface ComponentProps {
+interface HeroSectionProps {
     auth: Auth;
 }
 
-export default function HeroSection({ auth }: ComponentProps) {
+export default function HeroSection({ auth }: HeroSectionProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
