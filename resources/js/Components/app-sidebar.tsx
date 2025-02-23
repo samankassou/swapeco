@@ -1,13 +1,5 @@
 import * as React from "react";
-import {
-    Flower,
-    GalleryVerticalEnd,
-    Gauge,
-    HandCoins,
-    LayoutDashboard,
-    NewspaperIcon,
-    TagsIcon,
-} from "lucide-react";
+import { Flower, Gauge, HandCoins } from "lucide-react";
 
 import {
     Sidebar,
@@ -26,28 +18,30 @@ import { NavUser } from "./Dashboard/NavUser";
 const data = {
     dashboard: {
         name: "Tableau de bord",
-        url: route("dashboard"),
+        url: route("admin.dashboard"),
         icon: Gauge,
-        isActive: route().current("dashboard"),
+        isActive: route().current("admin.dashboard"),
     },
     navMain: [
         {
             title: "Bourse d’échanges",
             url: "#",
             icon: HandCoins,
-            isActive: route().current("exchange-market.*"),
+            isActive: route().current("admin.exchange-market.*"),
             items: [
                 {
                     title: "Comment ça marche",
-                    url: route("exchange-market.how-it-works"),
+                    url: route("admin.exchange-market.how-it-works"),
                     icon: HandCoins,
-                    isActive: route().current("exchange-market.how-it-works"),
+                    isActive: route().current(
+                        "admin.exchange-market.how-it-works"
+                    ),
                 },
                 {
                     title: "Gestion des échanges",
-                    url: "#",
+                    url: route("admin.exchange-market.index"),
                     icon: HandCoins,
-                    isActive: false,
+                    isActive: route().current("admin.exchange-market.index"),
                 },
                 {
                     title: "Mes transactions d’Echanges",

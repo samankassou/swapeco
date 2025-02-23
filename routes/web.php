@@ -14,7 +14,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Index');
     })->name('dashboard');
@@ -22,6 +22,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/exchange-market/how-it-works', function () {
         return Inertia::render('ExchangeMarket/HowItWorks/Index');
     })->name('exchange-market.how-it-works');
+    Route::get('/exchange-market', function () {
+        return Inertia::render('ExchangeMarket/List/Index');
+    })->name('exchange-market.index');
 });
 
 Route::middleware('auth')->group(function () {

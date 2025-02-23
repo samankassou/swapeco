@@ -1,6 +1,5 @@
 import { Head } from "@inertiajs/react";
 import Dashboard from "@/Layouts/DashboardLayout";
-import placeholder from "./images/placeholders/placeholder.svg";
 
 import {
     Card,
@@ -103,7 +102,7 @@ Index.layout = (page: React.ReactNode): React.ReactElement => {
     const breadcrumbs = [
         { href: "#", label: "Bourse d'échanges" },
         {
-            href: route("exchange-market.how-it-works"),
+            href: route("admin.exchange-market.how-it-works"),
             label: "Comment ça marche",
         },
     ];
