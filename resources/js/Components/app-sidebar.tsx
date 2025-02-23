@@ -38,10 +38,12 @@ const data = {
                     ),
                 },
                 {
-                    title: "Gestion des échanges",
-                    url: route("admin.exchange_market.index"),
+                    title: "Gestion des offres",
+                    url: route("admin.exchange_market.offers.index"),
                     icon: HandCoins,
-                    isActive: route().current("admin.exchange_market.index"),
+                    isActive: route().current(
+                        "admin.exchange_market.offers.index"
+                    ),
                 },
                 {
                     title: "Mes transactions d’Echanges",

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Admin\ExchangeMarket\OfferController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,9 +23,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
         return Inertia::render('ExchangeMarket/HowItWorks/Index');
     })->name('exchange_market.how_it_works');
 
-    Route::get('/exchange-market', function () {
-        return Inertia::render('ExchangeMarket/Offers/List/Index');
-    })->name('exchange_market.index');
+    Route::get('/exchange-market/offers', [OfferController::class, 'index'])->name('exchange_market.offers.index');
 });
 
 Route::middleware('auth')->group(function () {

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "@inertiajs/react";
+import { Auth } from "@/types";
 
 const navigation = [
     { name: "Accueil", href: "#" },
@@ -12,7 +13,11 @@ const navigation = [
     { name: "Contact", href: "#" },
 ];
 
-export default function HeroSection({ auth }) {
+interface ComponentProps {
+    auth: Auth;
+}
+
+export default function HeroSection({ auth }: ComponentProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (

@@ -6,6 +6,17 @@ export interface User {
     email_verified_at?: string;
 }
 
+export interface Auth {
+    user: User | null;
+}
+
+export interface Offer {
+    id: number;
+    title: string;
+    description: string;
+    published_at?: string;
+}
+
 export interface Flash {
     type: string;
     message: string;
