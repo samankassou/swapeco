@@ -27,21 +27,21 @@ const data = {
             title: "Bourse d’échanges",
             url: "#",
             icon: HandCoins,
-            isActive: route().current("admin.exchange-market.*"),
+            isActive: route().current("admin.exchange_market.*"),
             items: [
                 {
                     title: "Comment ça marche",
-                    url: route("admin.exchange-market.how-it-works"),
+                    url: route("admin.exchange_market.how_it_works"),
                     icon: HandCoins,
                     isActive: route().current(
-                        "admin.exchange-market.how-it-works"
+                        "admin.exchange_market.how_it_works"
                     ),
                 },
                 {
                     title: "Gestion des échanges",
-                    url: route("admin.exchange-market.index"),
+                    url: route("admin.exchange_market.index"),
                     icon: HandCoins,
-                    isActive: route().current("admin.exchange-market.index"),
+                    isActive: route().current("admin.exchange_market.index"),
                 },
                 {
                     title: "Mes transactions d’Echanges",

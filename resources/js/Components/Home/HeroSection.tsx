@@ -56,7 +56,7 @@ export default function HeroSection({ auth }) {
                     <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                         {auth.user ? (
                             <Link
-                                href={route("dashboard")}
+                                href={route("admin.dashboard")}
                                 className="inline-flex justify-center rounded-lg text-sm font-semibold py-2.5 px-4 bg-slate-900 text-white hover:bg-slate-700 ml-8"
                             >
                                 Dashboard
@@ -123,7 +123,7 @@ export default function HeroSection({ auth }) {
                                 <div className="py-6">
                                     {auth.user ? (
                                         <Link
-                                            href={route("dashboard")}
+                                            href={route("admin.dashboard")}
                                             className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                                         >
                                             Dashboard

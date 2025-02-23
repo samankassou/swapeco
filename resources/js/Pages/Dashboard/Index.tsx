@@ -17,7 +17,7 @@ export default function Index() {
 
 Index.layout = (page: React.ReactNode): React.ReactElement => {
     const breadcrumbs = [
-        { href: route("dashboard"), label: "Tableau de bord" },
+        { href: route("admin.dashboard"), label: "Tableau de bord" },
     ];
 
     return <Dashboard children={page} breadcrumbs={breadcrumbs} />;

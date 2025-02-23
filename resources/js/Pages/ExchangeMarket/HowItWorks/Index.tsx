@@ -102,7 +102,7 @@ Index.layout = (page: React.ReactNode): React.ReactElement => {
     const breadcrumbs = [
         { href: "#", label: "Bourse d'échanges" },
         {
-            href: route("admin.exchange-market.how-it-works"),
+            href: route("admin.exchange_market.how_it_works"),
             label: "Comment ça marche",
         },
     ];
