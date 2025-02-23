@@ -1,11 +1,19 @@
 import { Head, Link } from "@inertiajs/react";
 import Dashboard from "@/Layouts/DashboardLayout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/Components/ui/card";
 import OfferCard from "@/Components/ExchangeMarket/OfferCard";
 import { PaginatedData, Offer } from "@/types";
 import EmptyState from "@/Components/ExchangeMarket/Offers/EmptyState";
 import { Button } from "@/Components/ui/button";
 import { PlusCircle } from "lucide-react";
+import FilterBar from "@/Components/ExchangeMarket/Offers/FilterBar";
+import OffersPagination from "@/Components/ExchangeMarket/Offers/OffersPagination";
 
 export interface IndexProps {
     offers: PaginatedData<Offer>;
@@ -23,7 +31,7 @@ export default function Index({ offers }: IndexProps) {
             <div className="container mx-auto">
                 <Card className="px-10 py-4">
                     <CardHeader>
-                        <CardTitle className="text-base font-bold md:text-xl flex justify-between">
+                        <CardTitle className="text-base font-bold md:text-xl flex justify-between mb-4">
                             <h2>Mes offres</h2>
                             {offers.data.length > 0 && (
                                 <Button asChild>
@@ -38,8 +46,15 @@ export default function Index({ offers }: IndexProps) {
                                 </Button>
                             )}
                         </CardTitle>
+                        <FilterBar />
                     </CardHeader>
                     <CardContent className="space-y-4">
+                        {offers.data.length > 0 && (
+                            <div className="text-sm text-muted-foreground">
+                                Affichage de {offers.from} à {offers.to} sur{" "}
+                                {offers.total} offres
+                            </div>
+                        )}
                         {offers.data.length === 0 ? (
                             <EmptyState />
                         ) : (
@@ -55,6 +70,12 @@ export default function Index({ offers }: IndexProps) {
                             </div>
                         )}
                     </CardContent>
+                    {/* Pagination */}
+                    {offers.data.length > 0 && (
+                        <CardFooter className="flex justify-center">
+                            <OffersPagination links={offers.links} />
+                        </CardFooter>
+                    )}
                 </Card>
             </div>
         </>
