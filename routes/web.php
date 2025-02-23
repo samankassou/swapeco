@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     })->name('exchange_market.how_it_works');
 
     Route::get('/exchange-market/offers', [OfferController::class, 'index'])->name('exchange_market.offers.index');
+    Route::get('/exchange-market/offers/create', [OfferController::class, 'create'])->name('exchange_market.offers.create');
 });
 
 Route::middleware('auth')->group(function () {
@@ -32,4 +33,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

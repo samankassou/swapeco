@@ -1,11 +1,14 @@
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import Dashboard from "@/Layouts/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import OfferCard from "@/Components/ExchangeMarket/OfferCard";
-import { Offer } from "@/types";
+import { PaginatedData, Offer } from "@/types";
+import EmptyState from "./EmptyState";
+import { Button } from "@/Components/ui/button";
+import { PlusCircle } from "lucide-react";
 
 export interface IndexProps {
-    offers: Offer[];
+    offers: PaginatedData<Offer>;
 }
 export default function Index({ offers }: IndexProps) {
     return (
@@ -20,19 +23,37 @@ export default function Index({ offers }: IndexProps) {
             <div className="container mx-auto">
                 <Card className="px-10 py-4">
                     <CardHeader>
-                        <CardTitle className="text-base font-bold md:text-xl">
-                            Liste des offres
+                        <CardTitle className="text-base font-bold md:text-xl flex justify-between">
+                            <h2>Mes offres</h2>
+                            {offers.data.length > 0 && (
+                                <Button asChild>
+                                    <Link
+                                        href={route(
+                                            "admin.exchange_market.offers.create"
+                                        )}
+                                    >
+                                        <PlusCircle className="mr-2 h-4 w-4" />
+                                        Déposer une offre
+                                    </Link>
+                                </Button>
+                            )}
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <div className="flex flex-1 flex-col gap-4">
-                            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                                {offers &&
-                                    offers.map((offer) => (
-                                        <OfferCard offer={offer} />
+                        {offers.data.length === 0 ? (
+                            <EmptyState />
+                        ) : (
+                            <div className="flex flex-1 flex-col gap-4">
+                                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                                    {offers.data.map((offer) => (
+                                        <OfferCard
+                                            key={offer.id}
+                                            offer={offer}
+                                        />
                                     ))}
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </CardContent>
                 </Card>
             </div>
