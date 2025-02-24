@@ -133,33 +133,36 @@ export default function Index() {
                             </motion.button>
                         </motion.div>
                     </CardContent>
-                    <CardFooter className="p-6 bg-gradient-to-r from-blue-200 to-blue-400 rounded-b-xl shadow-xl">
-                        <p className="text-sm text-gray-800 italic">
-                            <strong>Rejoignez dès maintenant la Bourse des Échanges !</strong><br />
-                            Que vous soyez à la recherche d'une opportunité pour échanger vos produits, services, ou ressources, ou que vous souhaitiez mettre à disposition vos excédents, notre plateforme vous offre la flexibilité et l'accessibilité nécessaires pour maximiser vos échanges. Rejoignez une économie circulaire et contribuez à un avenir plus équitable et durable.
-                        </p>
-                        <div className="mt-4 flex justify-center space-x-4">
-                            <motion.a
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.8 }}
-                                href="#"
-                                className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full shadow-lg transition-all transform hover:scale-105"
+                    <CardFooter className="p-6 bg-gradient-to-r from-blue-100 to-blue-300 rounded-b-xl shadow-lg border-t border-blue-300 backdrop-blur-md">
+                    <p className="text-sm text-gray-900 italic leading-relaxed text-left pr-6 pl-6">
+                        <strong>Rejoignez dès maintenant la Bourse des Échanges !</strong><br />
+                        Maximisez vos opportunités en échangeant des produits, services et ressources sur notre plateforme. 
+                        <span className="font-semibold text-blue-800"> Participez à une économie plus équitable et durable.</span>
+                    </p>
+
+
+                        <div className="mt-6 flex justify-center space-x-4">
+                            <motion.button
+                                initial={{ opacity: 0, y: 5 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                                className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md transition-all focus:ring-2 focus:ring-indigo-400"
                             >
-                                Commencer maintenant
-                            </motion.a>
-                            <motion.a
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.8, delay: 0.4 }}
-                                href="#"
-                                className="px-8 py-3 bg-transparent border-2 border-blue-600 hover:bg-blue-600 text-blue-600 font-semibold rounded-full shadow-lg transition-all transform hover:scale-105"
+                                Commencer maintenant 🚀
+                            </motion.button>
+
+                            <motion.button
+                                initial={{ opacity: 0, y: 5 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.2 }}
+                                className="px-6 py-3 border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white font-semibold rounded-lg shadow-md transition-all focus:ring-2 focus:ring-indigo-400"
                             >
-                                En savoir plus
-                            </motion.a>
+                                En savoir plus ℹ️
+                            </motion.button>
                         </div>
                     </CardFooter>
-                    
+
+                          
                 </Card>
             </div>
         </>
