@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Enums\Offers\OfferStatusEnum;
+use App\Enums\Offers\OfferTypeEnum;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
 
@@ -17,25 +19,27 @@ it('can list offers', function () {
         );
 });
 
-/*it('can create an offer', function () {
+it('can create an offer', function () {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)
-        ->post(route('exchange_market.offers.store'), [
-            'type_of_expense_id' => $typeOfExpense->id,
-            'title' => 'Fuel',
-            'date' => '2021-01-01',
-            'amount' => 500,
+        ->post(route('admin.exchange_market.offers.store'), [
+            'type' => OfferTypeEnum::PRODUCT->value,
+            'title' => 'Test',
+            'description' => 'Test',
+            'estimated_value' => 200,
+            'status' => OfferStatusEnum::DRAFT->value,
         ]);
 
     $response->assertStatus(302)
         ->assertRedirect('/admin/exchange-market/offers');
 
     $this->assertDatabaseHas('offers', [
-        'company_id' => $company->id,
-        'type_of_expense_id' => $typeOfExpense->id,
-        'title' => 'Fuel',
-        'date' => '2021-01-01',
-        'amount' => 500,
+        'type' => OfferTypeEnum::PRODUCT->value,
+        'title' => 'Test',
+        'description' => 'Test',
+        'estimated_value' => 200,
+        'status' => OfferStatusEnum::DRAFT->value,
+        'user_id' => $user->id,
     ]);
-});*/
+});

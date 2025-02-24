@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
-use App\Enums\Offers\OfferTypeEnum;
-use App\Enums\Offers\OfferStatusEnum;
 use App\Actions\Offer\CreateOfferAction;
+use App\Enums\Offers\OfferStatusEnum;
+use App\Enums\Offers\OfferTypeEnum;
+use App\Models\User;
 
 it('can create an offer', function () {
 
@@ -13,7 +13,7 @@ it('can create an offer', function () {
     $user = User::factory()->create();
 
     $action->handle($user, [
-        'type' => OfferTypeEnum::PRODUCT,
+        'type' => OfferTypeEnum::PRODUCT->value,
         'title' => 'Test',
         'description' => 'Test',
         'estimated_value' => 200,
@@ -21,11 +21,11 @@ it('can create an offer', function () {
     ]);
 
     $this->assertDatabaseHas('offers', [
-        'type' => OfferTypeEnum::PRODUCT,
+        'type' => OfferTypeEnum::PRODUCT->value,
         'title' => 'Test',
         'description' => 'Test',
         'estimated_value' => 200,
-        'status' => OfferStatusEnum::DRAFT,
+        'status' => OfferStatusEnum::DRAFT->value,
         'user_id' => $user->id,
     ]);
 });

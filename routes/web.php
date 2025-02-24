@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
 
     Route::get('/exchange-market/offers', [OfferController::class, 'index'])->name('exchange_market.offers.index');
     Route::get('/exchange-market/offers/create', [OfferController::class, 'create'])->name('exchange_market.offers.create');
+    Route::post('/exchange-market/offers', [OfferController::class, 'store'])->name('exchange_market.offers.store');
 });
 
 Route::middleware('auth')->group(function () {
