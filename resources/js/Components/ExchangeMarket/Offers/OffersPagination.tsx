@@ -22,8 +22,7 @@ export default function OffersPagination({ links }: OffersPaginationProps) {
     return (
         <Pagination>
             <PaginationContent>
-                {links.map((link, i) => {
-                    // Skip rendering if it's the current page number
+                {links.map((link: PaginationLink, i: number) => {
                     if (link.label.includes("...")) {
                         return (
                             <PaginationItem key={i}>
