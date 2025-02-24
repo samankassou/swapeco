@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('type'); // product, service
             $table->string('title');
             $table->text('description');
-            $table->unsignedInteger('price');
+            $table->unsignedInteger('estimated_value');
             $table->string('status'); // draft, published, sold
             $table->foreignId('user_id')->constrained(); // user who created the offer
             $table->timestamp('published_at')->nullable();

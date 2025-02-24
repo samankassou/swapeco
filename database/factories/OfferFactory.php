@@ -23,7 +23,7 @@ class OfferFactory extends Factory
         return [
             'type' => fake()->randomElement(OfferTypeEnum::values()),
             'title' => fake()->sentence,
-            'price' => fake()->randomNumber(4),
+            'estimated_value' => fake()->randomNumber(4),
             'description' => fake()->text,
             'status' => 'active',
             'published_at' => now(),
