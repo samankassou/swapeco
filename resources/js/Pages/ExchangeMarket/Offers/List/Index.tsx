@@ -15,10 +15,7 @@ import { PlusCircle } from "lucide-react";
 import FilterBar from "@/Components/ExchangeMarket/Offers/FilterBar";
 import OffersPagination from "@/Components/ExchangeMarket/Offers/OffersPagination";
 
-export interface IndexProps {
-    offers: PaginatedData<Offer>;
-}
-export default function Index({ offers }: IndexProps) {
+export default function Index({ offers }: { offers: PaginatedData<Offer> }) {
     return (
         <>
             <Head title="Gestion des offres" />

@@ -56,12 +56,7 @@ export default function Index() {
                                 </Label>
                                 <Select name="type" value={data.type}>
                                     <SelectTrigger>
-                                        <SelectValue
-                                            onChange={(e) =>
-                                                setData("type", e.target.value)
-                                            }
-                                            placeholder="Choisir le type d'offre"
-                                        />
+                                        <SelectValue placeholder="Choisir le type d'offre" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="product">

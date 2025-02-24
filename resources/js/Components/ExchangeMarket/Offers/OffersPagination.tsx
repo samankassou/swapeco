@@ -8,7 +8,17 @@ import {
     PaginationPrevious,
 } from "@/Components/ui/pagination";
 
-export default function OffersPagination({ links }) {
+interface PaginationLink {
+    label: string;
+    url: string | null;
+    active: boolean;
+}
+
+interface OffersPaginationProps {
+    links: PaginationLink[];
+}
+
+export default function OffersPagination({ links }: OffersPaginationProps) {
     return (
         <Pagination>
             <PaginationContent>
