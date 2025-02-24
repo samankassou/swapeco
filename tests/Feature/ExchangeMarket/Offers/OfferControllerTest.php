@@ -13,7 +13,7 @@ it('can list offers', function () {
     $this->actingAs($user)
         ->get('/admin/exchange-market/offers')
         ->assertInertia(
-            fn(Assert $assert) => $assert
+            fn (Assert $assert) => $assert
                 ->component('ExchangeMarket/Offers/List/Index')
                 ->has('offers.data', 10)
         );
