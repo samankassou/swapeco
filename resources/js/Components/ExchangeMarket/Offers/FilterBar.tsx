@@ -1,3 +1,6 @@
+import { router } from "@inertiajs/react";
+import { useCallback, useState } from "react";
+import debounce from "lodash/debounce";
 import { Card, CardContent } from "@/Components/ui/card";
 import { Input } from "@/Components/ui/input";
 import {
@@ -10,6 +13,59 @@ import {
 import { Search } from "lucide-react";
 
 export default function FilterBar() {
+    const [search, setSearch] = useState("");
+    const [filter, setFilter] = useState({
+        type: "all",
+        status: "all",
+    });
+    const [sort, setSort] = useState("-created_at");
+
+    const updateSearch = useCallback(
+        debounce((value: string) => {
+            router.get(
+                route("admin.exchange_market.offers.index"),
+                {
+                    "filter[title]": value,
+                    "filter[type]": filter.type,
+                    "filter[status]": filter.status,
+                    sort: sort,
+                },
+                { preserveState: true, preserveScroll: true }
+            );
+        }, 300),
+        [filter, sort]
+    );
+
+    const updateFilters = (key: string, value: string) => {
+        if (key === "sort") {
+            setSort(value);
+            router.get(
+                route("admin.exchange_market.offers.index"),
+                {
+                    "filter[title]": search,
+                    "filter[type]": filter.type,
+                    "filter[status]": filter.status,
+                    sort: value,
+                },
+                { preserveState: true, preserveScroll: true }
+            );
+            return;
+        }
+
+        const newFilters = { ...filter, [key]: value };
+        setFilter(newFilters);
+        router.get(
+            route("admin.exchange_market.offers.index"),
+            {
+                "filter[title]": search,
+                "filter[type]": newFilters.type,
+                "filter[status]": newFilters.status,
+                sort: sort,
+            },
+            { preserveState: true, preserveScroll: true }
+        );
+    };
+
     return (
         <Card className="mb-6">
             <CardContent className="p-6">
@@ -20,9 +76,19 @@ export default function FilterBar() {
                             <Input
                                 placeholder="Rechercher une offre..."
                                 className="pl-9"
+                                value={search}
+                                onChange={(e) => {
+                                    setSearch(e.target.value);
+                                    updateSearch(e.target.value);
+                                }}
                             />
                         </div>
-                        <Select defaultValue="all">
+                        <Select
+                            value={filter.type}
+                            onValueChange={(value) =>
+                                updateFilters("type", value)
+                            }
+                        >
                             <SelectTrigger className="w-[180px]">
                                 <SelectValue placeholder="Type d'offre" />
                             </SelectTrigger>
@@ -38,7 +104,12 @@ export default function FilterBar() {
                                 </SelectItem>
                             </SelectContent>
                         </Select>
-                        <Select defaultValue="all">
+                        <Select
+                            value={filter.status}
+                            onValueChange={(value) =>
+                                updateFilters("status", value)
+                            }
+                        >
                             <SelectTrigger className="w-[180px]">
                                 <SelectValue placeholder="Statut" />
                             </SelectTrigger>
@@ -52,24 +123,25 @@ export default function FilterBar() {
                                 <SelectItem value="draft">
                                     Brouillons
                                 </SelectItem>
-                                <SelectItem value="pending">
-                                    En attente
-                                </SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
-                    <Select defaultValue="newest">
+                    <Select
+                        value={sort}
+                        onValueChange={(value) => updateFilters("sort", value)}
+                    >
                         <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Trier par" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="newest">
+                            <SelectItem value="-created_at">
                                 Plus récentes
                             </SelectItem>
-                            <SelectItem value="oldest">
+                            <SelectItem value="created_at">
                                 Plus anciennes
                             </SelectItem>
                             <SelectItem value="title">Titre (A-Z)</SelectItem>
+                            <SelectItem value="-title">Titre (Z-A)</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>

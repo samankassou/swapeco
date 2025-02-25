@@ -30,8 +30,6 @@ export default function Index() {
         post(route("admin.exchange_market.offers.store"));
     };
 
-    console.log(errors);
-
     return (
         <>
             <Head title="Gestion des offres" />
@@ -54,7 +52,13 @@ export default function Index() {
                                 <Label className="mb-1" htmlFor="type">
                                     Type d'offre
                                 </Label>
-                                <Select name="type" value={data.type}>
+                                <Select
+                                    name="type"
+                                    value={data.type}
+                                    onValueChange={(value) =>
+                                        setData("type", value)
+                                    }
+                                >
                                     <SelectTrigger>
                                         <SelectValue placeholder="Choisir le type d'offre" />
                                     </SelectTrigger>
@@ -121,7 +125,7 @@ export default function Index() {
                                 </Label>
 
                                 <Input
-                                    type="numeric"
+                                    type="number"
                                     id="estimated_value"
                                     name="estimated_value"
                                     value={data.estimated_value}

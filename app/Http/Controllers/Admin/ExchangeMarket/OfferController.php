@@ -4,19 +4,32 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\ExchangeMarket;
 
-use App\Actions\Offer\CreateOfferAction;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateOfferRequest;
-use App\Models\Offer;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Offer;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
+use App\Actions\Offer\CreateOfferAction;
+use App\Http\Requests\CreateOfferRequest;
+use App\Http\Requests\ListOffersRequest;
 
 class OfferController extends Controller
 {
-    public function index(Request $request)
+    public function index(ListOffersRequest $request)
     {
-        $offers = Offer::where('user_id', Auth::user()?->id)->latest()->paginate(10);
+        $query = Offer::where('user_id', Auth::user()->id);
+
+        $offers = QueryBuilder::for($query)
+            ->allowedFilters([
+                'title',
+                AllowedFilter::exact('type')->ignore('all'),
+                AllowedFilter::exact('status')->ignore('all'),
+            ])
+            ->allowedSorts(['created_at', 'title'])
+            ->defaultSort('-created_at')
+            ->paginate()
+            ->appends($request->query());
 
         return Inertia::render('ExchangeMarket/Offers/List/Index', ['offers' => $offers]);
     }
