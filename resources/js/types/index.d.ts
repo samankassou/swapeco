@@ -47,7 +47,11 @@ export interface NavItem {
 interface NavMainProps {
     items: NavItem[];
 }
-
+interface PaginationLink {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
 export interface PaginatedData<T> {
     data: T[];
     links: PaginationLink[];
@@ -56,6 +60,7 @@ export interface PaginatedData<T> {
     from: number;
     last_page: number;
     last_page_url: string;
+    links: PaginationLink[];
     next_page_url: string | null;
     path: string;
     per_page: number;

@@ -14,7 +14,7 @@ test('to array', function () {
             'type',
             'title',
             'description',
-            'price',
+            'estimated_value',
             'status',
             'user_id',
             'published_at',

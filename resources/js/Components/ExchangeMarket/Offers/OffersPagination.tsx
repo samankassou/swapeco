@@ -9,10 +9,11 @@ import {
 } from "@/Components/ui/pagination";
 
 interface PaginationLink {
-    url: string | null;
     label: string;
+    url: string | null;
     active: boolean;
 }
+
 interface OffersPaginationProps {
     links: PaginationLink[];
 }
@@ -75,4 +76,3 @@ export default function OffersPagination({ links }: OffersPaginationProps) {
         </Pagination>
     );
 }
-

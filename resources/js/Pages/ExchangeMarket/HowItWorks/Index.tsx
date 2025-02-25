@@ -27,12 +27,14 @@ export default function Index() {
             >
                 <div className="container mx-auto px-6">
                     <h1 className="text-3xl md:text-5xl font-extrabold mb-4">
-                        Découvrez la Bourse des Échanges : Valorisez vos ressources !
+                        Découvrez la Bourse des Échanges : Valorisez vos
+                        ressources !
                     </h1>
                     <p className="text-lg md:text-xl mb-6">
-                        Que vous soyez à la recherche d'une bourse pour vos produits et services, ou si vous souhaitez mettre
-                        vos ressources à disposition d'autres utilisateurs, notre plateforme vous offre une solution flexible
-                        et efficace.
+                        Que vous soyez à la recherche d'une bourse pour vos
+                        produits et services, ou si vous souhaitez mettre vos
+                        ressources à disposition d'autres utilisateurs, notre
+                        plateforme vous offre une solution flexible et efficace.
                     </p>
                     <motion.button
                         initial={{ opacity: 0 }}
@@ -53,8 +55,10 @@ export default function Index() {
                             Comment fonctionne la Bourse des Échanges ?
                         </CardTitle>
                         <CardDescription>
-                            Un système innovant où vous pouvez échanger des produits, des services, ou même des ressources contre
-                            de l'argent ou sous forme de troc. Découvrez comment ça marche !
+                            Un système innovant où vous pouvez échanger des
+                            produits, des services, ou même des ressources
+                            contre de l'argent ou sous forme de troc. Découvrez
+                            comment ça marche !
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-8">
@@ -69,9 +73,12 @@ export default function Index() {
                                 🔍 Recherche d'une Bourse
                             </h2>
                             <p className="text-sm text-gray-700">
-                                Une fois inscrit, vous pouvez rechercher des bourses adaptées à vos besoins en produits ou services.
-                                Que ce soit pour des investissements, des biens ou des échanges, vous trouverez une offre correspondant
-                                à vos attentes. Notre moteur de recherche puissant facilite la navigation.
+                                Une fois inscrit, vous pouvez rechercher des
+                                bourses adaptées à vos besoins en produits ou
+                                services. Que ce soit pour des investissements,
+                                des biens ou des échanges, vous trouverez une
+                                offre correspondant à vos attentes. Notre moteur
+                                de recherche puissant facilite la navigation.
                             </p>
                             <motion.button
                                 initial={{ opacity: 0 }}
@@ -94,9 +101,13 @@ export default function Index() {
                                 🛠️ Mettre en Bourse un Service ou Produit
                             </h2>
                             <p className="text-sm text-gray-700">
-                                Si vous possédez un excédent de ressources, vous pouvez facilement les mettre en bourse. Les autres
-                                utilisateurs pourront les échanger contre de l'argent ou via un système de troc simple et rapide.
-                                Notre plateforme permet d'ajouter vos produits ou services en quelques étapes simples et rapides.
+                                Si vous possédez un excédent de ressources, vous
+                                pouvez facilement les mettre en bourse. Les
+                                autres utilisateurs pourront les échanger contre
+                                de l'argent ou via un système de troc simple et
+                                rapide. Notre plateforme permet d'ajouter vos
+                                produits ou services en quelques étapes simples
+                                et rapides.
                             </p>
                             <motion.button
                                 initial={{ opacity: 0 }}
@@ -119,9 +130,12 @@ export default function Index() {
                                 ♻️ Engagez-vous dans l'Économie Circulaire
                             </h2>
                             <p className="text-sm text-gray-700">
-                                Rejoignez une économie circulaire, réduisez les déchets et valorisez vos excédents tout en contribuant
-                                à des projets sociaux et écologiques. C'est une opportunité de participer activement à un monde plus
-                                durable tout en gagnant de l'argent.
+                                Rejoignez une économie circulaire, réduisez les
+                                déchets et valorisez vos excédents tout en
+                                contribuant à des projets sociaux et
+                                écologiques. C'est une opportunité de participer
+                                activement à un monde plus durable tout en
+                                gagnant de l'argent.
                             </p>
                             <motion.button
                                 initial={{ opacity: 0 }}
