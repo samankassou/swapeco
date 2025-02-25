@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\ExchangeMarket;
 
-use Inertia\Inertia;
-use App\Models\Offer;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\QueryBuilder\AllowedFilter;
 use App\Actions\Offer\CreateOfferAction;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOfferRequest;
 use App\Http\Requests\ListOffersRequest;
+use App\Models\Offer;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class OfferController extends Controller
 {
