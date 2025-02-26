@@ -1,7 +1,6 @@
 "use client";
 import { Link } from "@inertiajs/react";
-import { Bell, ChevronsUpDown, LogOut } from "lucide-react";
-
+import { Bell, ChevronsUpDown, LogOut , Settings } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import {
     DropdownMenu,
@@ -84,6 +83,12 @@ export function NavUser({ user }: NavUserProps) {
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
+                            <DropdownMenuItem asChild>
+                                <Link href={route("logout")} method="get" >
+                                    <Settings className="h-5 w-5 mr-2" />
+                                    Profile Settings
+                                </Link>
+                            </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <Bell />
                                 Notifications

@@ -29,7 +29,7 @@ export default function Login({
 
   return (
     <GuestLayout>
-      <Head title="Log in" />
+      <Head title="Log In" />
       {/* Affichage du message de statut, s'il existe */}
       {statusMessage && (
         <div className="mb-4 text-sm font-medium text-green-600">{statusMessage}</div>
