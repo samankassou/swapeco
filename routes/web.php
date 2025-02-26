@@ -18,7 +18,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard/Index');
     })->name('dashboard');
-    
+
     Route::get('/profile-setting', function () {
         return Inertia::render('Profile/Edit');
     })->name('profile_setting');
