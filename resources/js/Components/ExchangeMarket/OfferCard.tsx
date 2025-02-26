@@ -46,16 +46,11 @@ export default function OfferCard({ offer }: OfferCardProps) {
                     >
                         {offer.title}
                     </CardTitle>
-                    <Badge className={cn("shrink-0", getTypeColor(offer.type))}>
-                        {offer.type === "product" ? "Produit" : "Service"}
-                    </Badge>
                     <Badge
-                        className={cn(
-                            "ml-2 shrink-0",
-                            getStatusColor(offer.status)
-                        )}
+                        variant="secondary"
+                        className={cn("shrink-0", getTypeColor(offer.type))}
                     >
-                        {offer.status}
+                        {offer.type === "product" ? "Produit" : "Service"}
                     </Badge>
                 </div>
                 <CardDescription>
@@ -73,7 +68,17 @@ export default function OfferCard({ offer }: OfferCardProps) {
                 <p className="line-clamp-2 text-sm text-gray-600">
                     {offer.description}
                 </p>
+                <div className="flex justify-between">
+                    <p className="text-sm font-medium">Valeur estimée : </p>
+                    <p className="font-semibold text-xl">
+                        {new Intl.NumberFormat("fr-FR", {
+                            style: "currency",
+                            currency: "EUR",
+                        }).format(offer.estimated_value)}
+                    </p>
+                </div>
             </CardContent>
+
             <CardFooter className="flex justify-between text-xs text-gray-500">
                 <div className="flex flex-col gap-1">
                     <span>
@@ -93,6 +98,15 @@ export default function OfferCard({ offer }: OfferCardProps) {
                         </span>
                     )}
                 </div>
+                <Badge
+                    variant="secondary"
+                    className={cn(
+                        "ml-2 shrink-0",
+                        getStatusColor(offer.status)
+                    )}
+                >
+                    {offer.status}
+                </Badge>
             </CardFooter>
         </Card>
     );

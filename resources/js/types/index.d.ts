@@ -17,6 +17,7 @@ export interface Offer {
     description: string;
     type: string;
     status: string;
+    estimated_value: number;
     published_at?: string;
     created_at: string;
     updated_at: string;
