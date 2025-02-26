@@ -2,6 +2,7 @@ import { FormEventHandler } from "react"
 import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
 import { Button } from "@/Components/ui/button"
+import { Link } from "@inertiajs/react"
 
 export function RegisterForm({
   data,
@@ -75,11 +76,18 @@ export function RegisterForm({
         {processing ? 'Inscription en cours...' : 'S’inscrire'}
       </Button>
 
-      {/* Copyright SWAPECO */}
+      {/* Lien vers la connexion */}
       <p className="text-center text-sm text-gray-500 mt-4">
+        Déjà un compte ?{" "}
+        <Link href={route("login")} className="text-blue-600 hover:underline">
+          Se connecter
+        </Link>
+      </p>
+
+      {/* Copyright SWAPECO */}
+      <p className="text-center text-sm text-gray-500 mt-2">
         © {new Date().getFullYear()} SWAPECO. Tous droits réservés.
       </p>
     </form>
   )
 }
-

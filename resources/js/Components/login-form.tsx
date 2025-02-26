@@ -10,6 +10,7 @@ import {
 import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
 import { Link } from '@inertiajs/react'  // Import Inertia Link for SPA navigation
+import { AlignCenter } from "lucide-react"
 
 export function LoginForm({
   data,
@@ -32,9 +33,11 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>Enter your email below to login to your account</CardDescription>
-        </CardHeader>
+          <CardTitle className="text-2xl text-center">LOGIN</CardTitle>
+          <CardDescription className="text-center">
+            Enter your email below to login to your account
+          </CardDescription>
+         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit}>
             <div className="flex flex-col gap-6">
@@ -96,6 +99,10 @@ export function LoginForm({
               Sign up
             </Link>
           </div>
+          {/* Copyright SWAPECO */}
+          <p className="text-center text-sm text-gray-500 mt-2">
+            © {new Date().getFullYear()} SWAPECO. Tous droits réservés.
+          </p>
         </CardContent>
       </Card>
     </div>
