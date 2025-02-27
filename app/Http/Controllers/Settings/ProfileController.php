@@ -1,33 +1,31 @@
 <?php
 
-declare(strict_types=1);
+namespace App\Http\Controllers\Settings;
 
-namespace App\Http\Controllers;
-
-use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Settings\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Show the user's profile settings page.
      */
     public function edit(Request $request): Response
     {
         return Inertia::render('Settings/Profile/Index', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => session('status'),
+            'status' => $request->session()->get('status'),
         ]);
     }
 
     /**
-     * Update the user's profile information.
+     * Update the user's profile settings.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -39,7 +37,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+        return to_route('profile.edit');
     }
 
     /**
@@ -60,6 +58,6 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return redirect('/');
     }
 }

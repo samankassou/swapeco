@@ -69,3 +69,15 @@ export interface PaginatedData<T> {
     to: number;
     total: number;
 }
+
+export interface BreadcrumbItem {
+    title: string;
+    href: string;
+}
+
+export interface SharedData {
+    name: string;
+    quote: { message: string; author: string };
+    auth: Auth;
+    [key: string]: unknown;
+}
