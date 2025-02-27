@@ -1,19 +1,22 @@
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import InputError from "@/Components/InputError";
+import TextLink from "@/Components/text-link";
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import GuestLayout from "@/Layouts/GuestLayout";
+import { Head, useForm } from "@inertiajs/react";
+import { LoaderCircle } from "lucide-react";
+import { FormEventHandler } from "react";
 
 export default function ForgotPassword({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({
-        email: '',
+        email: "",
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('password.email'));
+        post(route("password.email"));
     };
 
     return (
@@ -21,9 +24,10 @@ export default function ForgotPassword({ status }: { status?: string }) {
             <Head title="Forgot Password" />
 
             <div className="mb-4 text-sm text-gray-600">
-                Forgot your password? No problem. Just let us know your email
-                address and we will email you a password reset link that will
-                allow you to choose a new one.
+                Vous avez oublié votre mot de passe ? Pas de problème.
+                Indiquez-nous simplement votre adresse e-mail et nous vous
+                enverrons un lien de réinitialisation qui vous permettra d'en
+                choisir un nouveau.
             </div>
 
             {status && (
@@ -32,25 +36,39 @@ export default function ForgotPassword({ status }: { status?: string }) {
                 </div>
             )}
 
-            <form onSubmit={submit}>
-                <TextInput
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={data.email}
-                    className="mt-1 block w-full"
-                    isFocused={true}
-                    onChange={(e) => setData('email', e.target.value)}
-                />
+            <div className="space-y-6">
+                <form onSubmit={submit}>
+                    <div className="grid gap-2">
+                        <Label htmlFor="email">Adresse e-mail</Label>
+                        <Input
+                            id="email"
+                            type="email"
+                            name="email"
+                            autoComplete="off"
+                            value={data.email}
+                            autoFocus
+                            onChange={(e) => setData("email", e.target.value)}
+                            placeholder="email@example.com"
+                        />
 
-                <InputError message={errors.email} className="mt-2" />
+                        <InputError message={errors.email} />
+                    </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Email Password Reset Link
-                    </PrimaryButton>
+                    <div className="my-6 flex items-center justify-start">
+                        <Button className="w-full" disabled={processing}>
+                            {processing && (
+                                <LoaderCircle className="h-4 w-4 animate-spin" />
+                            )}
+                            Envoyer le lien de réinitialisation
+                        </Button>
+                    </div>
+                </form>
+
+                <div className="text-muted-foreground space-x-1 text-center text-sm">
+                    <span>Ou, retourner à la page de</span>
+                    <TextLink href={route("login")}>Connexion</TextLink>
                 </div>
-            </form>
+            </div>
         </GuestLayout>
     );
 }
