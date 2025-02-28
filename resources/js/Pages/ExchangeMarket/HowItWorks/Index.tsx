@@ -12,6 +12,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/Components/ui/card";
+import { Button } from "@/Components/ui/button";
 
 export default function Index() {
     return (
@@ -23,7 +24,7 @@ export default function Index() {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="bg-gradient-to-r from-gray-300 to-gray-500 text-white py-16 text-center shadow-lg"
+                className="bg-gradient-to-r from-gray-300 rounded-md to-gray-500 text-white py-8 md:py-16 text-center shadow-md"
             >
                 <div className="container mx-auto px-6">
                     <h1 className="text-3xl md:text-5xl font-extrabold mb-4 max-w-2xl mx-auto">
@@ -36,21 +37,22 @@ export default function Index() {
                         ressources à disposition d'autres utilisateurs, notre
                         plateforme vous offre une solution flexible et efficace.
                     </p>
-                    <motion.button
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 0.5 }}
-                        className="bg-primary text-primary-foreground shadow hover:bg-primary/90 h-10 rounded-md px-4"
-                    >
-                        Rechercher une Bourse
-                    </motion.button>
+                    <Button asChild>
+                        <motion.button
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1, delay: 0.5 }}
+                        >
+                            Rechercher une offre
+                        </motion.button>
+                    </Button>
                 </div>
             </motion.section>
 
-            <div className="container mx-auto py-16 px-6">
+            <div>
                 {/* Explication du fonctionnement */}
-                <Card className="px-10 py-4 shadow-lg">
-                    <CardHeader className="px-0">
+                <Card className="md:px-6 lg:px-8 md:py-4 shadow-md">
+                    <CardHeader>
                         <CardTitle className="text-xl font-bold text-gray-800">
                             Comment fonctionne la Bourse des Échanges ?
                         </CardTitle>
@@ -61,18 +63,18 @@ export default function Index() {
                             comment ça marche !
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-8 p-0">
-                        {/* Étape 1: Recherche d'une Bourse */}
+                    <CardContent className="grid grid-cols-1 gap-4 md:gap-8">
+                        {/* Étape 1: Recherche d'une Offre */}
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
-                            className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl shadow-md"
+                            className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-md shadow-md"
                         >
-                            <h2 className="font-semibold text-lg text-gray-700">
-                                🔍 Recherche d'une Bourse
+                            <h2 className="font-semibold text-lg text-gray-700 mb-4">
+                                🔍 Recherche d'une Offre
                             </h2>
-                            <p className="text-sm text-gray-700">
+                            <p className="text-sm text-gray-700 mb-4">
                                 Une fois inscrit, vous pouvez rechercher des
                                 bourses adaptées à vos besoins en produits ou
                                 services. Que ce soit pour des investissements,
@@ -80,14 +82,15 @@ export default function Index() {
                                 offre correspondant à vos attentes. Notre moteur
                                 de recherche puissant facilite la navigation.
                             </p>
-                            <motion.button
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 1, delay: 0.6 }}
-                                className="mt-4 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-10 rounded-md px-4"
-                            >
-                                Commencer ma Recherche
-                            </motion.button>
+                            <Button asChild>
+                                <motion.button
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 1, delay: 0.6 }}
+                                >
+                                    Commencer ma recherche
+                                </motion.button>
+                            </Button>
                         </motion.div>
 
                         {/* Étape 2: Mettre en Bourse un Produit ou Service */}
@@ -95,12 +98,12 @@ export default function Index() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.4 }}
-                            className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl shadow-md"
+                            className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-md shadow-md"
                         >
-                            <h2 className="font-semibold text-lg text-gray-700">
+                            <h2 className="font-semibold text-lg text-gray-700 mb-4">
                                 🛠️ Mettre en Bourse un Service ou Produit
                             </h2>
-                            <p className="text-sm text-gray-700">
+                            <p className="text-sm text-gray-700 mb-4">
                                 Si vous possédez un excédent de ressources, vous
                                 pouvez facilement les mettre en bourse. Les
                                 autres utilisateurs pourront les échanger contre
@@ -109,14 +112,15 @@ export default function Index() {
                                 produits ou services en quelques étapes simples
                                 et rapides.
                             </p>
-                            <motion.button
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 1, delay: 0.8 }}
-                                className="mt-4 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-10 rounded-md px-4"
-                            >
-                                Mettre en Bourse
-                            </motion.button>
+                            <Button asChild>
+                                <motion.button
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 1, delay: 0.8 }}
+                                >
+                                    Mettre en bourse
+                                </motion.button>
+                            </Button>
                         </motion.div>
 
                         {/* Étape 3: Engagez-vous dans l'Économie Circulaire */}
@@ -124,12 +128,12 @@ export default function Index() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.6 }}
-                            className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl shadow-md"
+                            className="p-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-md shadow-md"
                         >
-                            <h2 className="font-semibold text-lg text-gray-700">
+                            <h2 className="font-semibold text-lg text-gray-700 mb-4">
                                 ♻️ Engagez-vous dans l'Économie Circulaire
                             </h2>
-                            <p className="text-sm text-gray-700">
+                            <p className="text-sm text-gray-700 mb-4">
                                 Rejoignez une économie circulaire, réduisez les
                                 déchets et valorisez vos excédents tout en
                                 contribuant à des projets sociaux et
@@ -137,17 +141,18 @@ export default function Index() {
                                 activement à un monde plus durable tout en
                                 gagnant de l'argent.
                             </p>
-                            <motion.button
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 1, delay: 1 }}
-                                className="mt-4 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-10 rounded-md px-4"
-                            >
-                                Découvrir l'Économie Circulaire
-                            </motion.button>
+                            <Button asChild>
+                                <motion.button
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 1, delay: 1 }}
+                                >
+                                    Rejoindre l'économie circulaire
+                                </motion.button>
+                            </Button>
                         </motion.div>
                     </CardContent>
-                    <CardFooter className="grid grid-cols-1 mt-8 md:grid-cols-3 bg-gradient-to-r from-gray-100 to-gray-300 rounded-b-xl shadow-lg border-gray-300 backdrop-blur-md">
+                    <CardFooter className="grid grid-cols-1 mt-8 md:grid-cols-3 py-4 gap-4 rounded-b-md border border-gray-300">
                         <p className="md:col-span-2 text-sm text-gray-900 italic leading-relaxed text-left pr-5">
                             <strong>
                                 Rejoignez dès maintenant la Bourse des Échanges
@@ -165,23 +170,25 @@ export default function Index() {
                         </p>
 
                         <div className="flex flex-col justify-center space-y-4">
-                            <motion.button
-                                initial={{ opacity: 0, y: 5 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5 }}
-                                className="mt-4 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-10 rounded-md px-4"
-                            >
-                                <p>Commencer maintenant 🚀</p>
-                            </motion.button>
+                            <Button asChild>
+                                <motion.button
+                                    initial={{ opacity: 0, y: 5 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5 }}
+                                >
+                                    Commencer maintenant 🚀
+                                </motion.button>
+                            </Button>
 
-                            <motion.button
-                                initial={{ opacity: 0, y: 5 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.2 }}
-                                className="h-10 px-4 border-2 border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white rounded-md transition-all focus:ring-2 focus:bg-primary focus:text-primary-foreground"
-                            >
-                                En savoir plus ℹ️
-                            </motion.button>
+                            <Button variant="secondary" asChild>
+                                <motion.button
+                                    initial={{ opacity: 0, y: 5 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.2 }}
+                                >
+                                    En savoir plus ℹ️
+                                </motion.button>
+                            </Button>
                         </div>
                     </CardFooter>
                 </Card>
