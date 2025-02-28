@@ -14,67 +14,62 @@ import { Button } from "@/Components/ui/button";
 import { PlusCircle } from "lucide-react";
 import FilterBar from "@/Components/ExchangeMarket/Offers/FilterBar";
 import OffersPagination from "@/Components/ExchangeMarket/Offers/OffersPagination";
+import Heading from "@/Components/heading";
 
 export default function Index({ offers }: { offers: PaginatedData<Offer> }) {
     return (
         <>
             <Head title="Gestion des offres" />
 
-            <div className="flex items-center mb-5">
-                <h1 className="text-lg font-bold md:text-2xl">
-                    Bourse d'échanges - offres
-                </h1>
-            </div>
-            <div className="container mx-auto">
-                <Card className="px-10 py-4">
-                    <CardHeader>
-                        <CardTitle className="text-base font-bold md:text-xl flex justify-between mb-4">
-                            <h2>Mes offres</h2>
-                            {offers.data.length > 0 && (
-                                <Button asChild>
-                                    <Link
-                                        href={route(
-                                            "admin.exchange_market.offers.create"
-                                        )}
-                                    >
-                                        <PlusCircle className="mr-2 h-4 w-4" />
-                                        Déposer une offre
-                                    </Link>
-                                </Button>
-                            )}
-                        </CardTitle>
-                        <FilterBar />
-                    </CardHeader>
-                    <CardContent className="space-y-4">
+            <Heading
+                title="Bourse d'échanges - offres"
+                description="Gérez vos offres d'échanges"
+            />
+            <Card>
+                <CardHeader>
+                    <CardTitle className="text-base font-bold md:text-xl flex justify-between mb-4">
+                        <h2>Mes offres</h2>
                         {offers.data.length > 0 && (
-                            <div className="text-sm text-muted-foreground">
-                                Affichage de {offers.from} à {offers.to} sur{" "}
-                                {offers.total} offres
-                            </div>
+                            <Button asChild>
+                                <Link
+                                    href={route(
+                                        "admin.exchange_market.offers.create"
+                                    )}
+                                >
+                                    <PlusCircle className="mr-2 h-4 w-4" />
+                                    Déposer une offre
+                                </Link>
+                            </Button>
                         )}
-                        {offers.data.length === 0 ? (
-                            <EmptyState />
-                        ) : (
-                            <div className="flex flex-1 flex-col gap-4">
-                                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                                    {offers.data.map((offer) => (
-                                        <OfferCard
-                                            key={offer.id}
-                                            offer={offer}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </CardContent>
-                    {/* Pagination */}
+                    </CardTitle>
+                    <FilterBar />
+                </CardHeader>
+                <CardContent className="space-y-4">
                     {offers.data.length > 0 && (
-                        <CardFooter className="flex justify-center">
-                            <OffersPagination links={offers.links} />
-                        </CardFooter>
+                        <div className="text-sm text-muted-foreground">
+                            Affichage de {offers.from} à {offers.to} sur{" "}
+                            {offers.total} offres
+                        </div>
                     )}
-                </Card>
-            </div>
+                    {offers.data.length === 0 ? (
+                        <EmptyState />
+                    ) : (
+                        <div className="flex flex-1 flex-col gap-4">
+                            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+                                {offers.data.map((offer) => (
+                                    <OfferCard key={offer.id} offer={offer} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </CardContent>
+                {/* Pagination */}
+                {offers.data.length > 0 && (
+                    <CardFooter className="flex justify-center">
+                        <OffersPagination links={offers.links} />
+                    </CardFooter>
+                )}
+            </Card>
         </>
     );
 }

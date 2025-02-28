@@ -69,27 +69,27 @@ export default function FilterBar() {
     return (
         <Card className="mb-6">
             <CardContent className="p-6">
-                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                    <div className="flex flex-1 gap-4">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-                            <Input
-                                placeholder="Rechercher une offre..."
-                                className="pl-9"
-                                value={search}
-                                onChange={(e) => {
-                                    setSearch(e.target.value);
-                                    updateSearch(e.target.value);
-                                }}
-                            />
-                        </div>
+                <div className="flex items-center justify-between flex-col gap-4 md:flex-row">
+                    <div className="relative w-full">
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+                        <Input
+                            placeholder="Rechercher une offre..."
+                            className="pl-9"
+                            value={search}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                updateSearch(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className="flex gap-4 flex-col md:flex-row w-full">
                         <Select
                             value={filter.type}
                             onValueChange={(value) =>
                                 updateFilters("type", value)
                             }
                         >
-                            <SelectTrigger className="w-[180px]">
+                            <SelectTrigger className="md:w-[180px]">
                                 <SelectValue placeholder="Type d'offre" />
                             </SelectTrigger>
                             <SelectContent>
@@ -110,7 +110,7 @@ export default function FilterBar() {
                                 updateFilters("status", value)
                             }
                         >
-                            <SelectTrigger className="w-[180px]">
+                            <SelectTrigger className="md:w-[180px]">
                                 <SelectValue placeholder="Statut" />
                             </SelectTrigger>
                             <SelectContent>
@@ -125,25 +125,31 @@ export default function FilterBar() {
                                 </SelectItem>
                             </SelectContent>
                         </Select>
+                        <Select
+                            value={sort}
+                            onValueChange={(value) =>
+                                updateFilters("sort", value)
+                            }
+                        >
+                            <SelectTrigger className="md:w-[180px]">
+                                <SelectValue placeholder="Trier par" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="-created_at">
+                                    Plus récentes
+                                </SelectItem>
+                                <SelectItem value="created_at">
+                                    Plus anciennes
+                                </SelectItem>
+                                <SelectItem value="title">
+                                    Titre (A-Z)
+                                </SelectItem>
+                                <SelectItem value="-title">
+                                    Titre (Z-A)
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
-                    <Select
-                        value={sort}
-                        onValueChange={(value) => updateFilters("sort", value)}
-                    >
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Trier par" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="-created_at">
-                                Plus récentes
-                            </SelectItem>
-                            <SelectItem value="created_at">
-                                Plus anciennes
-                            </SelectItem>
-                            <SelectItem value="title">Titre (A-Z)</SelectItem>
-                            <SelectItem value="-title">Titre (Z-A)</SelectItem>
-                        </SelectContent>
-                    </Select>
                 </div>
             </CardContent>
         </Card>
