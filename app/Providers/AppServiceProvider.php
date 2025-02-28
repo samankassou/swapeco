@@ -67,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
      */
     private function configureUrls(): void
     {
-        URL::forceScheme('http');
+        URL::forceScheme('https');
     }
 
     /**

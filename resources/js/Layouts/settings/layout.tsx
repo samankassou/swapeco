@@ -11,17 +11,17 @@ interface NavItem {
 }
 const sidebarNavItems: NavItem[] = [
     {
-        title: "Profil",
+        title: "Profile",
         url: "/settings/profile",
         icon: null,
     },
     {
-        title: "Password",
+        title: "Mot de Passe",
         url: "/settings/password",
         icon: null,
     },
     {
-        title: "Appearance",
+        title: "Apparence",
         url: "/settings/appearance",
         icon: null,
     },
