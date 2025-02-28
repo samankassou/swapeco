@@ -56,14 +56,14 @@ export default function Index() {
             <SettingsLayout>
                 <div className="space-y-6">
                     <HeadingSmall
-                        title="Update password"
-                        description="Ensure your account is using a long, random password to stay secure"
+                        title="Mettre à jour le mot de passe"
+                        description="Assurez-vous que votre compte utilise un mot de passe long et aléatoire pour rester sécurisé"
                     />
 
                     <form onSubmit={updatePassword} className="space-y-6">
                         <div className="grid gap-2">
                             <Label htmlFor="current_password">
-                                Current password
+                                Mot de passe actuel
                             </Label>
 
                             <Input
@@ -76,14 +76,14 @@ export default function Index() {
                                 type="password"
                                 className="mt-1 block w-full"
                                 autoComplete="current-password"
-                                placeholder="Current password"
+                                placeholder="Mot de passe actuel"
                             />
 
                             <InputError message={errors.current_password} />
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password">New password</Label>
+                            <Label htmlFor="password">Nouveau mot de passe</Label>
 
                             <Input
                                 id="password"
@@ -95,7 +95,7 @@ export default function Index() {
                                 type="password"
                                 className="mt-1 block w-full"
                                 autoComplete="new-password"
-                                placeholder="New password"
+                                placeholder="Nouveau mot de passe"
                             />
 
                             <InputError message={errors.password} />
@@ -103,7 +103,7 @@ export default function Index() {
 
                         <div className="grid gap-2">
                             <Label htmlFor="password_confirmation">
-                                Confirm password
+                                Confirmer le mot de passe
                             </Label>
 
                             <Input
@@ -118,7 +118,7 @@ export default function Index() {
                                 type="password"
                                 className="mt-1 block w-full"
                                 autoComplete="new-password"
-                                placeholder="Confirm password"
+                                placeholder="Confirmer le mot de passe"
                             />
 
                             <InputError
@@ -127,7 +127,7 @@ export default function Index() {
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <Button disabled={processing}>Save password</Button>
+                            <Button disabled={processing}>Enregistrer le mot de passe</Button>
 
                             <Transition
                                 show={recentlySuccessful}
@@ -137,13 +137,14 @@ export default function Index() {
                                 leaveTo="opacity-0"
                             >
                                 <p className="text-sm text-neutral-600">
-                                    Saved
+                                    Enregistré
                                 </p>
                             </Transition>
                         </div>
                     </form>
                 </div>
             </SettingsLayout>
+
         </>
     );
 }

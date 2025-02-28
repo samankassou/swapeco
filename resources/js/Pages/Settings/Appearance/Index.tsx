@@ -7,7 +7,7 @@ import Dashboard from "@/Layouts/DashboardLayout";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: "Appearance settings",
+        label: "Appearance settings",
         href: "/settings/appearance",
     },
 ];
@@ -15,13 +15,13 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function Index() {
     return (
         <>
-            <Head title="Appearance settings" />
+            <Head title="Paramètres d'apparence" />
 
             <SettingsLayout>
                 <div className="space-y-6">
                     <HeadingSmall
-                        title="Appearance settings"
-                        description="Update your account's appearance settings"
+                        title="Paramètres d'apparence"
+                        description="Mettez à jour les paramètres d'apparence de votre compte"
                     />
                     <AppearanceTabs />
                 </div>

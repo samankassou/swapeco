@@ -71,7 +71,7 @@ export interface PaginatedData<T> {
 }
 
 export interface BreadcrumbItem {
-    title: string;
+    label: string;
     href: string;
 }
 
