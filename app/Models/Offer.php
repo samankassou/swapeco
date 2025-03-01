@@ -25,4 +25,9 @@ class Offer extends Model
             'published_at' => 'datetime',
         ];
     }
+
+    public function campuses()
+    {
+        return $this->belongsToMany(Campus::class);
+    }
 }

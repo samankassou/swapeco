@@ -11,4 +11,9 @@ class Campus extends Model
 {
     /** @use HasFactory<\Database\Factories\CampusFactory> */
     use HasFactory;
+
+    public function offers()
+    {
+        return $this->belongsToMany(Offer::class);
+    }
 }
