@@ -10,7 +10,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/Components/ui/select";
-import { Search } from "lucide-react";
+import { RotateCcw, Search } from "lucide-react";
+import { Button } from "@/Components/ui/button";
 
 export default function FilterBar() {
     const [search, setSearch] = useState("");
@@ -61,6 +62,26 @@ export default function FilterBar() {
                 "filter[type]": newFilters.type,
                 "filter[status]": newFilters.status,
                 sort: sort,
+            },
+            { preserveState: true, preserveScroll: true }
+        );
+    };
+
+    const resetAllFilters = () => {
+        setSearch("");
+        setFilter({
+            type: "all",
+            status: "all",
+        });
+        setSort("-created_at");
+
+        router.get(
+            route("admin.exchange_market.offers.index"),
+            {
+                "filter[title]": "",
+                "filter[type]": "all",
+                "filter[status]": "all",
+                sort: "-created_at",
             },
             { preserveState: true, preserveScroll: true }
         );
@@ -149,6 +170,15 @@ export default function FilterBar() {
                                 </SelectItem>
                             </SelectContent>
                         </Select>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={resetAllFilters}
+                            title="Réinitialiser les filtres"
+                            className="flex-shrink-0"
+                        >
+                            <RotateCcw className="h-4 w-4" />
+                        </Button>
                     </div>
                 </div>
             </CardContent>

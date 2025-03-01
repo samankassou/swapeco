@@ -4,6 +4,7 @@ export interface User {
     email: string;
     avatar: "/avatars/shadcn.jpg";
     email_verified_at?: string;
+    [key: string]: unknown;
 }
 
 export interface Auth {

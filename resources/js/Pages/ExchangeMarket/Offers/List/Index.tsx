@@ -21,26 +21,26 @@ export default function Index({ offers }: { offers: PaginatedData<Offer> }) {
         <>
             <Head title="Gestion des offres" />
 
-            <Heading
-                title="Bourse d'échanges - offres"
-                description="Gérez vos offres d'échanges"
-            />
+            <div className="flex md:items-center flex-col md:flex-row md:justify-between mb-4">
+                <Heading
+                    title="Bourse d'échanges - offres"
+                    description="Gérez vos offres d'échanges"
+                />
+                {offers.data.length > 0 && (
+                    <Button className="text-left" asChild>
+                        <Link
+                            href={route("admin.exchange_market.offers.create")}
+                        >
+                            <PlusCircle className="mr-2 h-4 w-4" />
+                            Déposer une offre
+                        </Link>
+                    </Button>
+                )}
+            </div>
             <Card>
                 <CardHeader>
                     <CardTitle className="text-base font-bold md:text-xl flex justify-between mb-4">
                         <h2>Mes offres</h2>
-                        {offers.data.length > 0 && (
-                            <Button asChild>
-                                <Link
-                                    href={route(
-                                        "admin.exchange_market.offers.create"
-                                    )}
-                                >
-                                    <PlusCircle className="mr-2 h-4 w-4" />
-                                    Déposer une offre
-                                </Link>
-                            </Button>
-                        )}
                     </CardTitle>
                     <FilterBar />
                 </CardHeader>

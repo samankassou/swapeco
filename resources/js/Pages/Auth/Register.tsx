@@ -7,8 +7,8 @@ import { Button } from "@/Components/ui/button";
 import InputError from "@/Components/InputError";
 import TextLink from "@/Components/text-link";
 import { LoaderCircle } from "lucide-react";
-import { Checkbox } from "@/Components/ui/checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
+import { RadioGroup, RadioGroupItem } from "@/Components/ui/radio-group";
 
 interface RegisterForm {
     name: string;
@@ -17,6 +17,21 @@ interface RegisterForm {
     password_confirmation: string;
     [key: string]: string;
 }
+
+const roles = [
+    {
+        id: "company",
+        name: "Eco-Entreprise",
+    },
+    {
+        id: "contributor",
+        name: "Eco-Contributeur",
+    },
+    {
+        id: "promoter",
+        name: "Promoteur de territoire",
+    },
+] as const;
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } =
@@ -133,6 +148,33 @@ export default function Register() {
                                     <InputError
                                         message={errors.password_confirmation}
                                     />
+                                </div>
+                                <div>
+                                    <Label className="mb-2">Vous êtes?</Label>
+                                    <div className="flex gap-6">
+                                        <RadioGroup
+                                            defaultValue="company"
+                                            className="max-w-sm"
+                                        >
+                                            {roles.map((role) => (
+                                                <Label
+                                                    className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-4 has-[[data-state=checked]]:border-gray-600 has-[[data-state=checked]]:bg-gray-50 dark:has-[[data-state=checked]]:border-gray-900 dark:has-[[data-state=checked]]:bg-gray-950"
+                                                    key={role.id}
+                                                >
+                                                    <RadioGroupItem
+                                                        value={role.id}
+                                                        id={role.name}
+                                                        className="shadow-none data-[state=checked]:border-gray-600 data-[state=checked]:bg-gray-600 *:data-[slot=radio-group-indicator]:[&>svg]:fill-white *:data-[slot=radio-group-indicator]:[&>svg]:stroke-white"
+                                                    />
+                                                    <div className="grid gap-1 font-normal">
+                                                        <div className="font-medium">
+                                                            {role.name}
+                                                        </div>
+                                                    </div>
+                                                </Label>
+                                            ))}
+                                        </RadioGroup>
+                                    </div>
                                 </div>
 
                                 <Button
