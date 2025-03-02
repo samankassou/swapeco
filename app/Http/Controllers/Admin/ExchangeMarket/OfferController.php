@@ -65,6 +65,7 @@ class OfferController extends Controller
 
     public function show(Offer $offer)
     {
+        $offer->load('campuses');
         return Inertia::render('ExchangeMarket/Offers/Show/Index', ['offer' => $offer]);
     }
 

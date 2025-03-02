@@ -89,148 +89,161 @@ export default function OfferCard({ offer }: OfferCardProps) {
     }
 
     return (
-        <Card className="group hover:shadow-lg transition-shadow">
-            <CardHeader className="space-y-2">
-                <div className="flex items-center justify-between">
-                    <CardTitle
-                        className="truncate text-lg font-semibold"
-                        title={offer.title}
-                    >
-                        {offer.title}
-                    </CardTitle>
-                    <div className="flex items-center gap-2">
-                        <Badge
-                            variant="secondary"
-                            className={cn("shrink-0", getTypeColor(offer.type))}
+        <Link
+            href={route("admin.exchange_market.offers.show", {
+                offer: offer.id,
+            })}
+        >
+            <Card className="group hover:shadow-lg transition-shadow">
+                <CardHeader className="space-y-2">
+                    <div className="flex items-center justify-between">
+                        <CardTitle
+                            className="truncate text-lg font-semibold"
+                            title={offer.title}
                         >
-                            {offer.type === "product" ? "Produit" : "Service"}
-                        </Badge>
-                        <DropdownMenu
-                            open={actionMenuOpen}
-                            onOpenChange={setActionMenuOpen}
-                        >
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="sm">
-                                    <MoreHorizontal />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                                align="end"
-                                className="w-[100px]"
+                            {offer.title}
+                        </CardTitle>
+                        <div className="flex items-center gap-2">
+                            <Badge
+                                variant="secondary"
+                                className={cn(
+                                    "shrink-0",
+                                    getTypeColor(offer.type)
+                                )}
                             >
-                                <DropdownMenuGroup>
-                                    <DropdownMenuItem asChild>
-                                        <Link
-                                            href={route(
-                                                "admin.exchange_market.offers.edit",
-                                                { offer: offer.id }
-                                            )}
+                                {offer.type === "product"
+                                    ? "Produit"
+                                    : "Service"}
+                            </Badge>
+                            <DropdownMenu
+                                open={actionMenuOpen}
+                                onOpenChange={setActionMenuOpen}
+                            >
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="ghost" size="sm">
+                                        <MoreHorizontal />
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent
+                                    align="end"
+                                    className="w-[100px]"
+                                >
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuItem asChild>
+                                            <Link
+                                                href={route(
+                                                    "admin.exchange_market.offers.edit",
+                                                    { offer: offer.id }
+                                                )}
+                                            >
+                                                Modifier
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem asChild>
+                                            <Link
+                                                href="#"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    confirm({
+                                                        title: "Êtes-vous sûr ?",
+                                                        description:
+                                                            "L'offre ne sera plus disponible pour les échanges.",
+                                                    })
+                                                        .then(() =>
+                                                            closeOffer(offer.id)
+                                                        )
+                                                        .catch(() => {});
+                                                }}
+                                            >
+                                                Clôturer
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem
+                                            className="text-red-600"
+                                            asChild
                                         >
-                                            Modifier
-                                        </Link>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem asChild>
-                                        <Link
-                                            href="#"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                confirm({
-                                                    title: "Êtes-vous sûr ?",
-                                                    description:
-                                                        "L'offre ne sera plus disponible pour les échanges.",
-                                                })
-                                                    .then(() =>
-                                                        closeOffer(offer.id)
-                                                    )
-                                                    .catch(() => {});
-                                            }}
-                                        >
-                                            Clôturer
-                                        </Link>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem
-                                        className="text-red-600"
-                                        asChild
-                                    >
-                                        <Link
-                                            href="#"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                confirm({
-                                                    title: "Êtes-vous vraiment sûr ?",
-                                                    description:
-                                                        "Cette action ne peut pas être annulée. Cela supprimera définitivement l'offre de nos serveurs.",
-                                                })
-                                                    .then(() =>
-                                                        deleteOffer(offer.id)
-                                                    )
-                                                    .catch(() => {});
-                                            }}
-                                        >
-                                            Supprimer
-                                        </Link>
-                                    </DropdownMenuItem>
-                                </DropdownMenuGroup>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                                            <Link
+                                                href="#"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    confirm({
+                                                        title: "Êtes-vous vraiment sûr ?",
+                                                        description:
+                                                            "Cette action ne peut pas être annulée. Cela supprimera définitivement l'offre de nos serveurs.",
+                                                    })
+                                                        .then(() =>
+                                                            deleteOffer(
+                                                                offer.id
+                                                            )
+                                                        )
+                                                        .catch(() => {});
+                                                }}
+                                            >
+                                                Supprimer
+                                            </Link>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuGroup>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
                     </div>
-                </div>
-                <CardDescription>
-                    <img
-                        src={
-                            offer.image_url ||
-                            "/images/placeholders/placeholder.svg"
-                        }
-                        alt={offer.title}
-                        className="aspect-video w-full rounded-md object-cover"
-                    />
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-                <p className="line-clamp-2 text-sm text-gray-600">
-                    {offer.description}
-                </p>
-                <div className="flex justify-between">
-                    <p className="text-sm font-medium">Valeur estimée : </p>
-                    <p className="font-semibold text-xl">
-                        {new Intl.NumberFormat("fr-FR", {
-                            style: "currency",
-                            currency: "EUR",
-                        }).format(offer.estimated_value)}
+                    <CardDescription>
+                        <img
+                            src={
+                                offer.image_url ||
+                                "/images/placeholders/placeholder.svg"
+                            }
+                            alt={offer.title}
+                            className="aspect-video w-full rounded-md object-cover"
+                        />
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                    <p className="line-clamp-2 text-sm text-gray-600">
+                        {offer.description}
                     </p>
-                </div>
-            </CardContent>
+                    <div className="flex justify-between">
+                        <p className="text-sm font-medium">Valeur estimée : </p>
+                        <p className="font-semibold text-xl">
+                            {new Intl.NumberFormat("fr-FR", {
+                                style: "currency",
+                                currency: "EUR",
+                            }).format(offer.estimated_value)}
+                        </p>
+                    </div>
+                </CardContent>
 
-            <CardFooter className="flex justify-between text-xs text-gray-500">
-                <div className="flex flex-col gap-1">
-                    <span>
-                        Créé le{" "}
-                        {format(new Date(offer.created_at), "dd MMM yyyy", {
-                            locale: fr,
-                        })}
-                    </span>
-                    {offer.published_at && (
+                <CardFooter className="flex justify-between text-xs text-gray-500">
+                    <div className="flex flex-col gap-1">
                         <span>
-                            Publié le{" "}
-                            {format(
-                                new Date(offer.published_at),
-                                "dd MMM yyyy",
-                                { locale: fr }
-                            )}
+                            Créé le{" "}
+                            {format(new Date(offer.created_at), "dd MMM yyyy", {
+                                locale: fr,
+                            })}
                         </span>
-                    )}
-                </div>
-                <Badge
-                    variant="secondary"
-                    className={cn(
-                        "ml-2 shrink-0",
-                        getStatusColor(offer.status)
-                    )}
-                >
-                    {offer.status}
-                </Badge>
-            </CardFooter>
-        </Card>
+                        {offer.published_at && (
+                            <span>
+                                Publié le{" "}
+                                {format(
+                                    new Date(offer.published_at),
+                                    "dd MMM yyyy",
+                                    { locale: fr }
+                                )}
+                            </span>
+                        )}
+                    </div>
+                    <Badge
+                        variant="secondary"
+                        className={cn(
+                            "ml-2 shrink-0",
+                            getStatusColor(offer.status)
+                        )}
+                    >
+                        {offer.status}
+                    </Badge>
+                </CardFooter>
+            </Card>
+        </Link>
     );
 }
