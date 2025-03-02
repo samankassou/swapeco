@@ -49,7 +49,7 @@ class OfferController extends Controller
         // retrieve validated campuses
         $campuses = $request->validated('campuses', []);
         // retrieve validated files
-        $files = $request->validated('files', []);
+        $request->validated('files', []);
 
         // create the offer
         $action->handle(Auth::user(), $validatedOfferData, $campuses);

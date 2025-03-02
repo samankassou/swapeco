@@ -16,7 +16,6 @@ class Offer extends Model
 
     /**
      * Les campus associés à l'offre.
-     *
      */
     public function campuses(): BelongsToMany
     {

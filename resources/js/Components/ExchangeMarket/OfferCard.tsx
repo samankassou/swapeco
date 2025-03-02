@@ -1,9 +1,12 @@
+import { router } from "@inertiajs/react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Badge } from "@/Components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "@/Components/ui/button";
+import { confirm } from "@/Components/ui/confirmer";
+
 import {
     Card,
     CardHeader,
@@ -24,6 +27,7 @@ import {
 import { Offer } from "@/types";
 import { MoreHorizontal } from "lucide-react";
 import { Link } from "@inertiajs/react";
+import { toast } from "sonner";
 
 interface OfferCardProps {
     offer: Offer;
@@ -49,6 +53,22 @@ export default function OfferCard({ offer }: OfferCardProps) {
             }[type] || "bg-gray-100 text-gray-800"
         );
     };
+
+    function deleteOffer(id: number): void {
+        router.delete(
+            route("admin.exchange_market.offers.destroy", { offer: id }),
+            {
+                onSuccess: () => {
+                    // Notification de succès (optionnel si vous avez déjà un middleware flash)
+                    toast.success("Offre supprimée avec succès");
+                },
+                onError: (errors) => {
+                    // Gestion des erreurs
+                    toast.error("Erreur lors de la suppression de l'offre");
+                },
+            }
+        );
+    }
 
     return (
         <Card className="group hover:shadow-lg transition-shadow">
@@ -92,7 +112,22 @@ export default function OfferCard({ offer }: OfferCardProps) {
                                         className="text-red-600"
                                         asChild
                                     >
-                                        <Link href="#">Supprimer</Link>
+                                        <Button
+                                            variant="outline"
+                                            onClick={() => {
+                                                confirm({
+                                                    title: "Êtes-vous vraiment sûr ?",
+                                                    description:
+                                                        "Cette action ne peut pas être annulée. Cela supprimera définitivement l'offre de nos serveurs.",
+                                                })
+                                                    .then(() =>
+                                                        deleteOffer(offer.id)
+                                                    )
+                                                    .catch(() => {});
+                                            }}
+                                        >
+                                            Supprimer
+                                        </Button>
                                     </DropdownMenuItem>
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>

@@ -56,13 +56,16 @@ export default function DeleteUser() {
                 <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
                     <p className="font-medium">DANGER</p>
                     <p className="text-sm">
-                        Veuillez procéder avec prudence, cette action est irréversible.
+                        Veuillez procéder avec prudence, cette action est
+                        irréversible.
                     </p>
                 </div>
 
                 <Dialog>
                     <DialogTrigger asChild>
-                        <Button variant="destructive">Supprimer le compte</Button>
+                        <Button variant="destructive">
+                            Supprimer le compte
+                        </Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogTitle>

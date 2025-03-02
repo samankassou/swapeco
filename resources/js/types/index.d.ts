@@ -8,7 +8,7 @@ export interface User {
 }
 
 export interface Auth {
-    user: User | null;
+    user: User;
 }
 
 export interface Offer {
