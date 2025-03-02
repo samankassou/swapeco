@@ -69,7 +69,7 @@ export default function Index({
         useState<string[]>(initialCampusIds);
     const [files, setFiles] = useState<File[]>([]);
 
-    const { data, setData, post, processing, errors } = useForm<OfferFormData>({
+    const { data, setData, put, processing, errors } = useForm<OfferFormData>({
         type: offer.type,
         title: offer.title,
         description: offer.description,
@@ -92,14 +92,13 @@ export default function Index({
         setData("files", [...files, ...newFiles]);
     };
 
+    // submit the form
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
-        post(route("admin.exchange_market.offers.update"), {
-            forceFormData: true,
-        });
+        put(route("admin.exchange_market.offers.update", offer.id));
     };
 
+    // remove a file from the list
     const removeFile = (index: number): void => {
         // Create a new array excluding the file at the specified index
         const updatedFiles = [...files];
