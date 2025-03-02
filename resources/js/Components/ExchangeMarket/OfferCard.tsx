@@ -120,7 +120,14 @@ export default function OfferCard({ offer }: OfferCardProps) {
                             >
                                 <DropdownMenuGroup>
                                     <DropdownMenuItem asChild>
-                                        <Link href="#">Modifier</Link>
+                                        <Link
+                                            href={route(
+                                                "admin.exchange_market.offers.edit",
+                                                { offer: offer.id }
+                                            )}
+                                        >
+                                            Modifier
+                                        </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem asChild>
                                         <Button

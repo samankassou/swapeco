@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Casts\MoneyCast;
 use App\Enums\Offers\OfferTypeEnum;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Offer extends Model
@@ -32,6 +34,7 @@ class Offer extends Model
         return [
             'type' => OfferTypeEnum::class,
             'published_at' => 'datetime',
+            'estimated_value' => MoneyCast::class,
         ];
     }
 }
