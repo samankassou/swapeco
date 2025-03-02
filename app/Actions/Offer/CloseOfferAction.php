@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Offer;
 
+use App\Enums\Offers\OfferStatusEnum;
 use App\Models\User;
 use App\Models\Offer;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class CloseOfferAction
     {
         DB::transaction(function () use ($user, $offer): void {
             $user->offers()->findOrFail($offer->id)->update([
-                'status' => 'CLOSED',
+                'status' => OfferStatusEnum::CLOSED->value,
             ]);
         });
     }

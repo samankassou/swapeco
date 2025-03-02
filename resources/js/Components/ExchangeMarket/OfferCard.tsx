@@ -58,6 +58,7 @@ export default function OfferCard({ offer }: OfferCardProps) {
         router.delete(
             route("admin.exchange_market.offers.destroy", { offer: id }),
             {
+                preserveScroll: true,
                 onSuccess: () => {
                     // Notification de succès (optionnel si vous avez déjà un middleware flash)
                     //toast.success("Offre supprimée avec succès");
@@ -65,6 +66,23 @@ export default function OfferCard({ offer }: OfferCardProps) {
                 onError: (errors) => {
                     // Gestion des erreurs
                     toast.error("Erreur lors de la suppression de l'offre");
+                },
+            }
+        );
+    }
+
+    function closeOffer(id: number): void {
+        router.post(
+            route("admin.exchange_market.offers.close", { offer: id }),
+            {}, // Données à envoyer (vide dans votre cas)
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    //toast.success("Offre clôturée avec succès");
+                },
+                onError: (errors) => {
+                    // Gestion des erreurs
+                    toast.error("Erreur lors de la clôture de l'offre");
                 },
             }
         );
@@ -105,7 +123,22 @@ export default function OfferCard({ offer }: OfferCardProps) {
                                         <Link href="#">Modifier</Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem asChild>
-                                        <Link href="#">Clôturer</Link>
+                                        <Button
+                                            variant="outline"
+                                            onClick={() => {
+                                                confirm({
+                                                    title: "Êtes-vous sûr ?",
+                                                    description:
+                                                        "L'offre ne sera plus disponible pour les échanges.",
+                                                })
+                                                    .then(() =>
+                                                        closeOffer(offer.id)
+                                                    )
+                                                    .catch(() => {});
+                                            }}
+                                        >
+                                            Clôturer
+                                        </Button>
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem

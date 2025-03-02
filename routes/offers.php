@@ -13,4 +13,5 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'admin', 'as' =>
     })->name('how_it_works');
 
     Route::resource('exchange-market/offers', OfferController::class);
+    Route::post('exchange-market/offers/{offer}/close', [OfferController::class, 'close'])->name('offers.close');
 });
