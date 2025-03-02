@@ -8,6 +8,7 @@ use App\Actions\Offer\CloseOfferAction;
 use App\Actions\Offer\CreateOfferAction;
 use App\Actions\Offer\DeleteOfferAction;
 use App\Actions\Offer\UpdateOfferAction;
+use App\Enums\Offers\OfferStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOfferRequest;
 use App\Http\Requests\ListOffersRequest;
@@ -58,6 +59,9 @@ class OfferController extends Controller
         // create the offer
         $action->handle(Auth::user(), $validatedOfferData, $campuses);
 
+        // notify admin that a new offer has been submitted
+
+
         return to_route('admin.exchange_market.offers.index')
             ->with('message', 'Votre offre a été soumise avec succès.')
             ->with('type', 'success');
@@ -84,6 +88,7 @@ class OfferController extends Controller
     {
         // retrieve validated inputs except for the campuses
         $validatedOfferData = $request->except(['campuses', 'files']);
+        $validatedOfferData['status'] = OfferStatusEnum::PENDING;
         // retrieve validated campuses
         $campuses = $request->validated('campuses', []);
         // retrieve validated files
@@ -91,6 +96,8 @@ class OfferController extends Controller
 
         // update the offer
         $action->handle(Auth::user(), $offer, $validatedOfferData, $campuses);
+
+        // notify admin that a new offer has been submitted
 
         return to_route('admin.exchange_market.offers.index')
             ->with('message', 'Votre offre a été mise à jour avec succès.')
