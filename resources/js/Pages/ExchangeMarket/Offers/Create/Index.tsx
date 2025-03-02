@@ -16,7 +16,37 @@ import {
 import { Textarea } from "@/Components/ui/textarea";
 import { Campus } from "@/types";
 import { MultiSelect } from "@/Components/multi-select";
-
+import {
+    Dropzone,
+    DropzoneInput,
+    DropzoneDescription,
+    DropzoneGroup,
+    DropzoneTitle,
+    DropzoneUploadIcon,
+    DropzoneZone,
+} from "@/Components/ui/dropzone";
+import {
+    FileList,
+    FileListDescription,
+    FileListIcon,
+    FileListHeader,
+    FileListInfo,
+    FileListItem,
+    FileListName,
+    FileListSize,
+    FileListAction,
+} from "@/Components/ui/file-list";
+import { X } from "lucide-react";
+interface OfferFormData {
+    type: string;
+    title: string;
+    description: string;
+    estimated_value: string;
+    status: string;
+    campuses: string[];
+    files: any[]; // ou File[] si vous utilisez l'API File de TypeScript
+    [key: string]: any; // Pour satisfaire la contrainte de FormDataType
+}
 export default function Index({ campuses }: { campuses: Campus[] }) {
     // transform campuses to array of { label: string, value: string }
     const campusOptions = campuses.map((campus) => ({
@@ -25,26 +55,47 @@ export default function Index({ campuses }: { campuses: Campus[] }) {
     }));
 
     const [selectedCampuses, setSelectedCampuses] = useState<string[]>([]);
+    const [files, setFiles] = useState<File[]>([]);
 
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm<OfferFormData>({
         type: "",
         title: "",
         description: "",
         estimated_value: "",
-        status: "draft",
+        status: "pending",
         campuses: [],
+        files: [],
     });
 
     const handleCampusChange = (values: string[]) => {
         setSelectedCampuses(values);
-        console.log(values);
         setData("campuses", values);
+    };
+
+    const handleFilesChange = (newFiles: File[]) => {
+        // Mettre à jour l'état local
+        setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+
+        // Pour Inertia.js, qui attend généralement un FormData ou une structure similaire
+        setData("files", [...files, ...newFiles]);
     };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("admin.exchange_market.offers.store"));
+        post(route("admin.exchange_market.offers.store"), {
+            forceFormData: true,
+        });
+    };
+
+    const removeFile = (index: number): void => {
+        // Create a new array excluding the file at the specified index
+        const updatedFiles = [...files];
+        updatedFiles.splice(index, 1);
+        setFiles(updatedFiles);
+
+        // Also update the form data to reflect the removed file
+        setData("files", updatedFiles);
     };
 
     return (
@@ -169,6 +220,7 @@ export default function Index({ campuses }: { campuses: Campus[] }) {
                                     Campus de diffusion
                                 </Label>
                                 <MultiSelect
+                                    className="mt-1"
                                     options={campusOptions}
                                     onValueChange={handleCampusChange}
                                     defaultValue={selectedCampuses}
@@ -181,6 +233,68 @@ export default function Index({ campuses }: { campuses: Campus[] }) {
                                     message={errors.campuses}
                                     className="mt-2"
                                 />
+                            </div>
+
+                            <div className="mt-4">
+                                <Label>Images du produit</Label>
+                                <div className="mt-1">
+                                    <Dropzone
+                                        multiple
+                                        accept={{
+                                            "image/*": [".jpg", ".png"],
+                                        }}
+                                        onDropAccepted={handleFilesChange}
+                                    >
+                                        <DropzoneZone>
+                                            <DropzoneInput />
+                                            <DropzoneGroup className="gap-4">
+                                                <DropzoneUploadIcon />
+                                                <DropzoneGroup>
+                                                    <DropzoneTitle>
+                                                        Déposez vos fichiers ici
+                                                        ou cliquez pour
+                                                        télécharger
+                                                    </DropzoneTitle>
+                                                    <DropzoneDescription>
+                                                        Vous pouvez téléverser
+                                                        des fichiers jusqu'à 4
+                                                        Mo. Formats pris en
+                                                        charge : JPG, JPEG, PNG.
+                                                    </DropzoneDescription>
+                                                </DropzoneGroup>
+                                            </DropzoneGroup>
+                                        </DropzoneZone>
+                                    </Dropzone>
+                                    <FileList className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+                                        {files.map((file, index) => (
+                                            <FileListItem key={index}>
+                                                <FileListHeader>
+                                                    <FileListIcon />
+                                                    <FileListInfo>
+                                                        <FileListName>
+                                                            {file.name}
+                                                        </FileListName>
+                                                        <FileListDescription>
+                                                            <FileListSize>
+                                                                {file.size}
+                                                            </FileListSize>
+                                                        </FileListDescription>
+                                                    </FileListInfo>
+                                                    <FileListAction
+                                                        onClick={() =>
+                                                            removeFile(index)
+                                                        }
+                                                    >
+                                                        <X />
+                                                        <span className="sr-only">
+                                                            Retirer
+                                                        </span>
+                                                    </FileListAction>
+                                                </FileListHeader>
+                                            </FileListItem>
+                                        ))}
+                                    </FileList>
+                                </div>
                             </div>
 
                             <div className="mt-4 flex items-center justify-end">

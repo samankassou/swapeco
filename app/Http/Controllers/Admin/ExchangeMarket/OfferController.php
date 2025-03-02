@@ -45,8 +45,11 @@ class OfferController extends Controller
     public function store(CreateOfferRequest $request, CreateOfferAction $action)
     {
         // retrieve validated inputs except for the campuses
-        $validatedOfferData = $request->except('campuses');
+        $validatedOfferData = $request->except(['campuses', 'files']);
+        // retrieve validated campuses
         $campuses = $request->validated('campuses', []);
+        // retrieve validated files
+        $files = $request->validated('files', []);
 
         // create the offer
         $action->handle(Auth::user(), $validatedOfferData, $campuses);

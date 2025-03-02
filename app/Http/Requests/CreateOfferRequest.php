@@ -36,6 +36,8 @@ class CreateOfferRequest extends FormRequest
                 'distinct',
             ],
             'campuses.*' => 'required|exists:campuses,id',
+            'files' => 'array',
+            'files.*' => 'file|max:2048',
         ];
     }
 }

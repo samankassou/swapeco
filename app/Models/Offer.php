@@ -7,13 +7,18 @@ namespace App\Models;
 use App\Enums\Offers\OfferTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Offer extends Model
 {
     /** @use HasFactory<\Database\Factories\OfferFactory> */
     use HasFactory;
 
-    public function campuses()
+    /**
+     * Les campus associés à l'offre.
+     *
+     */
+    public function campuses(): BelongsToMany
     {
         return $this->belongsToMany(Campus::class);
     }
