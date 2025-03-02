@@ -60,6 +60,40 @@ it('can create an offer', function () {
     ]);
 });
 
+it('can update an offer', function () {
+    $user = User::factory()->hasOffers(1)->create();
+    $offer = $user->offers()->first();
+    $campus = Campus::factory()->create();
+
+    $this->actingAs($user)
+        ->put(route('admin.exchange_market.offers.update', $offer->id), [
+            'type' => OfferTypeEnum::PRODUCT->value,
+            'title' => 'Test',
+            'description' => 'Test',
+            'estimated_value' => 200,
+            'status' => OfferStatusEnum::DRAFT->value,
+            'campuses' => [$campus->id],
+        ])
+        ->assertStatus(302)
+        ->assertRedirect('/admin/exchange-market/offers');
+
+    $this->assertDatabaseHas('offers', [
+        'id' => $offer->id,
+        'type' => OfferTypeEnum::PRODUCT->value,
+        'title' => 'Test',
+        'description' => 'Test',
+        'estimated_value' => 20000, // because of the conversion
+        'status' => OfferStatusEnum::DRAFT->value,
+    ]);
+
+    // assert that the offer is attached to the campus
+    $this->assertDatabaseCount('campus_offer', 1);
+    $this->assertDatabaseHas('campus_offer', [
+        'offer_id' => $offer->id,
+        'campus_id' => $campus->id,
+    ]);
+});
+
 it('can delete an offer', function () {
     $user = User::factory()->hasOffers(1)->create();
     $offet = $user->offers()->first();

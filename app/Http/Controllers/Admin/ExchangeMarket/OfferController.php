@@ -14,8 +14,10 @@ use Spatie\QueryBuilder\AllowedFilter;
 use App\Actions\Offer\CloseOfferAction;
 use App\Actions\Offer\CreateOfferAction;
 use App\Actions\Offer\DeleteOfferAction;
+use App\Actions\Offer\UpdateOfferAction;
 use App\Http\Requests\ListOffersRequest;
 use App\Http\Requests\CreateOfferRequest;
+use App\Http\Requests\UpdateOfferRequest;
 
 class OfferController extends Controller
 {
@@ -87,7 +89,7 @@ class OfferController extends Controller
         $request->validated('files', []);
 
         // update the offer
-        $action->handle(Auth::user(), $validatedOfferData, $campuses, $offer);
+        $action->handle(Auth::user(), $offer, $validatedOfferData, $campuses, $offer);
 
         return to_route('admin.exchange_market.offers.index')
             ->with('message', 'Votre offre a été mise à jour avec succès.')
