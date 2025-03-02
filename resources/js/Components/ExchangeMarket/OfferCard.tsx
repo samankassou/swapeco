@@ -130,9 +130,10 @@ export default function OfferCard({ offer }: OfferCardProps) {
                                         </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem asChild>
-                                        <Button
-                                            variant="outline"
-                                            onClick={() => {
+                                        <Link
+                                            href="#"
+                                            onClick={(e) => {
+                                                e.preventDefault();
                                                 confirm({
                                                     title: "Êtes-vous sûr ?",
                                                     description:
@@ -145,16 +146,17 @@ export default function OfferCard({ offer }: OfferCardProps) {
                                             }}
                                         >
                                             Clôturer
-                                        </Button>
+                                        </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem
                                         className="text-red-600"
                                         asChild
                                     >
-                                        <Button
-                                            variant="outline"
-                                            onClick={() => {
+                                        <Link
+                                            href="#"
+                                            onClick={(e) => {
+                                                e.preventDefault();
                                                 confirm({
                                                     title: "Êtes-vous vraiment sûr ?",
                                                     description:
@@ -167,7 +169,7 @@ export default function OfferCard({ offer }: OfferCardProps) {
                                             }}
                                         >
                                             Supprimer
-                                        </Button>
+                                        </Link>
                                     </DropdownMenuItem>
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
