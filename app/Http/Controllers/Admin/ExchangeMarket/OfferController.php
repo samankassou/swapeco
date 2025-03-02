@@ -55,6 +55,7 @@ class OfferController extends Controller
         $action->handle(Auth::user(), $validatedOfferData, $campuses);
 
         return to_route('admin.exchange_market.offers.index')
-            ->with('success', 'Offre créée avec succès.');
+            ->with('message', 'Votre offre a été soumise avec succès.')
+            ->with('type', 'success');
     }
 }

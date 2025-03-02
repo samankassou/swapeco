@@ -31,8 +31,8 @@ export interface Campus {
 }
 
 export interface Flash {
-    type: string;
-    message: string;
+    type?: string;
+    message?: string;
 }
 
 export type PageProps<
@@ -86,5 +86,9 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    flash: {
+        message?: string;
+        type?: "success" | "error" | "info" | "warning";
+    };
     [key: string]: unknown;
 }

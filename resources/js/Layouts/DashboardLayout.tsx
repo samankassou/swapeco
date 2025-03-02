@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { AppSidebar } from "@/Components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/Components/ui/sidebar";
 import { XIcon } from "lucide-react";
-import { PageProps } from "@/types";
+import { type SharedData } from "@/types";
 import DashboardHeader from "@/Components/Dashboard/Header";
 
 interface DashboardProps {
@@ -17,20 +17,20 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ children, breadcrumbs }: DashboardProps) {
-    const { flash } = usePage<PageProps>().props;
+    const { flash } = usePage<SharedData>().props;
 
     useEffect(() => {
-        if (flash?.type && flash?.message) {
-            toast(flash.message, {
-                className: flash.type,
-                duration: 2500,
+        if (flash.message && flash.type) {
+            toast[flash.type](flash.message, {
                 action: {
-                    label: <XIcon className="h-4 w-4 shrink-0" />,
+                    label: "Fermer",
                     onClick: () => toast.dismiss(),
+                    altText: "Fermer",
+                    icon: <XIcon className="w-4 h-4" />,
                 },
             });
         }
-    }, []);
+    }, [flash]);
 
     return (
         <SidebarProvider>
@@ -39,7 +39,7 @@ export default function Dashboard({ children, breadcrumbs }: DashboardProps) {
                 <DashboardHeader breadcrumbs={breadcrumbs} />
                 <div className="flex flex-1 flex-col gap-4 p-4">
                     {children}
-                    <Toaster richColors />
+                    <Toaster position="top-right" />
                 </div>
             </SidebarInset>
         </SidebarProvider>
