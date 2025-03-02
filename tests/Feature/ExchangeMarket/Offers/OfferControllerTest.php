@@ -14,7 +14,7 @@ it('can list offers', function () {
     $this->actingAs($user)
         ->get('/admin/exchange-market/offers')
         ->assertInertia(
-            fn (Assert $assert) => $assert
+            fn(Assert $assert) => $assert
                 ->component('ExchangeMarket/Offers/List/Index')
                 ->has('offers.data', 10)
         );
@@ -57,5 +57,41 @@ it('can create an offer', function () {
     $this->assertDatabaseHas('campus_offer', [
         'offer_id' => 1,
         'campus_id' => $campusIds[1],
+    ]);
+});
+
+it('can delete an offer', function () {
+    $user = User::factory()->hasOffers(1)->create();
+    $offet = $user->offers()->first();
+
+    $this->actingAs($user)
+        ->delete(route('admin.exchange_market.offers.destroy', $offet->id))
+        ->assertStatus(302)
+        ->assertRedirect('/admin/exchange-market/offers');
+
+    $this->assertDatabaseMissing('offers', [
+        'id' => $offet->id,
+    ]);
+});
+
+it('can delete offers with campuses', function () {
+    $user = User::factory()->hasOffers(1)->create();
+    $offet = $user->offers()->first();
+    $campus = Campus::factory()->create();
+    $offet->campuses()->attach($campus);
+
+    $this->actingAs($user)
+        ->delete(route('admin.exchange_market.offers.destroy', $offet->id))
+        ->assertStatus(302)
+        ->assertRedirect('/admin/exchange-market/offers');
+
+    $this->assertDatabaseMissing('offers', [
+        'id' => $offet->id,
+    ]);
+
+    // assert that the campus is detached from the offer
+    $this->assertDatabaseMissing('campus_offer', [
+        'offer_id' => $offet->id,
+        'campus_id' => $campus->id,
     ]);
 });
