@@ -28,7 +28,7 @@ it('can create an offer', function () {
         'type' => OfferTypeEnum::PRODUCT->value,
         'title' => 'Test',
         'description' => 'Test',
-        'estimated_value' => 200,
+        'estimated_value' => 20000, // because of the conversion
         'status' => OfferStatusEnum::DRAFT->value,
         'user_id' => $user->id,
     ]);
