@@ -23,17 +23,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-
 import { Offer } from "@/types";
 import { MoreHorizontal } from "lucide-react";
 import { Link } from "@inertiajs/react";
 import { toast } from "sonner";
 
-interface OfferCardProps {
-    offer: Offer;
-}
-
-export default function OfferCard({ offer }: OfferCardProps) {
+export default function OfferCard({ offer }: { offer: Offer }) {
     const [actionMenuOpen, setActionMenuOpen] = useState(false);
     const getStatusColor = (status: string) => {
         return (
@@ -108,12 +103,10 @@ export default function OfferCard({ offer }: OfferCardProps) {
                                 variant="secondary"
                                 className={cn(
                                     "shrink-0",
-                                    getTypeColor(offer.type)
+                                    getTypeColor(offer.type.value)
                                 )}
                             >
-                                {offer.type === "product"
-                                    ? "Produit"
-                                    : "Service"}
+                                {offer.type.label}
                             </Badge>
                             <DropdownMenu
                                 open={actionMenuOpen}
@@ -190,10 +183,7 @@ export default function OfferCard({ offer }: OfferCardProps) {
                     </div>
                     <CardDescription>
                         <img
-                            src={
-                                offer.image_url ||
-                                "/images/placeholders/placeholder.svg"
-                            }
+                            src={offer.image_url}
                             alt={offer.title}
                             className="aspect-video w-full rounded-md object-cover"
                         />
@@ -237,10 +227,10 @@ export default function OfferCard({ offer }: OfferCardProps) {
                         variant="secondary"
                         className={cn(
                             "ml-2 shrink-0",
-                            getStatusColor(offer.status)
+                            getStatusColor(offer.status.value)
                         )}
                     >
-                        {offer.status}
+                        {offer.status.label}
                     </Badge>
                 </CardFooter>
             </Card>

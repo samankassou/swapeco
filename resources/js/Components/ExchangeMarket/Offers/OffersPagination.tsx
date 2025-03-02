@@ -7,22 +7,13 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/Components/ui/pagination";
+import { PaginationMeta, PaginationMetaLink } from "@/types";
 
-interface PaginationLink {
-    label: string;
-    url: string | null;
-    active: boolean;
-}
-
-interface OffersPaginationProps {
-    links: PaginationLink[];
-}
-
-export default function OffersPagination({ links }: OffersPaginationProps) {
+export default function OffersPagination({ meta }: { meta: PaginationMeta }) {
     return (
         <Pagination>
             <PaginationContent>
-                {links.map((link: PaginationLink, i: number) => {
+                {meta.links.map((link: PaginationMetaLink, i: number) => {
                     if (link.label.includes("...")) {
                         return (
                             <PaginationItem key={i}>

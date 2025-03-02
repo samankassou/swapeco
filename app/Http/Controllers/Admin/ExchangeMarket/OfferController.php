@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\ExchangeMarket;
 
+use Inertia\Inertia;
+use App\Models\Offer;
+use App\Models\Campus;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Enums\Offers\OfferStatusEnum;
+use App\Http\Resources\OfferResource;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 use App\Actions\Offer\CloseOfferAction;
 use App\Actions\Offer\CreateOfferAction;
 use App\Actions\Offer\DeleteOfferAction;
 use App\Actions\Offer\UpdateOfferAction;
-use App\Enums\Offers\OfferStatusEnum;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateOfferRequest;
 use App\Http\Requests\ListOffersRequest;
+use App\Actions\Offer\ApproveOfferAction;
+use App\Http\Requests\CreateOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
-use App\Models\Campus;
-use App\Models\Offer;
-use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class OfferController extends Controller
 {
@@ -34,10 +36,15 @@ class OfferController extends Controller
             ])
             ->allowedSorts(['created_at', 'title'])
             ->defaultSort('-created_at')
+            ->with('campuses')
             ->paginate()
             ->appends($request->query());
 
-        return Inertia::render('ExchangeMarket/Offers/List/Index', ['offers' => $offers]);
+        //dd(OfferResource::collection($offers)->response()->getData(true));
+
+        return Inertia::render('ExchangeMarket/Offers/List/Index', [
+            'offers' => OfferResource::collection($offers)->response()->getData(true)
+        ]);
     }
 
     public function create()
@@ -101,6 +108,15 @@ class OfferController extends Controller
 
         return to_route('admin.exchange_market.offers.index')
             ->with('message', 'Votre offre a été mise à jour avec succès.')
+            ->with('type', 'success');
+    }
+
+    public function approve(Offer $offer, ApproveOfferAction $action)
+    {
+        $action->handle(Auth::user(), $offer);
+
+        return to_route('admin.exchange_market.offers.index')
+            ->with('message', 'L\'offre a été approuvée avec succès.')
             ->with('type', 'success');
     }
 

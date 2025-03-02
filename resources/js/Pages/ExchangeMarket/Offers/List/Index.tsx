@@ -47,8 +47,8 @@ export default function Index({ offers }: { offers: PaginatedData<Offer> }) {
                 <CardContent className="space-y-4">
                     {offers.data.length > 0 && (
                         <div className="text-sm text-muted-foreground">
-                            Affichage de {offers.from} à {offers.to} sur{" "}
-                            {offers.total} offres
+                            Affichage de {offers.meta.from} à {offers.meta.to}{" "}
+                            sur {offers.meta.total} offres
                         </div>
                     )}
                     {offers.data.length === 0 ? (
@@ -66,7 +66,7 @@ export default function Index({ offers }: { offers: PaginatedData<Offer> }) {
                 {/* Pagination */}
                 {offers.data.length > 0 && (
                     <CardFooter className="flex justify-center">
-                        <OffersPagination links={offers.links} />
+                        <OffersPagination meta={offers.meta} />
                     </CardFooter>
                 )}
             </Card>

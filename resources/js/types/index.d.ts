@@ -22,13 +22,22 @@ export interface Flash {
     message?: string;
 }
 
+export interface OfferStatus {
+    value: string;
+    label: string;
+}
+
+export interface OfferType {
+    value: string;
+    label: string;
+}
 export interface Offer {
     id: number;
     image_url: "/images/placeholders/placeholder.svg";
     title: string;
     description: string;
-    type: string;
-    status: string;
+    type: OfferType;
+    status: OfferStatus;
     campuses?: Campus[];
     estimated_value: number;
     published_at?: string;
@@ -53,29 +62,35 @@ export interface NavItem {
     items?: NavItem[];
 }
 
-interface NavMainProps {
+export interface NavMainProps {
     items: NavItem[];
 }
-interface PaginationLink {
+export interface PaginationMetaLink {
     url: string | null;
     label: string;
     active: boolean;
 }
-export interface PaginatedData<T> {
-    data: T[];
-    links: PaginationLink[];
+
+export interface PaginationMeta {
     current_page: number;
-    first_page_url: string;
     from: number;
     last_page: number;
-    last_page_url: string;
-    links: PaginationLink[];
-    next_page_url: string | null;
+    links: PaginationMetaLink[];
     path: string;
     per_page: number;
-    prev_page_url: string | null;
     to: number;
     total: number;
+}
+export interface RichPaginationLink {
+    firt: string | null;
+    last: string | null;
+    prev: string | null;
+    next: string | null;
+}
+export interface PaginatedData<T> {
+    data: T[];
+    links: RichPaginationLink[];
+    meta: PaginationMeta;
 }
 
 export interface BreadcrumbItem {

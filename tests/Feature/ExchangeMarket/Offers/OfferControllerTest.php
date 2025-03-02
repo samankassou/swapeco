@@ -14,7 +14,7 @@ it('can list offers', function () {
     $this->actingAs($user)
         ->get('/admin/exchange-market/offers')
         ->assertInertia(
-            fn (Assert $assert) => $assert
+            fn(Assert $assert) => $assert
                 ->component('ExchangeMarket/Offers/List/Index')
                 ->has('offers.data', 10)
         );
@@ -83,7 +83,7 @@ it('can update an offer', function () {
         'title' => 'Test',
         'description' => 'Test',
         'estimated_value' => 20000, // because of the conversion
-        'status' => OfferStatusEnum::DRAFT->value,
+        'status' => OfferStatusEnum::PENDING->value,
     ]);
 
     // assert that the offer is attached to the campus
