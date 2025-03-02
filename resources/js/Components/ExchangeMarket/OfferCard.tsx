@@ -60,7 +60,7 @@ export default function OfferCard({ offer }: OfferCardProps) {
             {
                 onSuccess: () => {
                     // Notification de succès (optionnel si vous avez déjà un middleware flash)
-                    toast.success("Offre supprimée avec succès");
+                    //toast.success("Offre supprimée avec succès");
                 },
                 onError: (errors) => {
                     // Gestion des erreurs

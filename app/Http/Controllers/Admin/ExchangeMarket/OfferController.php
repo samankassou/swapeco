@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin\ExchangeMarket;
 
 use App\Actions\Offer\CreateOfferAction;
+use App\Actions\Offer\DeleteOfferAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOfferRequest;
 use App\Http\Requests\ListOffersRequest;
@@ -56,6 +57,47 @@ class OfferController extends Controller
 
         return to_route('admin.exchange_market.offers.index')
             ->with('message', 'Votre offre a été soumise avec succès.')
+            ->with('type', 'success');
+    }
+
+    public function show(Offer $offer)
+    {
+        return Inertia::render('ExchangeMarket/Offers/Show/Index', ['offer' => $offer]);
+    }
+
+    public function edit(Offer $offer)
+    {
+        $campuses = Campus::get(['id', 'name']);
+
+        return Inertia::render('ExchangeMarket/Offers/Edit/Index', [
+            'offer' => $offer,
+            'campuses' => $campuses,
+        ]);
+    }
+
+    public function update(UpdateOfferRequest $request, Offer $offer, UpdateOfferAction $action)
+    {
+        // retrieve validated inputs except for the campuses
+        $validatedOfferData = $request->except(['campuses', 'files']);
+        // retrieve validated campuses
+        $campuses = $request->validated('campuses', []);
+        // retrieve validated files
+        $request->validated('files', []);
+
+        // update the offer
+        $action->handle(Auth::user(), $validatedOfferData, $campuses, $offer);
+
+        return to_route('admin.exchange_market.offers.index')
+            ->with('message', 'Votre offre a été mise à jour avec succès.')
+            ->with('type', 'success');
+    }
+
+    public function destroy(Offer $offer, DeleteOfferAction $action)
+    {
+        $action->handle(Auth::user(), $offer);
+
+        return to_route('admin.exchange_market.offers.index')
+            ->with('message', 'Votre offre a été supprimée avec succès.')
             ->with('type', 'success');
     }
 }
