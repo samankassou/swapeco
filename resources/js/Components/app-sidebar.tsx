@@ -38,7 +38,15 @@ const data = {
                     ),
                 },
                 {
-                    title: "Gestion des offres",
+                    title: "Déposer une offre d’échange",
+                    url: route("admin.exchange_market.offers.create"),
+                    icon: HandCoins,
+                    isActive: route().current(
+                        "admin.exchange_market.offers.create"
+                    ),
+                },
+                {
+                    title: "Mes offres d’Echanges",
                     url: route("admin.exchange_market.offers.index"),
                     icon: HandCoins,
                     isActive: route().current(

@@ -2,6 +2,8 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Badge } from "@/Components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { Button } from "@/Components/ui/button";
 import {
     Card,
     CardHeader,
@@ -10,13 +12,25 @@ import {
     CardFooter,
     CardDescription,
 } from "@/Components/ui/card";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu";
+
 import { Offer } from "@/types";
+import { MoreHorizontal } from "lucide-react";
+import { Link } from "@inertiajs/react";
 
 interface OfferCardProps {
     offer: Offer;
 }
 
 export default function OfferCard({ offer }: OfferCardProps) {
+    const [actionMenuOpen, setActionMenuOpen] = useState(false);
     const getStatusColor = (status: string) => {
         return (
             {
@@ -39,19 +53,51 @@ export default function OfferCard({ offer }: OfferCardProps) {
     return (
         <Card className="group hover:shadow-lg transition-shadow">
             <CardHeader className="space-y-2">
-                <div className="flex items-start justify-between">
+                <div className="flex items-center justify-between">
                     <CardTitle
                         className="truncate text-lg font-semibold"
                         title={offer.title}
                     >
                         {offer.title}
                     </CardTitle>
-                    <Badge
-                        variant="secondary"
-                        className={cn("shrink-0", getTypeColor(offer.type))}
-                    >
-                        {offer.type === "product" ? "Produit" : "Service"}
-                    </Badge>
+                    <div className="flex items-center gap-2">
+                        <Badge
+                            variant="secondary"
+                            className={cn("shrink-0", getTypeColor(offer.type))}
+                        >
+                            {offer.type === "product" ? "Produit" : "Service"}
+                        </Badge>
+                        <DropdownMenu
+                            open={actionMenuOpen}
+                            onOpenChange={setActionMenuOpen}
+                        >
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="sm">
+                                    <MoreHorizontal />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                                align="end"
+                                className="w-[100px]"
+                            >
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem asChild>
+                                        <Link href="#">Modifier</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <Link href="#">Clôturer</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem
+                                        className="text-red-600"
+                                        asChild
+                                    >
+                                        <Link href="#">Supprimer</Link>
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 </div>
                 <CardDescription>
                     <img
