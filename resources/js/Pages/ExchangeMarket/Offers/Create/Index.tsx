@@ -1,9 +1,9 @@
 import { Head, useForm } from "@inertiajs/react";
 import Dashboard from "@/Layouts/DashboardLayout";
-import { FormEventHandler } from "react";
+import { FormEventHandler, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Input } from "@/Components/ui/input";
-import InputError from "@/Components/InputError";
+import InputError from "@/Components/input-error";
 import { Label } from "@/Components/ui/label";
 import { Button } from "@/Components/ui/button";
 import {
@@ -14,15 +14,32 @@ import {
     SelectValue,
 } from "@/Components/ui/select";
 import { Textarea } from "@/Components/ui/textarea";
+import { Campus } from "@/types";
+import { MultiSelect } from "@/Components/multi-select";
 
-export default function Index() {
+export default function Index({ campuses }: { campuses: Campus[] }) {
+    // transform campuses to array of { label: string, value: string }
+    const campusOptions = campuses.map((campus) => ({
+        label: campus.name,
+        value: campus.id.toString(),
+    }));
+
+    const [selectedCampuses, setSelectedCampuses] = useState<string[]>([]);
+
     const { data, setData, post, processing, errors } = useForm({
-        type: "product",
+        type: "",
         title: "",
         description: "",
         estimated_value: "",
         status: "draft",
+        campuses: [],
     });
+
+    const handleCampusChange = (values: string[]) => {
+        setSelectedCampuses(values);
+        console.log(values);
+        setData("campuses", values);
+    };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -141,6 +158,25 @@ export default function Index() {
 
                                 <InputError
                                     message={errors.estimated_value}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="mt-4">
+                                <Label htmlFor="campuses">
+                                    Campus de diffusion
+                                </Label>
+                                <MultiSelect
+                                    options={campusOptions}
+                                    onValueChange={handleCampusChange}
+                                    defaultValue={selectedCampuses}
+                                    placeholder="Selectionnez les campus"
+                                    variant="inverted"
+                                    animation={2}
+                                    maxCount={3}
+                                />
+                                <InputError
+                                    message={errors.campuses}
                                     className="mt-2"
                                 />
                             </div>

@@ -24,6 +24,12 @@ export interface Offer {
     updated_at: string;
 }
 
+export interface Campus {
+    id: number;
+    name: string;
+    [key: string]: unknown;
+}
+
 export interface Flash {
     type: string;
     message: string;

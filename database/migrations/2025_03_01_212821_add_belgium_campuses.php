@@ -1,10 +1,8 @@
 php
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -17,7 +15,7 @@ return new class extends Migration
             // Vérifier si le pays existe déjà
             $existingCountry = DB::table('countries')->where('name', 'Belgique')->first();
 
-            if (!$existingCountry) {
+            if (! $existingCountry) {
                 // Insérer le pays
                 $countryId = DB::table('countries')->insertGetId([
                     'name' => 'Belgique',
@@ -43,7 +41,7 @@ return new class extends Migration
                 $existingCity = DB::table('cities')->where('name', $cityName)
                     ->where('country_id', $countryId)->first();
 
-                if (!$existingCity) {
+                if (! $existingCity) {
                     $cityId = DB::table('cities')->insertGetId([
                         'name' => $cityName,
                         'country_id' => $countryId,
@@ -60,48 +58,48 @@ return new class extends Migration
                 // Liège
                 [
                     'name' => 'Université de Liège - Campus du Sart Tilman',
-                    'city' => 'Liège'
+                    'city' => 'Liège',
                 ],
                 [
                     'name' => 'Université de Liège - Campus du Centre-ville',
-                    'city' => 'Liège'
+                    'city' => 'Liège',
                 ],
                 // Gembloux
                 [
                     'name' => 'Université de Liège - Gembloux Agro-Bio Tech',
-                    'city' => 'Gembloux'
+                    'city' => 'Gembloux',
                 ],
                 // Arlon
                 [
                     'name' => 'Université de Liège - Arlon Campus Environnement',
-                    'city' => 'Arlon'
+                    'city' => 'Arlon',
                 ],
                 // Anvers
                 [
                     'name' => 'Université d\'Anvers - Campus Stadscampus',
-                    'city' => 'Anvers'
+                    'city' => 'Anvers',
                 ],
                 [
                     'name' => 'Université d\'Anvers - Campus Middelheim',
-                    'city' => 'Anvers'
+                    'city' => 'Anvers',
                 ],
                 [
                     'name' => 'Université d\'Anvers - Campus Groenenborger',
-                    'city' => 'Anvers'
+                    'city' => 'Anvers',
                 ],
                 [
                     'name' => 'Université d\'Anvers - Campus Drie Eiken',
-                    'city' => 'Anvers'
+                    'city' => 'Anvers',
                 ],
                 // Namur
                 [
                     'name' => 'Université de Namur',
-                    'city' => 'Namur'
+                    'city' => 'Namur',
                 ],
                 // Gand
                 [
                     'name' => 'Haute École de Gand',
-                    'city' => 'Gand'
+                    'city' => 'Gand',
                 ],
             ];
 
@@ -110,7 +108,7 @@ return new class extends Migration
                 // Vérifier si le campus existe déjà
                 $existingCampus = DB::table('campuses')->where('name', $campus['name'])->first();
 
-                if (!$existingCampus) {
+                if (! $existingCampus) {
                     DB::table('campuses')->insert([
                         'name' => $campus['name'],
                         'city_id' => $cities[$campus['city']],

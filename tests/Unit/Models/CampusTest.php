@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Models\Offer;
 use App\Models\Campus;
+use App\Models\Offer;
 
 test('to array', function () {
     $campus = Campus::factory()->create()->fresh();

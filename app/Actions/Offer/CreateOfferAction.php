@@ -14,10 +14,11 @@ class CreateOfferAction
      *
      * @param  array<string, string>  $attributes
      */
-    public function handle(User $user, array $attributes): void
+    public function handle(User $user, array $attributes, array $campuses): void
     {
-        DB::transaction(function () use ($user, $attributes): void {
-            $user->offers()->create($attributes);
+        DB::transaction(function () use ($user, $attributes, $campuses): void {
+            $offer = $user->offers()->create($attributes);
+            $offer->campuses()->attach($campuses);
         });
     }
 }

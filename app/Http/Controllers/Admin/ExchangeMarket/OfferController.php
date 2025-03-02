@@ -8,6 +8,7 @@ use App\Actions\Offer\CreateOfferAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOfferRequest;
 use App\Http\Requests\ListOffersRequest;
+use App\Models\Campus;
 use App\Models\Offer;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -36,15 +37,21 @@ class OfferController extends Controller
 
     public function create()
     {
-        return Inertia::render('ExchangeMarket/Offers/Create/Index');
+        $campuses = Campus::get(['id', 'name']);
+
+        return Inertia::render('ExchangeMarket/Offers/Create/Index', ['campuses' => $campuses]);
     }
 
     public function store(CreateOfferRequest $request, CreateOfferAction $action)
     {
-        $validatedData = $request->validated();
+        // retrieve validated inputs except for the campuses
+        $validatedOfferData = $request->except('campuses');
+        $campuses = $request->validated('campuses', []);
 
-        $action->handle(Auth::user(), $validatedData);
+        // create the offer
+        $action->handle(Auth::user(), $validatedOfferData, $campuses);
 
-        return to_route('admin.exchange_market.offers.index');
+        return to_route('admin.exchange_market.offers.index')
+            ->with('success', 'Offre créée avec succès.');
     }
 }

@@ -13,6 +13,11 @@ class Offer extends Model
     /** @use HasFactory<\Database\Factories\OfferFactory> */
     use HasFactory;
 
+    public function campuses()
+    {
+        return $this->belongsToMany(Campus::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -24,10 +29,5 @@ class Offer extends Model
             'type' => OfferTypeEnum::class,
             'published_at' => 'datetime',
         ];
-    }
-
-    public function campuses()
-    {
-        return $this->belongsToMany(Campus::class);
     }
 }

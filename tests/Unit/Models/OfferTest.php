@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Models\Offer;
-use App\Models\Campus;
 use App\Enums\Offers\OfferTypeEnum;
+use App\Models\Campus;
+use App\Models\Offer;
 
 test('to array', function () {
     $offer = Offer::factory()->create()->fresh();
@@ -29,7 +29,6 @@ test('the type attribute is an instance of OfferTypeEnum', function () {
 
     expect($offer->type)->toBeInstanceOf(OfferTypeEnum::class);
 });
-
 
 it('may belong to many campuses', function () {
     $offer = Offer::factory()->create();

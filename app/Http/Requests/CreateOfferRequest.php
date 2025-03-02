@@ -29,6 +29,13 @@ class CreateOfferRequest extends FormRequest
             'description' => 'required',
             'estimated_value' => 'required',
             'status' => 'required',
+            'campuses' => [
+                'required',
+                'array',
+                'min:1',
+                'distinct',
+            ],
+            'campuses.*' => 'required|exists:campuses,id',
         ];
     }
 }
