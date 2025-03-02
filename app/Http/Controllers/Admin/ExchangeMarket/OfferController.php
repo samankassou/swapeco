@@ -68,6 +68,7 @@ class OfferController extends Controller
 
     public function edit(Offer $offer)
     {
+        $offer->load('campuses');
         $campuses = Campus::get(['id', 'name']);
 
         return Inertia::render('ExchangeMarket/Offers/Edit/Index', [

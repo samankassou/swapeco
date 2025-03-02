@@ -11,19 +11,6 @@ export interface Auth {
     user: User;
 }
 
-export interface Offer {
-    id: number;
-    image_url: "/images/placeholders/placeholder.svg";
-    title: string;
-    description: string;
-    type: string;
-    status: string;
-    estimated_value: number;
-    published_at?: string;
-    created_at: string;
-    updated_at: string;
-}
-
 export interface Campus {
     id: number;
     name: string;
@@ -33,6 +20,20 @@ export interface Campus {
 export interface Flash {
     type?: string;
     message?: string;
+}
+
+export interface Offer {
+    id: number;
+    image_url: "/images/placeholders/placeholder.svg";
+    title: string;
+    description: string;
+    type: string;
+    status: string;
+    campuses?: Campus[];
+    estimated_value: number;
+    published_at?: string;
+    created_at: string;
+    updated_at: string;
 }
 
 export type PageProps<
