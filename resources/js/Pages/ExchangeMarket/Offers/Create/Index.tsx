@@ -65,54 +65,56 @@ export default function Index({ campuses }: { campuses: Campus[] }) {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <form onSubmit={submit}>
-                            <div>
-                                <Label className="mb-1" htmlFor="type">
-                                    Type d'offre
-                                </Label>
-                                <Select
-                                    name="type"
-                                    value={data.type}
-                                    onValueChange={(value) =>
-                                        setData("type", value)
-                                    }
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Choisir le type d'offre" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="product">
-                                            Product
-                                        </SelectItem>
-                                        <SelectItem value="service">
-                                            Service
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
+                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                <div>
+                                    <Label htmlFor="type">Type d'offre</Label>
+                                    <Select
+                                        name="type"
+                                        value={data.type}
+                                        onValueChange={(value) =>
+                                            setData("type", value)
+                                        }
+                                    >
+                                        <SelectTrigger className="mt-1">
+                                            <SelectValue placeholder="Choisissez le type d'offre" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="product">
+                                                Product
+                                            </SelectItem>
+                                            <SelectItem value="service">
+                                                Service
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
 
-                                <InputError
-                                    message={errors.type}
-                                    className="mt-2"
-                                />
-                            </div>
+                                    <InputError
+                                        message={errors.type}
+                                        className="mt-2"
+                                    />
+                                </div>
 
-                            <div className="mt-4">
-                                <Label htmlFor="title">Titre</Label>
+                                <div>
+                                    <Label className="mb-1" htmlFor="title">
+                                        Que proposez-vous ?
+                                    </Label>
 
-                                <Input
-                                    id="title"
-                                    name="title"
-                                    value={data.title}
-                                    className="mt-1 block w-full"
-                                    onChange={(e) =>
-                                        setData("title", e.target.value)
-                                    }
-                                    required
-                                />
+                                    <Input
+                                        id="title"
+                                        name="title"
+                                        value={data.title}
+                                        className="mt-1"
+                                        onChange={(e) =>
+                                            setData("title", e.target.value)
+                                        }
+                                        required
+                                    />
 
-                                <InputError
-                                    message={errors.title}
-                                    className="mt-2"
-                                />
+                                    <InputError
+                                        message={errors.title}
+                                        className="mt-2"
+                                    />
+                                </div>
                             </div>
 
                             <div className="mt-4">
