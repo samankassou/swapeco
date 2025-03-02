@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Actions\Offer;
 
 use App\Enums\Offers\OfferStatusEnum;
-use App\Models\User;
 use App\Models\Offer;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class CloseOfferAction

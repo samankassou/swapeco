@@ -73,7 +73,7 @@ export default function Index({
         type: offer.type,
         title: offer.title,
         description: offer.description,
-        estimated_value: offer.estimated_value,
+        estimated_value: offer.estimated_value.toString(), // Conversion en chaîne,
         status: offer.status,
         campuses: initialCampusIds,
         files: [],

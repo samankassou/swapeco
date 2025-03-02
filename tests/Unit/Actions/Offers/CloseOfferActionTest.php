@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-
-use App\Models\User;
 use App\Actions\Offer\CloseOfferAction;
 use App\Enums\Offers\OfferStatusEnum;
+use App\Models\User;
 
 it('can close an offer', function () {
 

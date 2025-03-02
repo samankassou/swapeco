@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-
-use App\Models\User;
 use App\Actions\Offer\DeleteOfferAction;
-
+use App\Models\User;
 
 it('can delete an offer', function () {
 

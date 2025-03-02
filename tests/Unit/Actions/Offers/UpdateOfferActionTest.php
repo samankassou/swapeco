@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
-use App\Enums\Offers\OfferTypeEnum;
-use App\Enums\Offers\OfferStatusEnum;
 use App\Actions\Offer\UpdateOfferAction;
+use App\Enums\Offers\OfferStatusEnum;
+use App\Enums\Offers\OfferTypeEnum;
 use App\Models\Campus;
+use App\Models\User;
 
 it('can update an offer', function () {
 
@@ -21,7 +21,6 @@ it('can update an offer', function () {
         'status' => OfferStatusEnum::DRAFT,
     ]);
     $offer->campuses()->attach($campus);
-
 
     $action->handle($user, $offer, [
         'type' => OfferTypeEnum::SERVICE->value,
