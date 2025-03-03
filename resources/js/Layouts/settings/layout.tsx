@@ -25,6 +25,11 @@ const sidebarNavItems: NavItem[] = [
         url: "/settings/appearance",
         icon: null,
     },
+    {
+        title: "Reseaux Sociaux",
+        url: "/settings/social-media",
+        icon: null,
+    },
 ];
 
 export default function SettingsLayout({
