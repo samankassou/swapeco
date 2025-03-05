@@ -5,16 +5,22 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Casts\MoneyCast;
-use App\Enums\Offers\OfferTypeEnum;
 use App\Enums\Offers\OfferStatusEnum;
-use Illuminate\Database\Eloquent\Model;
+use App\Enums\Offers\OfferTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Offer extends Model
+class Offer extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\OfferFactory> */
     use HasFactory;
+
+    use InteractsWithMedia;
 
     /**
      * Les campus associés à l'offre.
@@ -22,6 +28,25 @@ class Offer extends Model
     public function campuses(): BelongsToMany
     {
         return $this->belongsToMany(Campus::class);
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaCollection('images')
+            ->singleFile() // Si vous ne voulez qu'une seule image
+            ->useFallbackUrl('/images/placeholders/placeholder.svg')
+            ->useFallbackPath(public_path('/images/placeholders/placeholder.svg'));
+
+        $this
+            ->addMediaConversion('thumb')
+            ->fit(Fit::Contain, 200, 200)
+            ->nonQueued();
+
+        $this
+            ->addMediaConversion('medium')
+            ->fit(Fit::Contain, 500, 500)
+            ->nonQueued();
     }
 
     /**

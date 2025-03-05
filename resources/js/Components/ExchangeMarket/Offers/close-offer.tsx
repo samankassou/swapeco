@@ -13,31 +13,32 @@ import {
 import { toast } from "sonner";
 import { Offer } from "@/types";
 
-interface DeleteOfferProps {
+interface CloseOfferProps {
     offer: Offer;
     triggerText?: string;
     triggerClassName?: string;
-    asLink?: boolean; // Nouvelle prop pour afficher en tant que lien
+    asLink?: boolean;
 }
 
-export default function DeleteOffer({
+export default function CloseOffer({
     offer,
-    triggerText = "Supprimer",
+    triggerText = "Clôturer",
     triggerClassName = "",
     asLink = false,
-}: DeleteOfferProps) {
+}: CloseOfferProps) {
     const [open, setOpen] = useState(false);
 
-    function deleteOffer(): void {
-        router.delete(
-            route("admin.exchange_market.offers.destroy", { offer: offer.id }),
+    function closeOffer(): void {
+        router.post(
+            route("admin.exchange_market.offers.close", { offer: offer.id }),
+            {},
             {
                 preserveScroll: true,
                 onSuccess: () => {
                     setOpen(false);
                 },
                 onError: () => {
-                    toast.error("Erreur lors de la suppression de l'offre");
+                    toast.error("Erreur lors de la clôture de l'offre");
                 },
             }
         );
@@ -45,7 +46,6 @@ export default function DeleteOffer({
 
     // Empêche la propagation du clic vers le Link parent
     function handleTriggerClick(e: React.MouseEvent) {
-        //e.preventDefault();
         e.stopPropagation();
     }
 
@@ -54,14 +54,14 @@ export default function DeleteOffer({
             <DialogTrigger asChild>
                 {asLink ? (
                     <button
-                        className={`text-red-600 hover:text-red-700 text-left ${triggerClassName}`}
+                        className={`text-blue-600 hover:text-blue-700 text-left ${triggerClassName}`}
                         onClick={handleTriggerClick}
                     >
                         {triggerText}
                     </button>
                 ) : (
                     <Button
-                        variant="destructive"
+                        variant="outline"
                         className={triggerClassName}
                         onClick={handleTriggerClick}
                     >
@@ -71,11 +71,12 @@ export default function DeleteOffer({
             </DialogTrigger>
             <DialogContent onClick={(e) => e.stopPropagation()}>
                 <DialogTitle>
-                    Êtes-vous sûr de vouloir supprimer cette offre ?
+                    Êtes-vous sûr de vouloir clôturer cette offre ?
                 </DialogTitle>
                 <DialogDescription>
-                    Cette action est irréversible. L'offre "{offer.title}" sera
-                    définitivement supprimée de votre compte.
+                    L'offre "{offer.title}" ne sera plus disponible pour les
+                    échanges. Cette action est réversible et vous pourrez
+                    ré-ouvrir l'offre ultérieurement.
                 </DialogDescription>
 
                 <DialogFooter className="gap-2 mt-4">
@@ -89,13 +90,13 @@ export default function DeleteOffer({
                     </DialogClose>
 
                     <Button
-                        variant="destructive"
+                        variant="default"
                         onClick={(e) => {
                             e.stopPropagation();
-                            deleteOffer();
+                            closeOffer();
                         }}
                     >
-                        Supprimer l'offre
+                        Clôturer l'offre
                     </Button>
                 </DialogFooter>
             </DialogContent>

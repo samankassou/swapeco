@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Offer;
 
+use App\Models\Offer;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -16,9 +17,19 @@ class CreateOfferAction
      */
     public function handle(User $user, array $attributes, array $campuses): void
     {
-        DB::transaction(function () use ($user, $attributes, $campuses): void {
+        $offer = DB::transaction(function () use ($user, $attributes, $campuses): Offer {
             $offer = $user->offers()->create($attributes);
             $offer->campuses()->attach($campuses);
+
+            return $offer;
         });
+
+        // Ajoutez cette partie pour gérer les médias
+        if (request()->hasFile('images')) {
+            foreach (request()->file('images') as $image) {
+                $offer->addMedia($image)
+                    ->toMediaCollection('images');
+            }
+        }
     }
 }

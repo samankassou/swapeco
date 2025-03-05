@@ -27,8 +27,7 @@ class UpdateOfferRequest extends FormRequest
             'type' => 'required',
             'title' => 'required',
             'description' => 'required',
-            'estimated_value' => 'required',
-            'status' => 'required',
+            'estimated_value' => 'required|numeric',
             'campuses' => [
                 'required',
                 'array',
@@ -36,8 +35,9 @@ class UpdateOfferRequest extends FormRequest
                 'distinct',
             ],
             'campuses.*' => 'required|exists:campuses,id',
-            'files' => 'array',
-            'files.*' => 'file|max:2048',
+            'images' => 'array',
+            'images.*' => 'file|max:2048',
+            'delete_images' => 'array',
         ];
     }
 }

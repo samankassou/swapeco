@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\Offers\OfferStatusEnum;
 use App\Enums\Offers\OfferTypeEnum;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,11 +22,11 @@ class OfferFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => fake()->randomElement(OfferTypeEnum::values()),
+            'type' => OfferTypeEnum::PRODUCT->value,
             'title' => fake()->sentence,
             'estimated_value' => fake()->randomNumber(4),
             'description' => fake()->text,
-            'status' => 'active',
+            'status' => OfferStatusEnum::DRAFT->value,
             'published_at' => now(),
             'user_id' => User::factory(),
             'created_at' => now(),

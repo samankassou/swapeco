@@ -25,20 +25,30 @@ export interface Flash {
 export interface OfferStatus {
     value: string;
     label: string;
+    classes: string;
 }
 
 export interface OfferType {
     value: string;
     label: string;
+    classes: string;
+}
+
+export interface OfferImage {
+    id: string | number;
+    name: string;
+    url: string;
+    [key: string]: unknown;
 }
 export interface Offer {
     id: number;
-    image_url: "/images/placeholders/placeholder.svg";
+    image_url: string;
     title: string;
     description: string;
     type: OfferType;
     status: OfferStatus;
     campuses?: Campus[];
+    images: OfferImage[];
     estimated_value: number;
     published_at?: string;
     created_at: string;

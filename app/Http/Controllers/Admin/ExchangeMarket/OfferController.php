@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\ExchangeMarket;
 
-use Inertia\Inertia;
-use App\Models\Offer;
-use App\Models\Campus;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\Enums\Offers\OfferStatusEnum;
-use App\Http\Resources\OfferResource;
-use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\QueryBuilder\AllowedFilter;
+use App\Actions\Offer\ApproveOfferAction;
 use App\Actions\Offer\CloseOfferAction;
 use App\Actions\Offer\CreateOfferAction;
 use App\Actions\Offer\DeleteOfferAction;
 use App\Actions\Offer\UpdateOfferAction;
-use App\Http\Requests\ListOffersRequest;
-use App\Actions\Offer\ApproveOfferAction;
+use App\Enums\Offers\OfferStatusEnum;
+use App\Enums\Offers\OfferTypeEnum;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOfferRequest;
+use App\Http\Requests\ListOffersRequest;
 use App\Http\Requests\UpdateOfferRequest;
+use App\Http\Resources\OfferResource;
+use App\Models\Campus;
+use App\Models\Offer;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class OfferController extends Controller
 {
@@ -40,10 +41,8 @@ class OfferController extends Controller
             ->paginate()
             ->appends($request->query());
 
-        //dd(OfferResource::collection($offers)->response()->getData(true));
-
         return Inertia::render('ExchangeMarket/Offers/List/Index', [
-            'offers' => OfferResource::collection($offers)->response()->getData(true)
+            'offers' => OfferResource::collection($offers)->response()->getData(true),
         ]);
     }
 
@@ -57,17 +56,16 @@ class OfferController extends Controller
     public function store(CreateOfferRequest $request, CreateOfferAction $action)
     {
         // retrieve validated inputs except for the campuses
-        $validatedOfferData = $request->except(['campuses', 'files']);
+        $validatedOfferData = $request->except(['campuses', 'images']);
         // retrieve validated campuses
         $campuses = $request->validated('campuses', []);
-        // retrieve validated files
-        $request->validated('files', []);
+        // retrieve validated images
+        $request->validated('images', []);
 
         // create the offer
         $action->handle(Auth::user(), $validatedOfferData, $campuses);
 
         // notify admin that a new offer has been submitted
-
 
         return to_route('admin.exchange_market.offers.index')
             ->with('message', 'Votre offre a été soumise avec succès.')
@@ -77,12 +75,26 @@ class OfferController extends Controller
     public function show(Offer $offer)
     {
         $offer->load('campuses');
-        return Inertia::render('ExchangeMarket/Offers/Show/Index', ['offer' => $offer]);
+
+        // Obtenir directement le tableau de ressource sans l'enveloppe 'data'
+        $offerData = OfferResource::make($offer)->resolve();
+
+        return Inertia::render('ExchangeMarket/Offers/Show/Index', [
+            'offer' => $offerData,
+        ]);
     }
 
     public function edit(Offer $offer)
     {
         $offer->load('campuses');
+        // load media images from spatie
+        $offer->images = $offer->getMedia('images')->map(fn ($media) => [
+            'id' => $media->id,
+            'name' => $media->file_name,
+            'url' => $media->getUrl(),
+        ]);
+
+        $offerTypes = OfferTypeEnum::options();
         $campuses = Campus::get(['id', 'name']);
 
         return Inertia::render('ExchangeMarket/Offers/Edit/Index', [
@@ -94,12 +106,11 @@ class OfferController extends Controller
     public function update(UpdateOfferRequest $request, Offer $offer, UpdateOfferAction $action)
     {
         // retrieve validated inputs except for the campuses
-        $validatedOfferData = $request->except(['campuses', 'files']);
-        $validatedOfferData['status'] = OfferStatusEnum::PENDING;
+        $validatedOfferData = $request->except(['campuses', 'images', 'delete_images']);
+        // set the status to pending
+        $validatedOfferData['status'] = OfferStatusEnum::PENDING->value;
         // retrieve validated campuses
-        $campuses = $request->validated('campuses', []);
-        // retrieve validated files
-        $request->validated('files', []);
+        $campuses = $request->array('campuses');
 
         // update the offer
         $action->handle(Auth::user(), $offer, $validatedOfferData, $campuses);

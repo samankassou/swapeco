@@ -31,4 +31,12 @@ enum OfferTypeEnum: string
             self::PRODUCT => 'Produit',
         };
     }
+
+    public function classes(): string
+    {
+        return match ($this) {
+            self::SERVICE => 'bg-blue-200 text-blue-700',
+            self::PRODUCT => 'bg-purple-200 text-purple-700',
+        };
+    }
 }

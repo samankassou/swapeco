@@ -44,7 +44,7 @@ interface OfferFormData {
     estimated_value: string;
     status: string;
     campuses: string[];
-    files: any[]; // ou File[] si vous utilisez l'API File de TypeScript
+    images: any[]; // ou File[] si vous utilisez l'API File de TypeScript
     [key: string]: any; // Pour satisfaire la contrainte de FormDataType
 }
 export default function Index({ campuses }: { campuses: Campus[] }) {
@@ -55,7 +55,7 @@ export default function Index({ campuses }: { campuses: Campus[] }) {
     }));
 
     const [selectedCampuses, setSelectedCampuses] = useState<string[]>([]);
-    const [files, setFiles] = useState<File[]>([]);
+    const [images, setImages] = useState<File[]>([]);
 
     const { data, setData, post, processing, errors } = useForm<OfferFormData>({
         type: "",
@@ -64,7 +64,7 @@ export default function Index({ campuses }: { campuses: Campus[] }) {
         estimated_value: "",
         status: "pending",
         campuses: [],
-        files: [],
+        images: [],
     });
 
     const handleCampusChange = (values: string[]) => {
@@ -72,12 +72,12 @@ export default function Index({ campuses }: { campuses: Campus[] }) {
         setData("campuses", values);
     };
 
-    const handleFilesChange = (newFiles: File[]) => {
+    const handleImagesChange = (newImages: File[]) => {
         // Mettre à jour l'état local
-        setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+        setImages((prevFiles) => [...prevFiles, ...newImages]);
 
         // Pour Inertia.js, qui attend généralement un FormData ou une structure similaire
-        setData("files", [...files, ...newFiles]);
+        setData("images", [...images, ...newImages]);
     };
 
     const submit: FormEventHandler = (e) => {
@@ -88,14 +88,14 @@ export default function Index({ campuses }: { campuses: Campus[] }) {
         });
     };
 
-    const removeFile = (index: number): void => {
+    const removeImage = (index: number): void => {
         // Create a new array excluding the file at the specified index
-        const updatedFiles = [...files];
-        updatedFiles.splice(index, 1);
-        setFiles(updatedFiles);
+        const updatedImages = [...images];
+        updatedImages.splice(index, 1);
+        setImages(updatedImages);
 
         // Also update the form data to reflect the removed file
-        setData("files", updatedFiles);
+        setData("images", updatedImages);
     };
 
     return (
@@ -243,7 +243,7 @@ export default function Index({ campuses }: { campuses: Campus[] }) {
                                         accept={{
                                             "image/*": [".jpg", ".png"],
                                         }}
-                                        onDropAccepted={handleFilesChange}
+                                        onDropAccepted={handleImagesChange}
                                     >
                                         <DropzoneZone>
                                             <DropzoneInput />
@@ -266,7 +266,7 @@ export default function Index({ campuses }: { campuses: Campus[] }) {
                                         </DropzoneZone>
                                     </Dropzone>
                                     <FileList className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-                                        {files.map((file, index) => (
+                                        {images.map((file, index) => (
                                             <FileListItem key={index}>
                                                 <FileListHeader>
                                                     <FileListIcon />
@@ -282,7 +282,7 @@ export default function Index({ campuses }: { campuses: Campus[] }) {
                                                     </FileListInfo>
                                                     <FileListAction
                                                         onClick={() =>
-                                                            removeFile(index)
+                                                            removeImage(index)
                                                         }
                                                     >
                                                         <X />

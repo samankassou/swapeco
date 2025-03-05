@@ -35,4 +35,14 @@ enum OfferStatusEnum: string
             self::CLOSED => 'Fermé',
         };
     }
+
+    public function classes(): string
+    {
+        return match ($this) {
+            self::DRAFT => 'bg-gray-200 text-gray-700',
+            self::PENDING => 'bg-yellow-200 text-yellow-700',
+            self::PUBLISHED => 'bg-green-200 text-green-700',
+            self::CLOSED => 'bg-red-200 text-red-700',
+        };
+    }
 }
