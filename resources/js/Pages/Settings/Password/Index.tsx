@@ -51,7 +51,7 @@ export default function Index() {
 
     return (
         <>
-            <Head title="Profile settings" />
+            <Head title="Parametres de Connexion" />
 
             <SettingsLayout>
                 <div className="space-y-6">

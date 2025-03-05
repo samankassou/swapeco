@@ -15,10 +15,5 @@ test('to array', function () {
             'email_verified_at',
             'created_at',
             'updated_at',
-            'facebook',
-            'twitter',
-            'linkedin',
-            'github',
-            'instagram',
         ]);
 });

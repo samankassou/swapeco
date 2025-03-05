@@ -27,7 +27,7 @@ const sidebarNavItems: NavItem[] = [
     },
     {
         title: "Reseaux Sociaux",
-        url: "/settings/social-media",
+        url: "/settings/social-links",
         icon: null,
     },
 ];

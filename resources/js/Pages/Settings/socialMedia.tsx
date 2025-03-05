@@ -14,7 +14,7 @@ import { Label } from '@/Components/ui/label';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         label: 'Social Media settings',
-        href: '/settings/social-media',
+        href: '/settings/social-links',
     },
 ];
 
@@ -30,7 +30,7 @@ export default function SocialMedia() {
     const updateSocialLinks: FormEventHandler = (e) => {
         e.preventDefault();
 
-        put(route('social_media.update'), {
+        put(route('social_link.update'), {
             preserveScroll: true,
             onSuccess: () => reset(),
             onError: (errors) => {
@@ -55,7 +55,7 @@ export default function SocialMedia() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Social Media Settings" />
+            <Head title="Parametres Reseaux Sociaux" />
 
             <SettingsLayout>
                 <div className="space-y-6">

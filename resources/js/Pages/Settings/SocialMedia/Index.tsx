@@ -1,54 +1,56 @@
-import InputError from "@/Components/input-error";
-import SettingsLayout from "@/Layouts/settings/layout";
-import Dashboard from "@/Layouts/DashboardLayout";
-import { type BreadcrumbItem } from "@/types";
-import { Transition } from "@headlessui/react";
-import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
-import HeadingSmall from "@/Components/heading-small";
+import { Head,useForm, usePage } from "@inertiajs/react";
+import { PageProps } from "@/types";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
+import InputError from "@/Components/input-error";
+import { Transition } from "@headlessui/react";
+import SettingsLayout from "@/Layouts/settings/layout";
+import Dashboard from "@/Layouts/DashboardLayout";
+
+// Définir le type des liens sociaux
+type SocialLink = {
+    facebook?: string;
+    twitter?: string;
+    linkedin?: string;
+    github?: string;
+    instagram?: string;
+};
 
 export default function SocialMedia() {
-    const {
-        data,
-        setData,
-        errors,
-        put,
-        reset,
-        processing,
-        recentlySuccessful,
-    } = useForm({
-        facebook: "",
-        twitter: "",
-        linkedin: "",
-        github: "",
-        instagram: "",
+    const { auth } = usePage<PageProps>().props;
+
+    // Initialisation des valeurs de socialLink, en s'assurant que c'est un objet de type SocialLink
+    const socialLinks: SocialLink = auth.user.socialLink || {};
+
+    const { data, setData, errors, put, reset, processing, recentlySuccessful } = useForm({
+        facebook: socialLinks.facebook ?? "",
+        twitter: socialLinks.twitter ?? "",
+        linkedin: socialLinks.linkedin ?? "",
+        github: socialLinks.github ?? "",
+        instagram: socialLinks.instagram ?? "",
     });
 
     const updateSocialMedia: FormEventHandler = (e) => {
         e.preventDefault();
 
-        put(route("social_media.update"), {
+        put(route("social_links.update"), {
             preserveScroll: true,
             onSuccess: () => reset(),
             onError: (errors) => {
-                // Handle error here if needed
+                console.error("Update failed:", errors);
             },
         });
     };
 
     return (
         <>
-            <Head title="Paramètres des réseaux sociaux" />
-
+            <Head title="Paramètres de Reseaux Sociaux" />
             <SettingsLayout>
                 <div className="space-y-6">
-                    <HeadingSmall
-                        title="Mettre à jour les réseaux sociaux"
-                        description="Mettez à jour les liens de vos profils sur les réseaux sociaux"
-                    />
+                    <h2 className="text-xl font-semibold">Mettre à jour les réseaux sociaux</h2>
+                    <p>Mettre à jour les liens de vos profils sur les réseaux sociaux.</p>
 
                     <form onSubmit={updateSocialMedia} className="space-y-6">
                         {/* Facebook */}
@@ -124,6 +126,7 @@ export default function SocialMedia() {
                         <div className="flex items-center gap-4">
                             <Button disabled={processing}>Enregistrer les liens</Button>
 
+                            {/* Affichage du statut d'enregistrement */}
                             <Transition
                                 show={recentlySuccessful}
                                 enter="transition ease-in-out"
@@ -131,7 +134,7 @@ export default function SocialMedia() {
                                 leave="transition ease-in-out"
                                 leaveTo="opacity-0"
                             >
-                                <p className="text-sm text-neutral-600">Enregistré</p>
+                                <p className="text-sm text-neutral-600">Enregistré avec succès</p>
                             </Transition>
                         </div>
                     </form>
@@ -142,18 +145,9 @@ export default function SocialMedia() {
 }
 
 SocialMedia.layout = (page: React.ReactNode): React.ReactElement => {
-    const breadcrumbs: BreadcrumbItem[] = [
+    const breadcrumbs = [
         { href: "#", label: "Paramètres du profil" },
     ];
 
     return <Dashboard children={page} breadcrumbs={breadcrumbs} />;
 };
-
-
-
-
-
-
-
-
-
