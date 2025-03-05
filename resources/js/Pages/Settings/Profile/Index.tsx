@@ -37,7 +37,7 @@ export default function Index({
 
     return (
         <>
-            <Head title="Paramètres du compte" />
+            <Head title="Paramètres du Profil" />
 
             <SettingsLayout>
                 <div className="space-y-6">

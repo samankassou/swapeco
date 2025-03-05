@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -37,13 +38,23 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * Get the offers created by the user
+     * Get the offers created by the user.
      *
      * @return HasMany<Offer, $this>
      */
     public function offers(): HasMany
     {
         return $this->hasMany(Offer::class);
+    }
+
+    /**
+     * Get the social links created by the user.
+     *
+     * @return HasOne<SocialLink, $this>
+     */
+    public function socialLink(): HasOne
+    {
+        return $this->hasOne(SocialLink::class);
     }
 
     /**
