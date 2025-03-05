@@ -1,6 +1,6 @@
 import { FormEventHandler } from "react";
-import { Head,useForm, usePage } from "@inertiajs/react";
-import { PageProps } from "@/types";
+import { Head, useForm } from "@inertiajs/react";
+import { SocialLink } from "@/types";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
@@ -9,27 +9,25 @@ import { Transition } from "@headlessui/react";
 import SettingsLayout from "@/Layouts/settings/layout";
 import Dashboard from "@/Layouts/DashboardLayout";
 
-// Définir le type des liens sociaux
-type SocialLink = {
-    facebook?: string;
-    twitter?: string;
-    linkedin?: string;
-    github?: string;
-    instagram?: string;
-};
-
-export default function SocialMedia() {
-    const { auth } = usePage<PageProps>().props;
-
-    // Initialisation des valeurs de socialLink, en s'assurant que c'est un objet de type SocialLink
-    const socialLinks: SocialLink = auth.user.socialLink || {};
-
-    const { data, setData, errors, put, reset, processing, recentlySuccessful } = useForm({
-        facebook: socialLinks.facebook ?? "",
-        twitter: socialLinks.twitter ?? "",
-        linkedin: socialLinks.linkedin ?? "",
-        github: socialLinks.github ?? "",
-        instagram: socialLinks.instagram ?? "",
+export default function SocialMedia({
+    userSocialLinks,
+}: {
+    userSocialLinks: SocialLink;
+}) {
+    const {
+        data,
+        setData,
+        errors,
+        put,
+        reset,
+        processing,
+        recentlySuccessful,
+    } = useForm({
+        facebook: userSocialLinks.facebook,
+        twitter: userSocialLinks.twitter,
+        linkedin: userSocialLinks.linkedin,
+        github: userSocialLinks.github,
+        instagram: userSocialLinks.instagram,
     });
 
     const updateSocialMedia: FormEventHandler = (e) => {
@@ -49,8 +47,13 @@ export default function SocialMedia() {
             <Head title="Paramètres de Reseaux Sociaux" />
             <SettingsLayout>
                 <div className="space-y-6">
-                    <h2 className="text-xl font-semibold">Mettre à jour les réseaux sociaux</h2>
-                    <p>Mettre à jour les liens de vos profils sur les réseaux sociaux.</p>
+                    <h2 className="text-xl font-semibold">
+                        Mettre à jour les réseaux sociaux
+                    </h2>
+                    <p>
+                        Mettre à jour les liens de vos profils sur les réseaux
+                        sociaux.
+                    </p>
 
                     <form onSubmit={updateSocialMedia} className="space-y-6">
                         {/* Facebook */}
@@ -59,7 +62,9 @@ export default function SocialMedia() {
                             <Input
                                 id="facebook"
                                 value={data.facebook}
-                                onChange={(e) => setData("facebook", e.target.value)}
+                                onChange={(e) =>
+                                    setData("facebook", e.target.value)
+                                }
                                 type="url"
                                 className="mt-1 block w-full"
                                 placeholder="URL de votre compte Facebook"
@@ -73,7 +78,9 @@ export default function SocialMedia() {
                             <Input
                                 id="twitter"
                                 value={data.twitter}
-                                onChange={(e) => setData("twitter", e.target.value)}
+                                onChange={(e) =>
+                                    setData("twitter", e.target.value)
+                                }
                                 type="url"
                                 className="mt-1 block w-full"
                                 placeholder="URL de votre compte Twitter"
@@ -87,7 +94,9 @@ export default function SocialMedia() {
                             <Input
                                 id="linkedin"
                                 value={data.linkedin}
-                                onChange={(e) => setData("linkedin", e.target.value)}
+                                onChange={(e) =>
+                                    setData("linkedin", e.target.value)
+                                }
                                 type="url"
                                 className="mt-1 block w-full"
                                 placeholder="URL de votre compte LinkedIn"
@@ -101,7 +110,9 @@ export default function SocialMedia() {
                             <Input
                                 id="github"
                                 value={data.github}
-                                onChange={(e) => setData("github", e.target.value)}
+                                onChange={(e) =>
+                                    setData("github", e.target.value)
+                                }
                                 type="url"
                                 className="mt-1 block w-full"
                                 placeholder="URL de votre compte GitHub"
@@ -115,7 +126,9 @@ export default function SocialMedia() {
                             <Input
                                 id="instagram"
                                 value={data.instagram}
-                                onChange={(e) => setData("instagram", e.target.value)}
+                                onChange={(e) =>
+                                    setData("instagram", e.target.value)
+                                }
                                 type="url"
                                 className="mt-1 block w-full"
                                 placeholder="URL de votre compte Instagram"
@@ -124,7 +137,9 @@ export default function SocialMedia() {
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <Button disabled={processing}>Enregistrer les liens</Button>
+                            <Button disabled={processing}>
+                                Enregistrer les liens
+                            </Button>
 
                             {/* Affichage du statut d'enregistrement */}
                             <Transition
@@ -134,7 +149,9 @@ export default function SocialMedia() {
                                 leave="transition ease-in-out"
                                 leaveTo="opacity-0"
                             >
-                                <p className="text-sm text-neutral-600">Enregistré avec succès</p>
+                                <p className="text-sm text-neutral-600">
+                                    Enregistré avec succès
+                                </p>
                             </Transition>
                         </div>
                     </form>
@@ -145,9 +162,7 @@ export default function SocialMedia() {
 }
 
 SocialMedia.layout = (page: React.ReactNode): React.ReactElement => {
-    const breadcrumbs = [
-        { href: "#", label: "Paramètres du profil" },
-    ];
+    const breadcrumbs = [{ href: "#", label: "Paramètres du profil" }];
 
     return <Dashboard children={page} breadcrumbs={breadcrumbs} />;
 };

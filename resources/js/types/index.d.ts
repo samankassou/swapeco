@@ -11,6 +11,17 @@ export interface Auth {
     user: User;
 }
 
+export interface SocialLink {
+    id: number;
+    user_id: number;
+    facebook: string;
+    twitter: string;
+    linkedin: string;
+    github: string;
+    instagram: string;
+    [key: string]: unknown;
+}
+
 export interface Campus {
     id: number;
     name: string;
