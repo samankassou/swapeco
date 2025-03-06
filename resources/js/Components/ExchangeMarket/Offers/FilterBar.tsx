@@ -12,13 +12,26 @@ import {
 } from "@/Components/ui/select";
 import { RotateCcw, Search } from "lucide-react";
 import { Button } from "@/Components/ui/button";
+import { Campus } from "@/types";
+import { MultiSelect } from "@/Components/multi-select";
 
-export default function FilterBar() {
+export default function FilterBar({ campuses }: { campuses: Campus[] }) {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState({
         type: "all",
         status: "all",
     });
+    const [selectedCampuses, setSelectedCampuses] = useState<string[]>([]);
+
+    const handleCampusChange = (values: string[]) => {
+        setSelectedCampuses(values);
+    };
+
+    const campusOptions = campuses.map((campus) => ({
+        label: campus.name,
+        value: campus.id.toString(),
+    }));
+
     const [sort, setSort] = useState("-created_at");
 
     const updateSearch = useCallback(
@@ -104,6 +117,18 @@ export default function FilterBar() {
                         />
                     </div>
                     <div className="flex gap-4 flex-col md:flex-row w-full">
+                        {/* Campus */}
+                        <MultiSelect
+                            className="mt-1"
+                            options={campusOptions}
+                            onValueChange={handleCampusChange}
+                            defaultValue={selectedCampuses}
+                            placeholder="Selectionnez les campus"
+                            variant="inverted"
+                            animation={2}
+                            maxCount={3}
+                        />
+                        {/* Type d'offre */}
                         <Select
                             value={filter.type}
                             onValueChange={(value) =>
@@ -125,6 +150,7 @@ export default function FilterBar() {
                                 </SelectItem>
                             </SelectContent>
                         </Select>
+                        {/* Statut */}
                         <Select
                             value={filter.status}
                             onValueChange={(value) =>
@@ -146,6 +172,7 @@ export default function FilterBar() {
                                 </SelectItem>
                             </SelectContent>
                         </Select>
+                        {/* Trier par */}
                         <Select
                             value={sort}
                             onValueChange={(value) =>
@@ -170,6 +197,7 @@ export default function FilterBar() {
                                 </SelectItem>
                             </SelectContent>
                         </Select>
+                        {/* Réinitialiser les filtres */}
                         <Button
                             variant="outline"
                             size="icon"

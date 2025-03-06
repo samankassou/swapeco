@@ -41,8 +41,11 @@ class OfferController extends Controller
             ->paginate()
             ->appends($request->query());
 
+        $campuses = Campus::get(['id', 'name']);
+
         return Inertia::render('ExchangeMarket/Offers/List/Index', [
             'offers' => OfferResource::collection($offers)->response()->getData(true),
+            'campuses' => $campuses,
         ]);
     }
 
@@ -88,7 +91,7 @@ class OfferController extends Controller
     {
         $offer->load('campuses');
         // load media images from spatie
-        $offer->images = $offer->getMedia('images')->map(fn ($media) => [
+        $offer->images = $offer->getMedia('images')->map(fn($media) => [
             'id' => $media->id,
             'name' => $media->file_name,
             'url' => $media->getUrl(),

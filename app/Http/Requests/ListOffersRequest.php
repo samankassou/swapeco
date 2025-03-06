@@ -18,7 +18,8 @@ class ListOffersRequest extends FormRequest
         return [
             'filter.title' => ['sometimes', 'nullable', 'string'],
             'filter.type' => ['sometimes', 'nullable', 'string', 'in:all,product,service'],
-            'filter.status' => ['sometimes', 'nullable', 'string', 'in:all,published,draft'],
+            'filter.status' => ['sometimes', 'nullable', 'string', 'in:all,draft,pending,published,closed'],
+            'filter.campus' => ['sometimes', 'nullable', 'string', 'exists:campuses,id'],
             'sort' => ['sometimes', 'nullable', 'string', 'in:created_at,-created_at,title,-title'],
         ];
     }

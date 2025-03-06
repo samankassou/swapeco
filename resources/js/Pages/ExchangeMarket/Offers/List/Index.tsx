@@ -8,7 +8,7 @@ import {
     CardTitle,
 } from "@/Components/ui/card";
 import OfferCard from "@/Components/ExchangeMarket/OfferCard";
-import { PaginatedData, Offer } from "@/types";
+import { PaginatedData, Offer, Campus } from "@/types";
 import EmptyState from "@/Components/ExchangeMarket/Offers/EmptyState";
 import { Button } from "@/Components/ui/button";
 import { PlusCircle } from "lucide-react";
@@ -16,7 +16,13 @@ import FilterBar from "@/Components/ExchangeMarket/Offers/FilterBar";
 import OffersPagination from "@/Components/ExchangeMarket/Offers/OffersPagination";
 import Heading from "@/Components/heading";
 
-export default function Index({ offers }: { offers: PaginatedData<Offer> }) {
+export default function Index({
+    offers,
+    campuses,
+}: {
+    offers: PaginatedData<Offer>;
+    campuses: Campus[];
+}) {
     return (
         <>
             <Head title="Gestion des offres" />
@@ -42,7 +48,7 @@ export default function Index({ offers }: { offers: PaginatedData<Offer> }) {
                     <CardTitle className="text-base font-bold md:text-xl flex justify-between mb-4">
                         <h2>Mes offres</h2>
                     </CardTitle>
-                    <FilterBar />
+                    <FilterBar campuses={campuses} />
                 </CardHeader>
                 <CardContent className="space-y-4">
                     {offers.data.length > 0 && (
