@@ -1,4 +1,4 @@
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import Dashboard from "@/Layouts/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Offer, OfferImage } from "@/types";
@@ -14,6 +14,8 @@ import { Button } from "@/Components/ui/button";
 import { router } from "@inertiajs/react";
 
 export default function Index({ offer }: { offer: Offer }) {
+    const auth = usePage().props.auth;
+
     const handleEdit = () => {
         router.visit(route("admin.exchange_market.offers.edit", offer.id));
     };
@@ -135,6 +137,23 @@ export default function Index({ offer }: { offer: Offer }) {
                                     {offer.description}
                                 </div>
                             </div>
+                            {/* Afficher le bouton de négociation pour les autres utilisateurs */}
+                            {offer.owner.id !== auth.user.id &&
+                                offer.status.value === "published" && (
+                                    <Button
+                                        onClick={() =>
+                                            router.post(
+                                                route(
+                                                    "admin.exchange_market.negotiations.create"
+                                                ),
+                                                { offer_id: offer.id }
+                                            )
+                                        }
+                                        className="mt-6"
+                                    >
+                                        Démarrer une négociation
+                                    </Button>
+                                )}
                         </div>
                     </div>
                     <div>

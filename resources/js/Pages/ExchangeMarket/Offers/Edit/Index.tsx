@@ -14,29 +14,8 @@ import {
     SelectValue,
 } from "@/Components/ui/select";
 import { Textarea } from "@/Components/ui/textarea";
-import { Campus, Offer, OfferStatus, OfferType } from "@/types";
+import { Campus, OfferStatus } from "@/types";
 import { MultiSelect } from "@/Components/multi-select";
-import {
-    Dropzone,
-    DropzoneInput,
-    DropzoneDescription,
-    DropzoneGroup,
-    DropzoneTitle,
-    DropzoneUploadIcon,
-    DropzoneZone,
-} from "@/Components/ui/dropzone";
-import {
-    FileList,
-    FileListDescription,
-    FileListIcon,
-    FileListHeader,
-    FileListInfo,
-    FileListItem,
-    FileListName,
-    FileListSize,
-    FileListAction,
-} from "@/Components/ui/file-list";
-import { X } from "lucide-react";
 
 interface OfferFormData {
     type: string;
@@ -45,14 +24,7 @@ interface OfferFormData {
     estimated_value: string;
     status: string;
     campuses: string[];
-    images: any[]; // Pour les nouvelles images
     [key: string]: any;
-}
-
-interface ExistingImage {
-    id: number;
-    name: string;
-    url: string;
 }
 
 interface OfferProps {
@@ -63,7 +35,6 @@ interface OfferProps {
     status: OfferStatus;
     estimated_value: number;
     campuses: Campus[];
-    images: ExistingImage[];
 }
 
 export default function Index({
@@ -87,11 +58,6 @@ export default function Index({
     const [selectedCampuses, setSelectedCampuses] = useState<string[]>(
         initialSelectedCampuses
     );
-    const [newImages, setNewImages] = useState<File[]>([]);
-    const [existingImages, setExistingImages] = useState<ExistingImage[]>(
-        offer.images || []
-    );
-    const [imagesToDelete, setImagesToDelete] = useState<number[]>([]);
 
     const { data, setData, put, processing, errors } = useForm<OfferFormData>({
         type: offer.type,
@@ -100,8 +66,6 @@ export default function Index({
         estimated_value: offer.estimated_value.toString(),
         status: offer.status.value,
         campuses: initialSelectedCampuses,
-        images: [],
-        delete_images: [],
     });
 
     const handleCampusChange = (values: string[]) => {
@@ -109,41 +73,9 @@ export default function Index({
         setData("campuses", values);
     };
 
-    // Pour la gestion des nouvelles images :
-    const handleNewImagesChange = (uploadedImages: File[]) => {
-        const updatedImages = [...newImages, ...uploadedImages];
-        setNewImages(updatedImages);
-        setData("images", updatedImages);
-    };
-
-    const removeNewImage = (index: number): void => {
-        const updatedImages = [...newImages];
-        updatedImages.splice(index, 1);
-        setNewImages(updatedImages);
-        setData("images", updatedImages);
-    };
-
-    const removeExistingImage = (imageId: number): void => {
-        const updatedImagesToDelete = [...imagesToDelete, imageId];
-
-        // Mettre à jour les deux états avec la même valeur
-        setImagesToDelete(updatedImagesToDelete);
-        setData("delete_images", updatedImagesToDelete);
-
-        // Retirer l'image de l'affichage
-        setExistingImages(existingImages.filter((img) => img.id !== imageId));
-    };
-
-    // Pour la valeur estimée, assurez-vous que c'est un nombre lors de l'envoi :
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        console.log("Données soumises:", data);
-        put(route("admin.exchange_market.offers.update", offer.id), {
-            forceFormData: true,
-            onError: (errors) => {
-                //console.log("Erreurs de validation:", errors);
-            },
-        });
+        put(route("admin.exchange_market.offers.update", { id: offer.id }));
     };
 
     return (
@@ -281,132 +213,6 @@ export default function Index({
                                     message={errors.campuses}
                                     className="mt-2"
                                 />
-                            </div>
-
-                            <div className="mt-4">
-                                <Label>Images du produit</Label>
-
-                                {/* Images existantes */}
-                                {existingImages.length > 0 && (
-                                    <>
-                                        <div className="mb-2 text-sm text-muted-foreground">
-                                            Images actuelles :
-                                        </div>
-                                        <FileList className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-                                            {existingImages.map((image) => (
-                                                <FileListItem key={image.id}>
-                                                    <FileListHeader>
-                                                        <FileListIcon />
-                                                        <FileListInfo>
-                                                            <FileListName>
-                                                                {image.name}
-                                                            </FileListName>
-                                                            <FileListDescription>
-                                                                <a
-                                                                    href={
-                                                                        image.url
-                                                                    }
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                    className="text-blue-500 hover:underline"
-                                                                >
-                                                                    Voir l'image
-                                                                </a>
-                                                            </FileListDescription>
-                                                        </FileListInfo>
-                                                        <FileListAction
-                                                            onClick={() =>
-                                                                removeExistingImage(
-                                                                    image.id
-                                                                )
-                                                            }
-                                                        >
-                                                            <X />
-                                                            <span className="sr-only">
-                                                                Retirer
-                                                            </span>
-                                                        </FileListAction>
-                                                    </FileListHeader>
-                                                </FileListItem>
-                                            ))}
-                                        </FileList>
-                                    </>
-                                )}
-
-                                {/* Ajouter de nouvelles images */}
-                                <div className="mt-4">
-                                    <div className="mb-2 text-sm text-muted-foreground">
-                                        Ajouter de nouvelles images :
-                                    </div>
-                                    <Dropzone
-                                        multiple
-                                        accept={{
-                                            "image/*": [".jpg", ".png"],
-                                        }}
-                                        onDropAccepted={handleNewImagesChange}
-                                    >
-                                        <DropzoneZone>
-                                            <DropzoneInput />
-                                            <DropzoneGroup className="gap-4">
-                                                <DropzoneUploadIcon />
-                                                <DropzoneGroup>
-                                                    <DropzoneTitle>
-                                                        Déposez vos fichiers ici
-                                                        ou cliquez pour
-                                                        télécharger
-                                                    </DropzoneTitle>
-                                                    <DropzoneDescription>
-                                                        Vous pouvez téléverser
-                                                        des fichiers jusqu'à 4
-                                                        Mo. Formats pris en
-                                                        charge : JPG, JPEG, PNG.
-                                                    </DropzoneDescription>
-                                                </DropzoneGroup>
-                                            </DropzoneGroup>
-                                        </DropzoneZone>
-                                    </Dropzone>
-
-                                    {/* Nouvelles images ajoutées */}
-                                    {newImages.length > 0 && (
-                                        <FileList className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-                                            {newImages.map((file, index) => (
-                                                <FileListItem key={index}>
-                                                    <FileListHeader>
-                                                        <FileListIcon />
-                                                        <FileListInfo>
-                                                            <FileListName>
-                                                                {file.name}
-                                                            </FileListName>
-                                                            <FileListDescription>
-                                                                <FileListSize>
-                                                                    {Math.round(
-                                                                        file.size /
-                                                                            1024
-                                                                    )}
-                                                                </FileListSize>
-                                                                <span className="ml-1">
-                                                                    Ko
-                                                                </span>
-                                                            </FileListDescription>
-                                                        </FileListInfo>
-                                                        <FileListAction
-                                                            onClick={() =>
-                                                                removeNewImage(
-                                                                    index
-                                                                )
-                                                            }
-                                                        >
-                                                            <X />
-                                                            <span className="sr-only">
-                                                                Retirer
-                                                            </span>
-                                                        </FileListAction>
-                                                    </FileListHeader>
-                                                </FileListItem>
-                                            ))}
-                                        </FileList>
-                                    )}
-                                </div>
                             </div>
 
                             <div className="mt-4 flex items-center justify-end">

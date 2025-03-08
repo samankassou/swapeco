@@ -60,6 +60,7 @@ export interface Offer {
     status: OfferStatus;
     campuses?: Campus[];
     images: OfferImage[];
+    owner: User;
     estimated_value: number;
     published_at?: string;
     created_at: string;

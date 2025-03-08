@@ -15,6 +15,18 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+/**
+ * @property int $id
+ * @property string $title
+ * @property string $description
+ * @property OfferTypeEnum $type
+ * @property OfferStatusEnum $status
+ * @property string $estimated_value
+ * @property \Carbon\Carbon $published_at
+ * @property-read \Carbon\Carbon $created_at
+ * @property-read \Carbon\Carbon $updated_at
+ * @property string $user_id
+ */
 class Offer extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\OfferFactory> */
@@ -40,13 +52,16 @@ class Offer extends Model implements HasMedia
 
         $this
             ->addMediaConversion('thumb')
-            ->fit(Fit::Contain, 200, 200)
-            ->nonQueued();
+            ->fit(Fit::Contain, 200, 200);
 
         $this
             ->addMediaConversion('medium')
-            ->fit(Fit::Contain, 500, 500)
-            ->nonQueued();
+            ->fit(Fit::Contain, 500, 500);
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

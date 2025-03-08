@@ -38,6 +38,14 @@ const data = {
                     ),
                 },
                 {
+                    title: "Trouver une offre d’échange",
+                    url: route("admin.exchange_market.offers.index"),
+                    icon: HandCoins,
+                    isActive: route().current(
+                        "admin.exchange_market.offers.index"
+                    ),
+                },
+                {
                     title: "Déposer une offre d’échange",
                     url: route("admin.exchange_market.offers.create"),
                     icon: HandCoins,
@@ -47,10 +55,10 @@ const data = {
                 },
                 {
                     title: "Mes offres d’Echanges",
-                    url: route("admin.exchange_market.offers.index"),
+                    url: route("admin.exchange_market.offers.me"),
                     icon: HandCoins,
                     isActive: route().current(
-                        "admin.exchange_market.offers.index"
+                        "admin.exchange_market.offers.me"
                     ),
                 },
                 {

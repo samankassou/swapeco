@@ -10,7 +10,6 @@ use App\Actions\Offer\CreateOfferAction;
 use App\Actions\Offer\DeleteOfferAction;
 use App\Actions\Offer\UpdateOfferAction;
 use App\Enums\Offers\OfferStatusEnum;
-use App\Enums\Offers\OfferTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOfferRequest;
 use App\Http\Requests\ListOffersRequest;
@@ -27,7 +26,7 @@ class OfferController extends Controller
 {
     public function index(ListOffersRequest $request)
     {
-        $query = Offer::where('user_id', Auth::user()->id);
+        $query = Offer::where('status', OfferStatusEnum::PUBLISHED->value);
 
         $offers = QueryBuilder::for($query)
             ->allowedFilters([
@@ -44,6 +43,29 @@ class OfferController extends Controller
         $campuses = Campus::get(['id', 'name']);
 
         return Inertia::render('ExchangeMarket/Offers/List/Index', [
+            'offers' => OfferResource::collection($offers)->response()->getData(true),
+            'campuses' => $campuses,
+        ]);
+    }
+
+    public function myOffers()
+    {
+        $query = Offer::where('user_id', Auth::user()->id);
+
+        $offers = QueryBuilder::for($query)
+            ->allowedFilters([
+                'title',
+                AllowedFilter::exact('type')->ignore('all'),
+                AllowedFilter::exact('status')->ignore('all'),
+            ])
+            ->allowedSorts(['created_at', 'title'])
+            ->defaultSort('-created_at')
+            ->with('campuses')
+            ->paginate();
+
+        $campuses = Campus::get(['id', 'name']);
+
+        return Inertia::render('ExchangeMarket/Offers/MyOffers/Index', [
             'offers' => OfferResource::collection($offers)->response()->getData(true),
             'campuses' => $campuses,
         ]);
@@ -70,7 +92,7 @@ class OfferController extends Controller
 
         // notify admin that a new offer has been submitted
 
-        return to_route('admin.exchange_market.offers.index')
+        return to_route('admin.exchange_market.offers.me')
             ->with('message', 'Votre offre a été soumise avec succès.')
             ->with('type', 'success');
     }
@@ -78,6 +100,7 @@ class OfferController extends Controller
     public function show(Offer $offer)
     {
         $offer->load('campuses');
+        $offer->load('owner');
 
         // Obtenir directement le tableau de ressource sans l'enveloppe 'data'
         $offerData = OfferResource::make($offer)->resolve();
@@ -90,19 +113,18 @@ class OfferController extends Controller
     public function edit(Offer $offer)
     {
         $offer->load('campuses');
+
         // load media images from spatie
-        $offer->images = $offer->getMedia('images')->map(fn($media) => [
+        $images = $offer->getMedia('images')->map(fn ($media): array => [
             'id' => $media->id,
             'name' => $media->file_name,
             'url' => $media->getUrl(),
         ]);
 
-        $offerTypes = OfferTypeEnum::options();
-        $campuses = Campus::get(['id', 'name']);
-
         return Inertia::render('ExchangeMarket/Offers/Edit/Index', [
             'offer' => $offer,
-            'campuses' => $campuses,
+            'images' => $images,
+            'campuses' => Campus::get(['id', 'name']),
         ]);
     }
 
@@ -120,7 +142,7 @@ class OfferController extends Controller
 
         // notify admin that a new offer has been submitted
 
-        return to_route('admin.exchange_market.offers.index')
+        return to_route('admin.exchange_market.offers.me')
             ->with('message', 'Votre offre a été mise à jour avec succès.')
             ->with('type', 'success');
     }
@@ -129,7 +151,7 @@ class OfferController extends Controller
     {
         $action->handle(Auth::user(), $offer);
 
-        return to_route('admin.exchange_market.offers.index')
+        return to_route('admin.exchange_market.offers.me')
             ->with('message', 'L\'offre a été approuvée avec succès.')
             ->with('type', 'success');
     }
