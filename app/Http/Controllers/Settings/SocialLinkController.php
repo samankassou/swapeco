@@ -19,7 +19,18 @@ class SocialLinkController extends Controller
     public function edit(): Response
     {
         $user = Auth::user();
-        $userSocialLinks = $user->socialLink->firstOrCreate();
+        // Check if the user has a social link, if not create one
+        if (!$user->socialLink) {
+            $user->socialLink()->create([
+                'facebook' => '',
+                'twitter' => '',
+                'linkedin' => '',
+                'instagram' => '',
+                'github' => '',
+            ]);
+        }
+        // Fetch the user's social links
+        $userSocialLinks = $user->socialLink;
 
         return Inertia::render('Settings/SocialMedia/Index', [
             'userSocialLinks' => $userSocialLinks,

@@ -10,6 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @mixin Offer
+ *
  * @property-read int $id
  * @property-read string $title
  * @property-read string $description
@@ -19,6 +20,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property-read \Carbon\Carbon|null $published_at
  * @property-read \Carbon\Carbon $created_at
  * @property-read \Carbon\Carbon $updated_at
+ *
  * @method string getFirstMediaUrl(string $collection = 'default', string $conversion = '')
  * @method \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection getMedia(string $collection = 'default')
  */
@@ -48,7 +50,7 @@ class OfferResource extends JsonResource
             'estimated_value' => $this->estimated_value,
             'image_url' => $this->getFirstMediaUrl('images'),
             // get media id, name, url
-            'images' => $this->getMedia('images')->map(fn($media): array => [
+            'images' => $this->getMedia('images')->map(fn ($media): array => [
                 'id' => $media->id,
                 'name' => $media->file_name,
                 'url' => $media->getUrl(),

@@ -20,15 +20,15 @@ interface RegisterForm {
 
 const roles = [
     {
-        id: "company",
+        id: "eco-company",
         name: "Eco-Entreprise",
     },
     {
-        id: "contributor",
+        id: "eco-contributor",
         name: "Eco-Contributeur",
     },
     {
-        id: "promoter",
+        id: "territory-promoter",
         name: "Promoteur de territoire",
     },
 ] as const;
@@ -40,6 +40,7 @@ export default function Register() {
             email: "",
             password: "",
             password_confirmation: "",
+            role: "",
         });
 
     const submit: FormEventHandler = (e) => {
@@ -153,8 +154,15 @@ export default function Register() {
                                     <Label className="mb-2">Vous êtes?</Label>
                                     <div className="flex gap-6">
                                         <RadioGroup
-                                            defaultValue="company"
+                                            defaultValue="eco-company"
                                             className="max-w-sm"
+                                            onValueChange={(value) =>
+                                                setData("role", value)
+                                            }
+                                            aria-label="Vous êtes?"
+                                            value={data.role}
+                                            name="role"
+                                            tabIndex={5}
                                         >
                                             {roles.map((role) => (
                                                 <Label
@@ -175,6 +183,7 @@ export default function Register() {
                                             ))}
                                         </RadioGroup>
                                     </div>
+                                    <InputError message={errors.role} />
                                 </div>
 
                                 <Button

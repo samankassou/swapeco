@@ -10,6 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @mixin Campus
+ *
  * @property-read int $id
  * @property-read string $name
  * @property-read \Carbon\Carbon $created_at
