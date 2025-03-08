@@ -4,7 +4,7 @@ Une application web moderne construite avec Laravel et React.
 
 ## À propos du projet
 
-SwapEco est une application web développée avec Laravel 11 et React 18, utilisant Inertia.js pour créer une expérience utilisateur fluide et moderne.
+SwapEco est une bourse de valorisation d’échanges Eco-solidaires inter-entreprises, fondée sur la valorisation des sous-produits et des ressources sous-utilisées.
 
 ## Prérequis
 
@@ -107,6 +107,16 @@ Pour éviter les conflits `git`, pensez à:
 2. `composer install`
 3. `npm install`
 4. `php artisan migrate` pour s'assurer que vous avez la dernière version de la BD
+
+## Analyse
+
+1. Diagramme de classes
+
+[Diagramme de classes des offres](docs/diagrams/classes/offers_class_diagram.MD)
+
+2. Cycle de vie d'une offre
+
+[Cycle de vie d'une offre](docs/diagrams/flows/cycle_vie_offre.MD)
 
 ## License
 
