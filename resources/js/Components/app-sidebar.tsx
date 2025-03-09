@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Flower, Gauge, HandCoins } from "lucide-react";
+import { Flower, Gauge, HandCoins, LucideUsers2 } from "lucide-react";
 
 import {
     Sidebar,
@@ -66,6 +66,20 @@ const data = {
                     url: "#",
                     icon: HandCoins,
                     isActive: false,
+                },
+            ],
+        },
+        {
+            title: "Utilisateurs",
+            url: route("admin.users.index"),
+            icon: LucideUsers2,
+            isActive: route().current("admin.users.*"),
+            items: [
+                {
+                    title: "Gérer les utilisateurs",
+                    url: route("admin.users.index"),
+                    icon: LucideUsers2,
+                    isActive: route().current("admin.users.index"),
                 },
             ],
         },
