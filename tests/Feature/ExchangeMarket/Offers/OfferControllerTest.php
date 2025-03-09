@@ -2,19 +2,22 @@
 
 declare(strict_types=1);
 
-use App\Enums\Offers\OfferStatusEnum;
-use App\Enums\Offers\OfferTypeEnum;
-use App\Models\Campus;
 use App\Models\User;
+use App\Models\Campus;
+use Spatie\Permission\Models\Role;
+use App\Enums\Offers\OfferTypeEnum;
+use App\Enums\Offers\OfferStatusEnum;
 use Inertia\Testing\AssertableInertia as Assert;
 
 it('can list offers', function () {
-    $user = User::factory()->hasOffers(10)->create();
+    $user = User::factory()->hasOffers(10, ['status' => OfferStatusEnum::PUBLISHED->value])->create();
+    $role = Role::firstOrCreate(['name' => 'admin']);
+    $user->assignRole($role);
 
     $this->actingAs($user)
         ->get('/admin/exchange-market/offers')
         ->assertInertia(
-            fn (Assert $assert) => $assert
+            fn(Assert $assert) => $assert
                 ->component('ExchangeMarket/Offers/List/Index')
                 ->has('offers.data', 10)
         );
@@ -22,6 +25,8 @@ it('can list offers', function () {
 
 it('can create an offer', function () {
     $user = User::factory()->create();
+    $role = Role::firstOrCreate(['name' => 'admin']);
+    $user->assignRole($role);
     // array of campus ids
     $campuses = Campus::factory(2)->create();
     $campusIds = $campuses->pluck('id')->toArray();
@@ -37,7 +42,7 @@ it('can create an offer', function () {
         ]);
 
     $response->assertStatus(302)
-        ->assertRedirect('/admin/exchange-market/offers');
+        ->assertRedirect('/admin/exchange-market/my-offers');
 
     $this->assertDatabaseHas('offers', [
         'type' => OfferTypeEnum::PRODUCT->value,
@@ -62,6 +67,8 @@ it('can create an offer', function () {
 
 it('can update an offer', function () {
     $user = User::factory()->hasOffers(1)->create();
+    $role = Role::firstOrCreate(['name' => 'admin']);
+    $user->assignRole($role);
     $offer = $user->offers()->first();
     $campus = Campus::factory()->create();
 
@@ -75,7 +82,7 @@ it('can update an offer', function () {
             'campuses' => [$campus->id],
         ])
         ->assertStatus(302)
-        ->assertRedirect('/admin/exchange-market/offers');
+        ->assertRedirect('/admin/exchange-market/my-offers');
 
     $this->assertDatabaseHas('offers', [
         'id' => $offer->id,

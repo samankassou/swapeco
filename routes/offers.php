@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Admin\ExchangeMarket\CounterOfferController;
 use App\Http\Controllers\Admin\ExchangeMarket\MessageController;
 use App\Http\Controllers\Admin\ExchangeMarket\NegotiationController;
 use App\Http\Controllers\Admin\ExchangeMarket\OfferController;
