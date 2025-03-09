@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -65,8 +66,27 @@ class UserController extends Controller
         // Logic to update a specific user
     }
 
-    public function destroy($id): void
+    public function destroy(User $user): RedirectResponse
     {
-        // Logic to delete a specific user
+        try {
+            // Supprimer les offres liées de l'utilisateur
+            $user->offers()->delete();
+            // Supprimer le lien social s'il existe
+            if ($user->socialLink) {
+                $user->socialLink()->delete();
+            }
+            // Supprimer l'utilisateur
+            $user->delete();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('flash', [
+                'type' => 'danger',
+                'message' => "Impossible de supprimer l'utilisateur en raison de données liées."
+            ]);
+        }
+
+        return redirect()->back()->with('flash', [
+            'type' => 'success',
+            'message' => "L'utilisateur a été supprimé avec succès."
+        ]);
     }
 }
