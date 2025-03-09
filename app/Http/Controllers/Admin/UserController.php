@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-
-use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -39,32 +40,32 @@ class UserController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): void
     {
         // Logic to show user creation form
     }
 
-    public function store(Request $request)
+    public function store(Request $request): void
     {
         // Logic to store a new user
     }
 
-    public function show($id)
+    public function show($id): void
     {
         // Logic to show a specific user
     }
 
-    public function edit($id)
+    public function edit($id): void
     {
         // Logic to show user edit form
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): void
     {
         // Logic to update a specific user
     }
 
-    public function destroy($id)
+    public function destroy($id): void
     {
         // Logic to delete a specific user
     }

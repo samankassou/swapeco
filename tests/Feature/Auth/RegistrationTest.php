@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Auth;
 
-use Tests\TestCase;
-use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
@@ -25,11 +25,11 @@ class RegistrationTest extends TestCase
         $role = Role::firstOrCreate(['name' => 'admin']);
 
         $response = $this->post('/register', [
-            'name'                  => 'Test User',
-            'email'                 => 'test@example.com',
-            'password'              => 'password',
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
             'password_confirmation' => 'password',
-            'role'                  => 'eco-company',
+            'role' => 'eco-company',
         ]);
 
         $this->assertAuthenticated();

@@ -20,7 +20,7 @@ class SocialLinkController extends Controller
     {
         $user = Auth::user();
         // Check if the user has a social link, if not create one
-        if (!$user->socialLink) {
+        if (! $user->socialLink) {
             $user->socialLink()->create([
                 'facebook' => '',
                 'twitter' => '',

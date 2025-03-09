@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
-use App\Models\Campus;
-use Spatie\Permission\Models\Role;
-use App\Enums\Offers\OfferTypeEnum;
 use App\Enums\Offers\OfferStatusEnum;
+use App\Enums\Offers\OfferTypeEnum;
+use App\Models\Campus;
+use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
+use Spatie\Permission\Models\Role;
 
 it('can list offers', function () {
     $user = User::factory()->hasOffers(10, ['status' => OfferStatusEnum::PUBLISHED->value])->create();
@@ -17,7 +17,7 @@ it('can list offers', function () {
     $this->actingAs($user)
         ->get('/admin/exchange-market/offers')
         ->assertInertia(
-            fn(Assert $assert) => $assert
+            fn (Assert $assert) => $assert
                 ->component('ExchangeMarket/Offers/List/Index')
                 ->has('offers.data', 10)
         );

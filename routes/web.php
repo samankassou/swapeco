@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Home', [
@@ -18,7 +18,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'admin', 'as' =>
     })->name('dashboard');
 });
 
-require __DIR__ . '/offers.php';
-require __DIR__ . '/users.php';
-require __DIR__ . '/settings.php';
-require __DIR__ . '/auth.php';
+require __DIR__.'/offers.php';
+require __DIR__.'/users.php';
+require __DIR__.'/settings.php';
+require __DIR__.'/auth.php';
