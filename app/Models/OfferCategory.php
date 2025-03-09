@@ -18,7 +18,7 @@ class OfferCategory extends Model
      *
      * @return HasMany
      */
-    public function subCategories()
+    public function subCategories(): HasMany
     {
         return $this->hasMany(OfferSubCategory::class, 'category_id');
     }

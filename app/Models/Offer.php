@@ -9,6 +9,7 @@ use App\Enums\Offers\OfferStatusEnum;
 use App\Enums\Offers\OfferTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
@@ -59,7 +60,7 @@ class Offer extends Model implements HasMedia
             ->fit(Fit::Contain, 500, 500);
     }
 
-    public function owner()
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
