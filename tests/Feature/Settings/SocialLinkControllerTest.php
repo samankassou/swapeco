@@ -12,7 +12,7 @@ it('can display social links page', function () {
     $this->actingAs($this->user)
         ->get(route('social_links.edit'))
         ->assertInertia(
-            fn($assert) => $assert
+            fn ($assert) => $assert
                 ->component('Settings/SocialMedia/Index')
                 ->has('userSocialLinks')
         );

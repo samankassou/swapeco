@@ -15,8 +15,6 @@ class OfferCategory extends Model
 
     /**
      * Get sub categories
-     *
-     * @return HasMany
      */
     public function subCategories(): HasMany
     {

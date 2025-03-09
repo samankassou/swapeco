@@ -15,8 +15,6 @@ class OfferSubCategory extends Model
 
     /**
      * Get the parent category
-     *
-     * @return BelongsTo
      */
     public function category(): BelongsTo
     {
