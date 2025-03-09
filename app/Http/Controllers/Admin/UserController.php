@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -41,14 +43,36 @@ class UserController extends Controller
         ]);
     }
 
-    public function create(): void
+    public function create()
     {
-        // Logic to show user creation form
+        // Récupérer tous les rôles afin de les assigner lors de la création
+        $roles = Role::all(['name']);
+        return Inertia::render('Users/Create/Index', [
+            'roles' => $roles,
+        ]);
     }
 
-    public function store(Request $request): void
+    public function store(Request $request): RedirectResponse
     {
-        // Logic to store a new user
+        $validated = $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8',
+            'role'     => 'required|string|exists:roles,name',
+        ]);
+
+        $user = User::create([
+            'name'     => $validated['name'],
+            'email'    => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        $user->assignRole($validated['role']);
+
+        return redirect()->route('admin.users.index')->with('flash', [
+            'type'    => 'success',
+            'message' => "L'utilisateur a été créé avec succès.",
+        ]);
     }
 
     public function show($id): void
