@@ -73,4 +73,14 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Determine if the user is an administrator.
+     */
+    protected function getIsAdminAttribute(): bool
+    {
+        return $this->hasRole('admin');
+    }
+
+    protected $appends = ['is_admin'];
 }

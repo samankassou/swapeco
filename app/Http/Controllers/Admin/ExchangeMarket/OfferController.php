@@ -36,13 +36,38 @@ class OfferController extends Controller
             ])
             ->allowedSorts(['created_at', 'title'])
             ->defaultSort('-created_at')
-            ->with('campuses')
+            ->with('campuses', 'owner')
             ->paginate()
             ->appends($request->query());
 
         $campuses = Campus::get(['id', 'name']);
 
         return Inertia::render('ExchangeMarket/Offers/List/Index', [
+            'offers' => OfferResource::collection($offers)->response()->getData(true),
+            'campuses' => $campuses,
+        ]);
+    }
+
+    // Display all the offers so that admins and moderators can manage them
+    public function manage(ListOffersRequest $request)
+    {
+        $query = Offer::query();
+
+        $offers = QueryBuilder::for($query)
+            ->allowedFilters([
+                'title',
+                AllowedFilter::exact('type')->ignore('all'),
+                AllowedFilter::exact('status')->ignore('all'),
+            ])
+            ->allowedSorts(['created_at', 'title'])
+            ->defaultSort('-created_at')
+            ->with('campuses', 'owner')
+            ->paginate()
+            ->appends($request->query());
+
+        $campuses = Campus::get(['id', 'name']);
+
+        return Inertia::render('ExchangeMarket/Offers/Manage/Index', [
             'offers' => OfferResource::collection($offers)->response()->getData(true),
             'campuses' => $campuses,
         ]);
@@ -60,7 +85,7 @@ class OfferController extends Controller
             ])
             ->allowedSorts(['created_at', 'title'])
             ->defaultSort('-created_at')
-            ->with('campuses')
+            ->with('campuses', 'owner')
             ->paginate();
 
         $campuses = Campus::get(['id', 'name']);

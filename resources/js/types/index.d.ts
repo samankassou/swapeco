@@ -2,6 +2,7 @@ export interface User {
     id: number;
     name: string;
     email: string;
+    is_admin?: boolean;
     avatar: "/avatars/shadcn.jpg";
     email_verified_at?: string;
     [key: string]: unknown;

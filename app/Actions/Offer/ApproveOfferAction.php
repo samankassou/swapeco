@@ -17,7 +17,7 @@ class ApproveOfferAction
     public function handle(User $user, Offer $offer): void
     {
         DB::transaction(function () use ($user, $offer): void {
-            $user->offers()->findOrFail($offer->id)->update([
+            $offer->update([
                 'status' => OfferStatusEnum::PUBLISHED->value,
             ]);
         });

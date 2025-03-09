@@ -17,6 +17,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'admin', 'as' =>
 
     Route::resource('exchange-market/offers', OfferController::class);
     Route::get('exchange-market/my-offers', [OfferController::class, 'myOffers'])->name('offers.me');
+    Route::get('exchange-market/manage', [OfferController::class, 'manage'])->name('offers.manage');
     Route::post('exchange-market/offers/{offer}/close', [OfferController::class, 'close'])->name('offers.close');
     Route::post('exchange-market/offers/{offer}/approve', [OfferController::class, 'approve'])->name('offers.approve');
     Route::post('exchange-market/offers/{offer}/reject', [OfferController::class, 'reject'])->name('offers.reject');

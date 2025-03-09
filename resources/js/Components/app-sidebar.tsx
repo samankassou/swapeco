@@ -15,79 +15,100 @@ import { usePage } from "@inertiajs/react";
 import { NavMain } from "./Dashboard/NavMain";
 import { NavDashboard } from "./Dashboard/NavDashboard";
 import { NavUser } from "./Dashboard/NavUser";
-const data = {
-    dashboard: {
-        name: "Tableau de bord",
-        url: route("admin.dashboard"),
-        icon: Gauge,
-        isActive: route().current("admin.dashboard"),
-    },
-    navMain: [
-        {
-            title: "Bourse d’échanges",
-            url: "#",
-            icon: HandCoins,
-            isActive: route().current("admin.exchange_market.*"),
-            items: [
-                {
-                    title: "Comment ça marche",
-                    url: route("admin.exchange_market.how_it_works"),
-                    icon: HandCoins,
-                    isActive: route().current(
-                        "admin.exchange_market.how_it_works"
-                    ),
-                },
-                {
-                    title: "Trouver une offre d’échange",
-                    url: route("admin.exchange_market.offers.index"),
-                    icon: HandCoins,
-                    isActive: route().current(
-                        "admin.exchange_market.offers.index"
-                    ),
-                },
-                {
-                    title: "Déposer une offre d’échange",
-                    url: route("admin.exchange_market.offers.create"),
-                    icon: HandCoins,
-                    isActive: route().current(
-                        "admin.exchange_market.offers.create"
-                    ),
-                },
-                {
-                    title: "Mes offres d’Echanges",
-                    url: route("admin.exchange_market.offers.me"),
-                    icon: HandCoins,
-                    isActive: route().current(
-                        "admin.exchange_market.offers.me"
-                    ),
-                },
-                {
-                    title: "Mes transactions d’Echanges",
-                    url: "#",
-                    icon: HandCoins,
-                    isActive: false,
-                },
-            ],
-        },
-        {
-            title: "Utilisateurs",
-            url: route("admin.users.index"),
-            icon: LucideUsers2,
-            isActive: route().current("admin.users.*"),
-            items: [
-                {
-                    title: "Gérer les utilisateurs",
-                    url: route("admin.users.index"),
-                    icon: LucideUsers2,
-                    isActive: route().current("admin.users.index"),
-                },
-            ],
-        },
-    ],
-};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const user = usePage().props.auth.user;
+
+    const data = {
+        dashboard: {
+            name: "Tableau de bord",
+            url: route("admin.dashboard"),
+            icon: Gauge,
+            isActive: route().current("admin.dashboard"),
+        },
+        navMain: [
+            {
+                title: "Bourse d’échanges",
+                url: "#",
+                icon: HandCoins,
+                isActive: route().current("admin.exchange_market.*"),
+                items: [
+                    {
+                        title: "Comment ça marche",
+                        url: route("admin.exchange_market.how_it_works"),
+                        icon: HandCoins,
+                        isActive: route().current(
+                            "admin.exchange_market.how_it_works"
+                        ),
+                    },
+                    {
+                        title: "Trouver une offre d’échange",
+                        url: route("admin.exchange_market.offers.index"),
+                        icon: HandCoins,
+                        isActive: route().current(
+                            "admin.exchange_market.offers.index"
+                        ),
+                    },
+                    {
+                        title: "Déposer une offre d’échange",
+                        url: route("admin.exchange_market.offers.create"),
+                        icon: HandCoins,
+                        isActive: route().current(
+                            "admin.exchange_market.offers.create"
+                        ),
+                    },
+                    {
+                        title: "Mes offres d’Echanges",
+                        url: route("admin.exchange_market.offers.me"),
+                        icon: HandCoins,
+                        isActive: route().current(
+                            "admin.exchange_market.offers.me"
+                        ),
+                    },
+                    // Item visible uniquement pour les admins
+                    ...(user?.is_admin
+                        ? [
+                              {
+                                  title: "Gérer les offres d’Echanges",
+                                  url: route(
+                                      "admin.exchange_market.offers.manage"
+                                  ),
+                                  icon: HandCoins,
+                                  isActive: route().current(
+                                      "admin.exchange_market.offers.manage"
+                                  ),
+                              },
+                          ]
+                        : []),
+                    {
+                        title: "Mes transactions d’Echanges",
+                        url: "#",
+                        icon: HandCoins,
+                        isActive: false,
+                    },
+                ],
+            },
+            ...(user?.is_admin
+                ? [
+                      {
+                          title: "Utilisateurs",
+                          url: route("admin.users.index"),
+                          icon: LucideUsers2,
+                          isActive: route().current("admin.users.*"),
+                          items: [
+                              {
+                                  title: "Gérer les utilisateurs",
+                                  url: route("admin.users.index"),
+                                  icon: LucideUsers2,
+                                  isActive:
+                                      route().current("admin.users.index"),
+                              },
+                          ],
+                      },
+                  ]
+                : []),
+        ],
+    };
 
     return (
         <Sidebar {...props}>

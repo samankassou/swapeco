@@ -17,7 +17,7 @@ class DeleteOfferAction
     {
         DB::transaction(function () use ($user, $offer): void {
             $offer->campuses()->detach();
-            $user->offers()->findOrFail($offer->id)->delete();
+            $offer->delete();
         });
     }
 }

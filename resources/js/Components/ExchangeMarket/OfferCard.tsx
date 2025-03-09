@@ -1,10 +1,11 @@
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { Badge } from "@/Components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "@/Components/ui/button";
 import DeleteOffer from "@/Components/ExchangeMarket/Offers/delete-offer";
 import CloseOffer from "@/Components/ExchangeMarket/Offers/close-offer";
+import ApproveOffer from "@/Components/ExchangeMarket/Offers/approve-offer";
 
 import {
     Card,
@@ -25,9 +26,11 @@ import {
 import { Offer } from "@/types";
 import { MoreHorizontal } from "lucide-react";
 import { Link } from "@inertiajs/react";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function OfferCard({ offer }: { offer: Offer }) {
     const [actionMenuOpen, setActionMenuOpen] = useState(false);
+    const { auth } = usePage().props;
 
     return (
         <Card className="group hover:shadow-lg transition-shadow">
@@ -70,6 +73,16 @@ export default function OfferCard({ offer }: { offer: Offer }) {
                                             Modifier
                                         </Link>
                                     </DropdownMenuItem>
+                                    {auth.user.is_admin &&
+                                        offer.status.value !== "published" && (
+                                            <DropdownMenuItem>
+                                                <ApproveOffer
+                                                    offer={offer}
+                                                    asLink
+                                                    triggerText="Approuver"
+                                                />
+                                            </DropdownMenuItem>
+                                        )}
                                     <DropdownMenuItem>
                                         <CloseOffer
                                             offer={offer}
@@ -84,6 +97,23 @@ export default function OfferCard({ offer }: { offer: Offer }) {
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>
+                    </div>
+                </div>
+                {/* Affichage de l'avatar et nom de l'auteur */}
+                <div className="flex items-center gap-2">
+                    <Avatar className="h-8 w-8 rounded-lg">
+                        <AvatarImage
+                            src={offer.owner.avatar}
+                            alt={offer.owner.name}
+                        />
+                        <AvatarFallback className="rounded-lg">
+                            SE
+                        </AvatarFallback>
+                    </Avatar>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                        <span className="truncate font-semibold">
+                            {offer.owner.name}
+                        </span>
                     </div>
                 </div>
                 <Link
