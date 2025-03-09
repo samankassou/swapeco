@@ -46,7 +46,7 @@ export default function Index({
             <Card>
                 <CardHeader>
                     <CardTitle className="text-base font-bold md:text-xl flex justify-between mb-4">
-                        <h2>Mes offres</h2>
+                        <h2>Les offres disponibles</h2>
                     </CardTitle>
                     <FilterBar />
                 </CardHeader>
