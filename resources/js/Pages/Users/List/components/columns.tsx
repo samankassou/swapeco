@@ -76,6 +76,15 @@ export const columns: ColumnDef<User>[] = [
         },
     },
     {
+        accessorKey: "role",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Rôle" />
+        ),
+        cell: ({ row }) => (
+            <div className="max-w-[200px]">{row.getValue("role")}</div>
+        ),
+    },
+    {
         id: "actions",
         cell: ({ row }) => <DataTableRowActions row={row} />,
     },

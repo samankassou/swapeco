@@ -19,7 +19,13 @@ class UserController extends Controller
     {
         $tasksJson = File::get(base_path('resources/js/Pages/Users/List/data/tasks.json'));
         $tasks = json_decode($tasksJson, true);
-        $users = User::query()->get(['id', 'name', 'email'])->toArray();
+        // Récupérer les utilisateurs avec leurs rôles
+        $users = User::with('roles')->get(['id', 'name', 'email'])
+            ->map(function ($user) {
+                // Joindre les noms de rôles en une chaîne
+                $user->role = $user->getRoleNames()->implode(', ');
+                return $user;
+            })->toArray();
 
         $labels = [
             [
