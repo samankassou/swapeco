@@ -6,17 +6,20 @@ import { toast } from "sonner";
 import { AppSidebar } from "@/Components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/Components/ui/sidebar";
 import { type SharedData } from "@/types";
-import DashboardHeader from "@/Components/Dashboard/Header";
+import Header from "./Partials/Header";
 
 interface DashboardProps {
     children: React.ReactNode;
-    breadcrumbs: Array<{
-        href?: string;
+    breadcrumbs?: Array<{
+        href: string;
         label: string;
     }>;
 }
 
-export default function Dashboard({ children, breadcrumbs }: DashboardProps) {
+export default function Dashboard({
+    children,
+    breadcrumbs = [],
+}: DashboardProps) {
     const { flash } = usePage<SharedData>().props;
 
     useEffect(() => {
@@ -34,7 +37,7 @@ export default function Dashboard({ children, breadcrumbs }: DashboardProps) {
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <DashboardHeader breadcrumbs={breadcrumbs} />
+                <Header breadcrumbs={breadcrumbs} />
                 <div className="flex flex-1 flex-col gap-4 p-4">
                     {children}
                     <Toaster position="top-right" />

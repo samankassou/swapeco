@@ -42,10 +42,16 @@ class UserController extends Controller
             ],
         ];
 
+        $roles = \Spatie\Permission\Models\Role::all(['name'])
+            ->map(function ($role) {
+                return ['value' => $role->name, 'label' => $role->name];
+            })->toArray();
+
         return Inertia::render('Users/List/Index', [
-            'tasks' => $tasks,
-            'users' => $users,
+            'tasks'  => $tasks,
+            'users'  => $users,
             'labels' => $labels,
+            'roles'  => $roles, // rôles disponibles pour le filtre
         ]);
     }
 
@@ -86,14 +92,43 @@ class UserController extends Controller
         // Logic to show a specific user
     }
 
-    public function edit($id): void
+    public function edit($id): \Inertia\Response
     {
-        // Logic to show user edit form
+        $user = User::findOrFail($id);
+        $roles = Role::all(['name'])
+            ->map(function ($role) {
+                return ['value' => $role->name, 'label' => $role->name];
+            })->toArray();
+
+        return Inertia::render('Users/Edit', [
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->roles->first()?->name ?? '',
+            ],
+            'roles' => $roles,
+        ]);
     }
 
-    public function update(Request $request, $id): void
+    public function update(Request $request, $id): RedirectResponse
     {
-        // Logic to update a specific user
+        $user = User::findOrFail($id);
+        $validated = $request->validate([
+            'name'  => 'required|string|max:255',
+            'role'  => 'required|string|exists:roles,name',
+        ]);
+
+        $user->update([
+            'name'  => $validated['name'],
+        ]);
+
+        $user->syncRoles($validated['role']);
+
+        return redirect()->route('admin.users.index')->with('flash', [
+            'type'    => 'success',
+            'message' => "L'utilisateur a été mis à jour avec succès.",
+        ]);
     }
 
     public function destroy(User $user): RedirectResponse

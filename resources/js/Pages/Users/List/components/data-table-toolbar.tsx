@@ -5,7 +5,6 @@ import { X } from "lucide-react";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { DataTableViewOptions } from "./data-table-view-options";
-import { priorities, statuses } from "../data/data";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { Label } from "@/types/users";
 
@@ -16,6 +15,7 @@ interface DataTableToolbarProps<TData> {
 
 export function DataTableToolbar<TData>({
     table,
+    labels,
 }: DataTableToolbarProps<TData>) {
     const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -35,18 +35,14 @@ export function DataTableToolbar<TData>({
                     }
                     className="h-8 w-[150px] lg:w-[250px]"
                 />
-                {table.getColumn("email") && (
+                {table.getColumn("role") && (
                     <DataTableFacetedFilter
-                        column={table.getColumn("email")}
-                        title="Email"
-                        options={statuses}
-                    />
-                )}
-                {table.getColumn("email") && (
-                    <DataTableFacetedFilter
-                        column={table.getColumn("email")}
-                        title="Email"
-                        options={priorities}
+                        column={table.getColumn("role")}
+                        title="Rôle"
+                        options={(labels ?? []).map((role) => ({
+                            label: role,
+                            value: role,
+                        }))}
                     />
                 )}
                 {isFiltered && (
@@ -55,7 +51,7 @@ export function DataTableToolbar<TData>({
                         onClick={() => table.resetColumnFilters()}
                         className="h-8 px-2 lg:px-3"
                     >
-                        Reset
+                        Réinitialiser
                         <X />
                     </Button>
                 )}

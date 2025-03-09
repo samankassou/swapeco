@@ -115,7 +115,7 @@ class OfferController extends Controller
         $offer->load('campuses');
 
         // load media images from spatie
-        $images = $offer->getMedia('images')->map(fn ($media): array => [
+        $images = $offer->getMedia('images')->map(fn($media): array => [
             'id' => $media->id,
             'name' => $media->file_name,
             'url' => $media->getUrl(),
@@ -160,7 +160,7 @@ class OfferController extends Controller
     {
         $action->handle(Auth::user(), $offer);
 
-        return to_route('admin.exchange_market.offers.index')
+        return to_route('admin.exchange_market.offers.me')
             ->with('message', 'Votre offre a été fermée avec succès.')
             ->with('type', 'success');
     }
@@ -169,7 +169,7 @@ class OfferController extends Controller
     {
         $action->handle(Auth::user(), $offer);
 
-        return to_route('admin.exchange_market.offers.index')
+        return to_route('admin.exchange_market.offers.me')
             ->with('message', 'Votre offre a été supprimée avec succès.')
             ->with('type', 'success');
     }

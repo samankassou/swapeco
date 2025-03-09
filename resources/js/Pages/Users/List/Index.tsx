@@ -1,12 +1,19 @@
 import { Head } from "@inertiajs/react";
 import Dashboard from "@/Layouts/DashboardLayout";
-import { columns } from "./components/columns";
+import { getColumns } from "./components/columns";
 import { DataTable } from "./components/data-table";
 import Heading from "@/Components/heading";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { User } from "@/types/users";
 
-export default function Index({ users }: { users: User[] }) {
+export default function Index({
+    users,
+    roles,
+}: {
+    users: User[];
+    roles: { value: string; label: string }[];
+}) {
+    const columns = getColumns(roles);
     return (
         <>
             <Head title="Utilisateurs" />
@@ -32,7 +39,8 @@ export default function Index({ users }: { users: User[] }) {
 
 Index.layout = (page: React.ReactNode): React.ReactElement => {
     const breadcrumbs = [
-        { href: route("admin.dashboard"), label: "Utilisateurs" },
+        { href: route("admin.dashboard"), label: "Dashboard" },
+        { href: route("admin.users.index"), label: "Utilisateurs" },
     ];
 
     return <Dashboard children={page} breadcrumbs={breadcrumbs} />;

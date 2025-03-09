@@ -50,20 +50,20 @@ export function DataTableColumnHeader<TData, TValue>({
                         onClick={() => column.toggleSorting(false)}
                     >
                         <ArrowUp className="h-3.5 w-3.5 text-muted-foreground/70" />
-                        Asc
+                        Croissant
                     </DropdownMenuItem>
                     <DropdownMenuItem
                         onClick={() => column.toggleSorting(true)}
                     >
                         <ArrowDown className="h-3.5 w-3.5 text-muted-foreground/70" />
-                        Desc
+                        Décroissant
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                         onClick={() => column.toggleVisibility(false)}
                     >
                         <EyeOff className="h-3.5 w-3.5 text-muted-foreground/70" />
-                        Hide
+                        Masquer
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
